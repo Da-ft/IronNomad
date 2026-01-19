@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b646f7e40ba1f4941bd1a4308077d42d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WalkerGrid
-  _cellSize: 0.0478
+  _cellSize: 0.04
 --- !u!1 &2130114916
 GameObject:
   m_ObjectHideFlags: 0
