@@ -10,7 +10,8 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("Movement (Shooter Feel)")]
     [SerializeField] private float _walkSpeed = 8f;
-    [SerializeField] private float _sprintSpeed = 12f;
+    // TODO: Sprinting and Sliding/Crouching
+    //[SerializeField] private float _sprintSpeed = 12f;
     [SerializeField] private float _jumpForce = 7f;
     [SerializeField] private float _airControl = 0.5f; // Multiplikator für Luft-Bewegung
 

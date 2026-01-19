@@ -129,6 +129,15 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FireEvent"",
+                    ""type"": ""Button"",
+                    ""id"": ""59f2d817-0136-4e09-b3a2-e675ac2919ff"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -338,6 +347,17 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Build"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1f54bb8-e62c-4374-9d79-de2b277ff525"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""FireEvent"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -929,6 +949,7 @@ namespace IronNomad.Inputs
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
             m_Gameplay_Build = m_Gameplay.FindAction("Build", throwIfNotFound: true);
+            m_Gameplay_FireEvent = m_Gameplay.FindAction("FireEvent", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1026,6 +1047,7 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_Look;
         private readonly InputAction m_Gameplay_Jump;
         private readonly InputAction m_Gameplay_Build;
+        private readonly InputAction m_Gameplay_FireEvent;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1053,6 +1075,10 @@ namespace IronNomad.Inputs
             /// Provides access to the underlying input action "Gameplay/Build".
             /// </summary>
             public InputAction @Build => m_Wrapper.m_Gameplay_Build;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/FireEvent".
+            /// </summary>
+            public InputAction @FireEvent => m_Wrapper.m_Gameplay_FireEvent;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1091,6 +1117,9 @@ namespace IronNomad.Inputs
                 @Build.started += instance.OnBuild;
                 @Build.performed += instance.OnBuild;
                 @Build.canceled += instance.OnBuild;
+                @FireEvent.started += instance.OnFireEvent;
+                @FireEvent.performed += instance.OnFireEvent;
+                @FireEvent.canceled += instance.OnFireEvent;
             }
 
             /// <summary>
@@ -1114,6 +1143,9 @@ namespace IronNomad.Inputs
                 @Build.started -= instance.OnBuild;
                 @Build.performed -= instance.OnBuild;
                 @Build.canceled -= instance.OnBuild;
+                @FireEvent.started -= instance.OnFireEvent;
+                @FireEvent.performed -= instance.OnFireEvent;
+                @FireEvent.canceled -= instance.OnFireEvent;
             }
 
             /// <summary>
@@ -1442,6 +1474,13 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnBuild(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "FireEvent" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnFireEvent(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

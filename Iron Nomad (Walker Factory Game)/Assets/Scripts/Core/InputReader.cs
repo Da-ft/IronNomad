@@ -11,6 +11,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     public event UnityAction JumpEvent;
     public event UnityAction JumpCanceledEvent;
     public event UnityAction BuildEvent;
+    public event UnityAction FireEvent;
 
     private GameInput _gameInput;
 
@@ -52,5 +53,11 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     {
         if(context.phase == InputActionPhase.Performed)
             BuildEvent?.Invoke();
+    }
+
+    public void OnFireEvent(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+            FireEvent?.Invoke();
     }
 }
