@@ -34,9 +34,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Build",
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "4f1f07ba-b609-4872-b41a-315fe8f67243",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "dc51d098-5f29-460c-a6ec-18913f2797fd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleBuild",
                     "type": "Button",
                     "id": "dc068d5e-b832-412e-af39-8c722d776c3d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DemolishMode",
+                    "type": "Button",
+                    "id": "f7f174f8-1cf4-4f11-b913-4335347827bc",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -46,6 +73,15 @@
                     "name": "FireEvent",
                     "type": "Button",
                     "id": "59f2d817-0136-4e09-b3a2-e675ac2919ff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "9b6a9c7e-b29b-4441-a9b7-0029e2388440",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -254,11 +290,11 @@
                 {
                     "name": "",
                     "id": "61176411-c1f2-45d0-b4c3-3c81092ce506",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Build",
+                    "action": "ToggleBuild",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -270,6 +306,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "FireEvent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75b4e963-c8fa-4de0-adb2-d9fa77691365",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdb71b64-786e-48ea-b355-8e9efa07433f",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "629d8bc5-6689-4da7-8372-0d229551c8ce",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "DemolishMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8772613-5974-4fce-b246-c48b81facf0d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

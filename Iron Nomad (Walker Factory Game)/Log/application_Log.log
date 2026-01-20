@@ -1,0 +1,524 @@
+2026-01-20 19:35:07 [INFO] AnycubicPhotonWorkshop start!
+2026-01-20 19:35:07 [INFO] argc:  2
+2026-01-20 19:35:07 [WARN] "C:/Program Files/AnycubicPhotonWorkshop"
+2026-01-20 19:35:07 [WARN] Successfully init crashpad
+2026-01-20 19:35:07 [WARN] Unable to enumerate family ' "Alibaba PuHuiTi 3.0 55 Regular L3" '
+2026-01-20 19:35:07 [WARN] Unable to enumerate family ' "Alibaba PuHuiTi 3.0 95 ExtraBold" '
+2026-01-20 19:35:07 [INFO] ctk manager plugins:  "C:/Program Files/AnycubicPhotonWorkshop/plugins/"
+2026-01-20 19:35:07 [INFO] Load plugin org.commontk.eventadmin success.
+2026-01-20 19:35:07 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/splashwindow.dll"
+2026-01-20 19:35:07 [INFO] Install Plugin Success!
+2026-01-20 19:35:08 [WARN] Unable to enumerate family ' "Alibaba PuHuiTi 3.0 55 Regular L3" '
+2026-01-20 19:35:08 [WARN] Unable to enumerate family ' "Alibaba PuHuiTi 3.0 95 ExtraBold" '
+2026-01-20 19:35:08 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/printer.dll"
+2026-01-20 19:35:08 [INFO] Install Plugin Success!
+2026-01-20 19:35:08 [FATAL] readDataFromFile (C:/Program Files/AnycubicPhotonWorkshop/machine_type/Anycubic Photon Mono M7.pwsp) is error.
+2026-01-20 19:35:08 [FATAL] loadFactoryMachine factory market Anycubic Photon Mono M7 msg retcode -1, msg retmsg: 
+2026-01-20 19:35:08 [WARN] loadMachineResin currentPrinter(Anycubic Photon Mono 2) init success.
+2026-01-20 19:35:08 [INFO] loadMachineParamRange is success.
+2026-01-20 19:35:08 [INFO] loadMachineResinType is success.
+2026-01-20 19:35:08 [INFO] loadMachineResinName is success.
+2026-01-20 19:35:08 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/mainwindow.dll"
+2026-01-20 19:35:08 [INFO] Install Plugin Success!
+2026-01-20 19:35:08 [INFO] "current server is testserver. 0"
+2026-01-20 19:35:08 [INFO] QVariant(QByteArray, "mqtt.anycubic.com")
+2026-01-20 19:35:08 [INFO] QVariant(QByteArray, "mqtt-universe.anycubic.com")
+2026-01-20 19:35:08 [INFO] QVariant(QByteArray, "8883")
+2026-01-20 19:35:08 [INFO] QVariant(QByteArray, "8883")
+2026-01-20 19:35:08 [INFO] "environment_url is https://workbentch.s3.us-east-2.amazonaws.com/workshop/environment.ini"
+2026-01-20 19:35:09 [INFO] QmlFactory 0.106 s
+2026-01-20 19:35:09 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/autoupdater.dll"
+2026-01-20 19:35:09 [INFO] Install Plugin Success!
+2026-01-20 19:35:09 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/gareport.dll"
+2026-01-20 19:35:09 [INFO] Install Plugin Success!
+2026-01-20 19:35:09 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/accloud.dll"
+2026-01-20 19:35:09 [INFO] Install Plugin Success!
+2026-01-20 19:35:09 [WARN] void __cdecl ACCloudNetRequest::init(void), cn_server = mqtt.anycubic.com, cn_server_port = 8883, en_server = mqtt-universe.anycubic.com, en_server_port = 8883, url = https://cloud-universe.anycubic.com/p/p/workbench/api
+2026-01-20 19:35:09 [WARN] CountriesDataModel::setCurrCountryIdn, newCurrCountryIdn = CN
+2026-01-20 19:35:09 [WARN] void __cdecl ACCloudNetRequest::getCountries(void)
+2026-01-20 19:35:09 [WARN] void __cdecl ACCloudNetRequest::getPrintCtrlCodeReasons(void)
+2026-01-20 19:35:09 [WARN] ACCloudManager::ACCloudManager, cloud model, build_time = 2024-04-26 17:28:45, git_brance = feat/casdoor, git_hash = 6b20758, git_commit = 2024-04-26
+2026-01-20 19:35:09 [INFO] [Install Plugin] "C:/Program Files/AnycubicPhotonWorkshop/plugins/facegen.dll"
+2026-01-20 19:35:09 [INFO] Install Plugin Success!
+2026-01-20 19:35:09 [WARN] Translation::changedSystemLanguage, language = 0
+2026-01-20 19:35:09 [WARN] register  GizmoController
+2026-01-20 19:35:09 [WARN] void __cdecl EventMiniHandlerCallback::event(const struct ReasonResponse *,unsigned int)
+2026-01-20 19:35:10 [WARN] enableMenuShortcut menushort cut: 0
+2026-01-20 19:35:10 [INFO] uiState:  false
+2026-01-20 19:35:10 [WARN] enableMenuShortcut menushort cut: 0
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:10 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:10 [WARN] xChanged 1
+2026-01-20 19:35:10 [INFO] event:  "splash_window_visible" data:  QVariant(bool, false) extentionData:  QVariant(Invalid)
+2026-01-20 19:35:10 [INFO] event:  "main_load" data:  QVariant(Invalid) extentionData:  QVariant(Invalid)
+2026-01-20 19:35:10 [INFO] event:  "main_language_changed" data:  QVariant(int, 0) extentionData:  QVariant(Invalid)
+2026-01-20 19:35:10 [WARN] void __cdecl PrintersDataModel::onReasonResponse(const struct ReasonResponse *,int)
+count = 130
+2026-01-20 19:35:10 [INFO] uiState:  true
+2026-01-20 19:35:11 [WARN] creating renderer
+2026-01-20 19:35:11 [WARN] printer valid --:  71.68 44.55
+2026-01-20 19:35:11 [WARN] printer build --:  71.68 44.8
+2026-01-20 19:35:11 [WARN] deltaX -- :  0
+2026-01-20 19:35:11 [WARN] deltaY -- :  0.25
+2026-01-20 19:35:11 [WARN] machine boarder width 1--------------------  0 0.25
+2026-01-20 19:35:11 [WARN] create planar shadow node
+2026-01-20 19:35:11 [WARN] loadGizmoRotationHead OK 576
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home/ComputeBound
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home/ComputeBound
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home/BoundingSphere
+2026-01-20 19:35:11 [INFO]  camera_manipulator::home/udpate_view
+2026-01-20 19:35:11 [WARN] GL Verison:  0x28b6d63e898
+2026-01-20 19:35:11 [WARN] GL Renderer:  0x28b64674f58
+2026-01-20 19:35:11 [WARN] compile shader program ok
+2026-01-20 19:35:11 [WARN] compile shader program ok
+2026-01-20 19:35:11 [WARN] compile shader program ok
+2026-01-20 19:35:11 [WARN] AnyGizmos::Im3d_Init      LoadCompileShader Ok
+2026-01-20 19:35:11 [WARN] AnyGizmos::Im3d_Init   VAO release Ok
+2026-01-20 19:35:11 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:11 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:11 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:11 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:11 [INFO] event:  "updater_init_compeleted" data:  QVariant(Invalid) extentionData:  QVariant(Invalid)
+2026-01-20 19:35:11 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:11 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:11 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:11 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] void __cdecl ACCloudNetRequest::getCountries(void)
+2026-01-20 19:35:12 [WARN] void __cdecl ACCloudNetRequest::getPrintCtrlCodeReasons(void)
+2026-01-20 19:35:12 [INFO] event:  "accloud_start_init" data:  QVariant(int, 0) extentionData:  QVariant(int, 0)
+2026-01-20 19:35:12 [INFO] send post data success!
+2026-01-20 19:35:12 [INFO] parseImportFiles model files: S:\Spiele\IronNomad\Iron Nomad (Walker Factory Game)\Assets\Prefab\PillBoy (1).obj
+2026-01-20 19:35:12 [INFO] parseImportFiles model files: S:\Spiele\IronNomad\Iron Nomad (Walker Factory Game)\Assets\Prefab\PillBoy (1).obj
+2026-01-20 19:35:12 [WARN]  - 1 ImportFilesDialog, importModelFiles file = S:\Spiele\IronNomad\Iron Nomad (Walker Factory Game)\Assets\Prefab\PillBoy (1).obj, modelQualityChecked = true
+2026-01-20 19:35:12 [INFO] "start check autoUpdater!"
+2026-01-20 19:35:12 [INFO] event:  "updater_check" data:  QVariant(Invalid) extentionData:  QVariant(Invalid)
+2026-01-20 19:35:12 [WARN] -slot_closeGizmoWhenLoadModel
+2026-01-20 19:35:12 [INFO] sendData:  "{\n    \"appName\": \"AnycubicPhotonWorkshop_V3.3.2\",\n    \"appVersion\": \"v3.3.2\",\n    \"business\": \"\",\n    \"city\": \"0\",\n    \"country\": \"\xE5\xBE\xB7\xE5\x9B\xBD\",\n    \"elementContent\": \"\",\n    \"elementType\": \"\",\n    \"eventName\": \"AppStart\",\n    \"function\": \"\",\n    \"isOverseasVersion\": true,\n    \"module\": \"\",\n    \"pcId\": \"8835b64f2d7650217b75e69c3a434cf1\",\n    \"printerType\": \"\",\n    \"province\": \"Nordrhein-Westfalen\",\n    \"timestamp\": 1768934112,\n    \"title\": \"\",\n    \"userId\": 0\n}\n"
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] void __cdecl EventMiniHandlerCallback::event(const struct ReasonResponse *,unsigned int)
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:12 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:12 [INFO] uiState:  false
+2026-01-20 19:35:12 [WARN] enableMenuShortcut menushort cut: 8
+2026-01-20 19:35:12 [INFO] uiState:  true
+2026-01-20 19:35:12 [WARN] enableMenuShortcut menushort cut: 0
+2026-01-20 19:35:12 [INFO] "doReportImportModelResult!"
+2026-01-20 19:35:12 [INFO] event:  "ga_report" data:  QVariant(QByteArray, "{\n    \"business\": \"model_prepare\",\n    \"elementContent\": \"Import Files\",\n    \"elementType\": \"BUTTON\",\n    \"event\": \"ImportModelResult\",\n    \"function\": \"import_model\",\n    \"module\": \"menu_bar\",\n    \"printerType\": \"LCD\",\n    \"title\": \"\"\n}\n") extentionData:  QVariant(QByteArray, "{\n    \"importType\": \"4\",\n    \"modelInformation\": [\n        {\n            \"fileName\": \"PillBoy (1)\",\n            \"fileSize\": 25058,\n            \"fileType\": \"obj\",\n            \"isSuccess\": 0\n        }\n    ],\n    \"numberOfModel\": 1\n}\n")
+2026-01-20 19:35:12 [WARN] void __cdecl PrintersDataModel::onReasonResponse(const struct ReasonResponse *,int)
+count = 130
+2026-01-20 19:35:12 [WARN] gizmo emit sceneModelChanged
+2026-01-20 19:35:12 [INFO] uiState:  false
+2026-01-20 19:35:12 [WARN] enableMenuShortcut menushort cut: 8
+2026-01-20 19:35:12 [INFO] uiState:  true
+2026-01-20 19:35:12 [WARN] enableMenuShortcut menushort cut: 0
+2026-01-20 19:35:12 [INFO] "doReadMachineLcd setMachine Anycubic Photon Mono 2"
+2026-01-20 19:35:12 [INFO] sendData:  "{\n    \"appName\": \"AnycubicPhotonWorkshop_V3.3.2\",\n    \"appVersion\": \"v3.3.2\",\n    \"business\": \"\",\n    \"city\": \"0\",\n    \"country\": \"\xE5\xBE\xB7\xE5\x9B\xBD\",\n    \"elementContent\": \"\",\n    \"elementType\": \"\",\n    \"eventName\": \"ImportModelResult\",\n    \"function\": \"\",\n    \"isOverseasVersion\": true,\n    \"module\": \"\",\n    \"pcId\": \"8835b64f2d7650217b75e69c3a434cf1\",\n    \"printerType\": \"\",\n    \"province\": \"Nordrhein-Westfalen\",\n    \"timestamp\": 1768934112,\n    \"title\": \"\",\n    \"userId\": 0\n}\n"
+2026-01-20 19:35:12 [WARN] ctrl_select IS_PROPERTY_SELECTED1  true 1
+2026-01-20 19:35:12 [INFO] get_model_height() osg_model_group
+2026-01-20 19:35:13 [INFO] send post data success!
+2026-01-20 19:35:13 [INFO] uiState:  false
+2026-01-20 19:35:13 [INFO] send post data success!
+2026-01-20 19:35:13 [INFO] scene modifyed:  true
+2026-01-20 19:35:13 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 19:35:13 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 19:35:13 [INFO] uiState:  false
+2026-01-20 19:45:09 [INFO] check Backup Secene!
+2026-01-20 19:45:14 [INFO] get idle state:  true
+2026-01-20 19:45:19 [INFO] get idle state:  true
+2026-01-20 19:45:24 [INFO] get idle state:  true
+2026-01-20 19:45:29 [INFO] get idle state:  true
+2026-01-20 19:45:34 [INFO] get idle state:  true
+2026-01-20 19:45:39 [INFO] get idle state:  true
+2026-01-20 19:45:44 [INFO] get idle state:  true
+2026-01-20 19:45:49 [INFO] get idle state:  true
+2026-01-20 19:45:54 [INFO] get idle state:  true
+2026-01-20 19:45:59 [INFO] get idle state:  true
+2026-01-20 19:46:04 [INFO] get idle state:  true
+2026-01-20 19:46:09 [INFO] get idle state:  true
+2026-01-20 19:46:14 [INFO] get idle state:  true
+2026-01-20 19:46:19 [INFO] get idle state:  true
+2026-01-20 19:46:24 [INFO] get idle state:  true
+2026-01-20 19:46:29 [INFO] get idle state:  true
+2026-01-20 19:46:34 [INFO] get idle state:  true
+2026-01-20 19:46:39 [INFO] get idle state:  true
+2026-01-20 19:46:44 [INFO] get idle state:  true
+2026-01-20 19:46:49 [INFO] get idle state:  true
+2026-01-20 19:46:54 [INFO] get idle state:  true
+2026-01-20 19:46:59 [INFO] get idle state:  true
+2026-01-20 19:47:04 [INFO] get idle state:  true
+2026-01-20 19:47:09 [INFO] get idle state:  true
+2026-01-20 19:47:14 [INFO] get idle state:  true
+2026-01-20 19:47:19 [INFO] get idle state:  true
+2026-01-20 19:47:24 [INFO] get idle state:  true
+2026-01-20 19:47:29 [INFO] get idle state:  true
+2026-01-20 19:47:34 [INFO] get idle state:  true
+2026-01-20 19:47:39 [INFO] get idle state:  true
+2026-01-20 19:47:44 [INFO] get idle state:  true
+2026-01-20 19:47:49 [INFO] get idle state:  true
+2026-01-20 19:47:54 [INFO] get idle state:  true
+2026-01-20 19:47:59 [INFO] get idle state:  true
+2026-01-20 19:48:04 [INFO] get idle state:  true
+2026-01-20 19:48:09 [INFO] get idle state:  true
+2026-01-20 19:48:14 [INFO] get idle state:  true
+2026-01-20 19:48:19 [INFO] get idle state:  true
+2026-01-20 19:48:24 [INFO] get idle state:  true
+2026-01-20 19:48:29 [INFO] get idle state:  true
+2026-01-20 19:48:34 [INFO] get idle state:  true
+2026-01-20 19:48:39 [INFO] get idle state:  true
+2026-01-20 19:48:44 [INFO] get idle state:  true
+2026-01-20 19:48:49 [INFO] get idle state:  true
+2026-01-20 19:48:54 [INFO] get idle state:  true
+2026-01-20 19:48:59 [INFO] get idle state:  true
+2026-01-20 19:49:04 [INFO] get idle state:  true
+2026-01-20 19:49:09 [INFO] get idle state:  true
+2026-01-20 19:49:14 [INFO] get idle state:  true
+2026-01-20 19:49:19 [INFO] get idle state:  true
+2026-01-20 19:49:24 [INFO] get idle state:  true
+2026-01-20 19:49:29 [INFO] get idle state:  true
+2026-01-20 19:49:34 [INFO] get idle state:  true
+2026-01-20 19:49:39 [INFO] get idle state:  true
+2026-01-20 19:49:44 [INFO] get idle state:  true
+2026-01-20 19:49:49 [INFO] get idle state:  true
+2026-01-20 19:49:54 [INFO] get idle state:  true
+2026-01-20 19:49:59 [INFO] get idle state:  true
+2026-01-20 19:50:04 [INFO] get idle state:  true
+2026-01-20 19:50:09 [INFO] get idle state:  true
+2026-01-20 19:50:14 [INFO] get idle state:  true
+2026-01-20 19:50:19 [INFO] get idle state:  true
+2026-01-20 19:50:24 [INFO] get idle state:  true
+2026-01-20 19:50:29 [INFO] get idle state:  true
+2026-01-20 19:50:34 [INFO] get idle state:  true
+2026-01-20 19:50:39 [INFO] get idle state:  true
+2026-01-20 19:50:45 [INFO] get idle state:  true
+2026-01-20 19:50:50 [INFO] get idle state:  true
+2026-01-20 19:50:55 [INFO] get idle state:  true
+2026-01-20 19:51:00 [INFO] get idle state:  true
+2026-01-20 19:51:05 [INFO] get idle state:  true
+2026-01-20 19:51:10 [INFO] get idle state:  true
+2026-01-20 19:51:15 [INFO] get idle state:  true
+2026-01-20 19:51:20 [INFO] get idle state:  true
+2026-01-20 19:51:25 [INFO] get idle state:  true
+2026-01-20 19:51:30 [INFO] get idle state:  true
+2026-01-20 19:51:35 [INFO] get idle state:  true
+2026-01-20 19:51:40 [INFO] get idle state:  true
+2026-01-20 19:51:45 [INFO] get idle state:  true
+2026-01-20 19:51:50 [INFO] get idle state:  true
+2026-01-20 19:51:55 [INFO] get idle state:  true
+2026-01-20 19:52:00 [INFO] get idle state:  true
+2026-01-20 19:52:05 [INFO] get idle state:  true
+2026-01-20 19:52:10 [INFO] get idle state:  true
+2026-01-20 19:52:15 [INFO] get idle state:  true
+2026-01-20 19:52:20 [INFO] get idle state:  true
+2026-01-20 19:52:25 [INFO] get idle state:  true
+2026-01-20 19:52:30 [INFO] get idle state:  true
+2026-01-20 19:52:35 [INFO] get idle state:  true
+2026-01-20 19:52:40 [INFO] get idle state:  true
+2026-01-20 19:52:45 [INFO] get idle state:  true
+2026-01-20 19:52:50 [INFO] get idle state:  true
+2026-01-20 19:52:55 [INFO] get idle state:  true
+2026-01-20 19:53:00 [INFO] get idle state:  true
+2026-01-20 19:53:05 [INFO] get idle state:  true
+2026-01-20 19:53:10 [INFO] get idle state:  true
+2026-01-20 19:53:15 [INFO] get idle state:  true
+2026-01-20 19:53:20 [INFO] get idle state:  true
+2026-01-20 19:53:25 [INFO] get idle state:  true
+2026-01-20 19:53:30 [INFO] get idle state:  true
+2026-01-20 19:53:35 [INFO] get idle state:  true
+2026-01-20 19:53:40 [INFO] get idle state:  true
+2026-01-20 19:53:45 [INFO] get idle state:  true
+2026-01-20 19:53:50 [INFO] get idle state:  true
+2026-01-20 19:53:55 [INFO] get idle state:  true
+2026-01-20 19:54:00 [INFO] get idle state:  true
+2026-01-20 19:54:05 [INFO] get idle state:  true
+2026-01-20 19:54:10 [INFO] get idle state:  true
+2026-01-20 19:54:15 [INFO] get idle state:  true
+2026-01-20 19:54:20 [INFO] get idle state:  true
+2026-01-20 19:54:25 [INFO] get idle state:  true
+2026-01-20 19:54:30 [INFO] get idle state:  true
+2026-01-20 19:54:35 [INFO] get idle state:  true
+2026-01-20 19:54:40 [INFO] get idle state:  true
+2026-01-20 19:54:45 [INFO] get idle state:  true
+2026-01-20 19:54:50 [INFO] get idle state:  true
+2026-01-20 19:54:55 [INFO] get idle state:  true
+2026-01-20 19:55:00 [INFO] get idle state:  true
+2026-01-20 19:55:05 [INFO] get idle state:  true
+2026-01-20 19:55:09 [INFO] check Backup Secene!
+2026-01-20 19:55:10 [INFO] get idle state:  true
+2026-01-20 19:55:15 [INFO] get idle state:  true
+2026-01-20 19:55:20 [INFO] get idle state:  true
+2026-01-20 19:55:25 [INFO] get idle state:  true
+2026-01-20 19:55:30 [INFO] get idle state:  true
+2026-01-20 19:55:35 [INFO] get idle state:  true
+2026-01-20 19:55:40 [INFO] get idle state:  true
+2026-01-20 19:55:45 [INFO] get idle state:  true
+2026-01-20 19:55:50 [INFO] get idle state:  true
+2026-01-20 19:55:55 [INFO] get idle state:  true
+2026-01-20 19:56:00 [INFO] get idle state:  true
+2026-01-20 19:56:05 [INFO] get idle state:  true
+2026-01-20 19:56:10 [INFO] get idle state:  true
+2026-01-20 19:56:15 [INFO] get idle state:  true
+2026-01-20 19:56:20 [INFO] get idle state:  true
+2026-01-20 19:56:25 [INFO] get idle state:  true
+2026-01-20 19:56:30 [INFO] get idle state:  true
+2026-01-20 19:56:35 [INFO] get idle state:  true
+2026-01-20 19:56:40 [INFO] get idle state:  true
+2026-01-20 19:56:45 [INFO] get idle state:  true
+2026-01-20 19:56:50 [INFO] get idle state:  true
+2026-01-20 19:56:55 [INFO] get idle state:  true
+2026-01-20 19:57:00 [INFO] get idle state:  true
+2026-01-20 19:57:05 [INFO] get idle state:  true
+2026-01-20 19:57:10 [INFO] get idle state:  true
+2026-01-20 19:57:15 [INFO] get idle state:  true
+2026-01-20 19:57:20 [INFO] get idle state:  true
+2026-01-20 19:57:25 [INFO] get idle state:  true
+2026-01-20 19:57:30 [INFO] get idle state:  true
+2026-01-20 19:57:35 [INFO] get idle state:  true
+2026-01-20 19:57:40 [INFO] get idle state:  true
+2026-01-20 19:57:45 [INFO] get idle state:  true
+2026-01-20 19:57:50 [INFO] get idle state:  true
+2026-01-20 19:57:55 [INFO] get idle state:  true
+2026-01-20 19:58:00 [INFO] get idle state:  true
+2026-01-20 19:58:05 [INFO] get idle state:  true
+2026-01-20 19:58:10 [INFO] get idle state:  true
+2026-01-20 19:58:15 [INFO] get idle state:  true
+2026-01-20 19:58:20 [INFO] get idle state:  true
+2026-01-20 19:58:25 [INFO] get idle state:  true
+2026-01-20 19:58:30 [INFO] get idle state:  true
+2026-01-20 19:58:35 [INFO] get idle state:  true
+2026-01-20 19:58:40 [INFO] get idle state:  true
+2026-01-20 19:58:45 [INFO] get idle state:  true
+2026-01-20 19:58:50 [INFO] get idle state:  true
+2026-01-20 19:58:55 [INFO] get idle state:  true
+2026-01-20 19:59:00 [INFO] get idle state:  true
+2026-01-20 19:59:05 [INFO] get idle state:  true
+2026-01-20 19:59:10 [INFO] get idle state:  true
+2026-01-20 19:59:15 [INFO] get idle state:  true
+2026-01-20 19:59:20 [INFO] get idle state:  true
+2026-01-20 19:59:25 [INFO] get idle state:  true
+2026-01-20 19:59:30 [INFO] get idle state:  true
+2026-01-20 19:59:35 [INFO] get idle state:  true
+2026-01-20 19:59:40 [INFO] get idle state:  true
+2026-01-20 19:59:45 [INFO] get idle state:  true
+2026-01-20 19:59:50 [INFO] get idle state:  true
+2026-01-20 19:59:55 [INFO] get idle state:  true
+2026-01-20 20:00:00 [INFO] get idle state:  true
+2026-01-20 20:00:05 [INFO] get idle state:  true
+2026-01-20 20:00:10 [INFO] get idle state:  true
+2026-01-20 20:00:15 [INFO] get idle state:  true
+2026-01-20 20:00:20 [INFO] get idle state:  true
+2026-01-20 20:00:25 [INFO] get idle state:  true
+2026-01-20 20:00:31 [INFO] get idle state:  true
+2026-01-20 20:00:36 [INFO] get idle state:  true
+2026-01-20 20:00:41 [INFO] get idle state:  true
+2026-01-20 20:00:46 [INFO] get idle state:  true
+2026-01-20 20:00:51 [INFO] get idle state:  true
+2026-01-20 20:00:56 [INFO] get idle state:  true
+2026-01-20 20:01:01 [INFO] get idle state:  true
+2026-01-20 20:01:06 [INFO] get idle state:  true
+2026-01-20 20:01:11 [INFO] get idle state:  true
+2026-01-20 20:01:16 [INFO] get idle state:  true
+2026-01-20 20:01:21 [INFO] get idle state:  true
+2026-01-20 20:01:26 [INFO] get idle state:  true
+2026-01-20 20:01:31 [INFO] get idle state:  true
+2026-01-20 20:01:36 [INFO] get idle state:  true
+2026-01-20 20:01:41 [INFO] get idle state:  true
+2026-01-20 20:01:46 [INFO] get idle state:  true
+2026-01-20 20:01:51 [INFO] get idle state:  true
+2026-01-20 20:01:56 [INFO] get idle state:  true
+2026-01-20 20:02:01 [INFO] get idle state:  true
+2026-01-20 20:02:06 [INFO] get idle state:  true
+2026-01-20 20:02:11 [INFO] get idle state:  true
+2026-01-20 20:02:16 [INFO] get idle state:  true
+2026-01-20 20:02:21 [INFO] get idle state:  true
+2026-01-20 20:02:26 [INFO] get idle state:  true
+2026-01-20 20:02:31 [INFO] get idle state:  true
+2026-01-20 20:02:36 [INFO] get idle state:  true
+2026-01-20 20:02:41 [INFO] get idle state:  true
+2026-01-20 20:02:46 [INFO] get idle state:  true
+2026-01-20 20:02:51 [INFO] get idle state:  true
+2026-01-20 20:02:56 [INFO] get idle state:  true
+2026-01-20 20:03:01 [INFO] get idle state:  true
+2026-01-20 20:03:06 [INFO] get idle state:  true
+2026-01-20 20:03:11 [INFO] get idle state:  true
+2026-01-20 20:03:16 [INFO] get idle state:  true
+2026-01-20 20:03:21 [INFO] get idle state:  true
+2026-01-20 20:03:26 [INFO] get idle state:  true
+2026-01-20 20:03:31 [INFO] get idle state:  true
+2026-01-20 20:03:36 [INFO] get idle state:  true
+2026-01-20 20:03:41 [INFO] get idle state:  true
+2026-01-20 20:03:46 [INFO] get idle state:  true
+2026-01-20 20:03:51 [INFO] get idle state:  true
+2026-01-20 20:03:56 [INFO] get idle state:  true
+2026-01-20 20:04:01 [INFO] get idle state:  true
+2026-01-20 20:04:06 [INFO] get idle state:  true
+2026-01-20 20:04:11 [INFO] get idle state:  true
+2026-01-20 20:04:16 [INFO] get idle state:  true
+2026-01-20 20:04:21 [INFO] get idle state:  true
+2026-01-20 20:04:26 [INFO] get idle state:  true
+2026-01-20 20:04:31 [INFO] get idle state:  true
+2026-01-20 20:04:36 [INFO] get idle state:  true
+2026-01-20 20:04:41 [INFO] get idle state:  true
+2026-01-20 20:04:46 [INFO] get idle state:  true
+2026-01-20 20:04:51 [INFO] get idle state:  true
+2026-01-20 20:04:56 [INFO] get idle state:  true
+2026-01-20 20:05:01 [INFO] get idle state:  true
+2026-01-20 20:05:06 [INFO] get idle state:  true
+2026-01-20 20:05:09 [INFO] check Backup Secene!
+2026-01-20 20:05:11 [INFO] get idle state:  true
+2026-01-20 20:05:16 [INFO] get idle state:  true
+2026-01-20 20:05:21 [INFO] get idle state:  true
+2026-01-20 20:05:26 [INFO] get idle state:  true
+2026-01-20 20:05:31 [INFO] get idle state:  true
+2026-01-20 20:05:36 [INFO] get idle state:  true
+2026-01-20 20:05:41 [INFO] get idle state:  true
+2026-01-20 20:05:46 [INFO] get idle state:  true
+2026-01-20 20:05:51 [INFO] get idle state:  true
+2026-01-20 20:05:56 [INFO] get idle state:  true
+2026-01-20 20:06:01 [INFO] get idle state:  true
+2026-01-20 20:06:06 [INFO] get idle state:  true
+2026-01-20 20:06:11 [INFO] get idle state:  true
+2026-01-20 20:06:16 [INFO] get idle state:  true
+2026-01-20 20:06:21 [INFO] get idle state:  true
+2026-01-20 20:06:26 [INFO] get idle state:  true
+2026-01-20 20:06:31 [INFO] get idle state:  true
+2026-01-20 20:06:36 [INFO] get idle state:  true
+2026-01-20 20:06:41 [INFO] get idle state:  true
+2026-01-20 20:06:46 [INFO] get idle state:  true
+2026-01-20 20:06:51 [INFO] get idle state:  true
+2026-01-20 20:06:56 [INFO] get idle state:  true
+2026-01-20 20:07:01 [INFO] get idle state:  true
+2026-01-20 20:07:06 [INFO] get idle state:  true
+2026-01-20 20:07:11 [INFO] get idle state:  true
+2026-01-20 20:07:16 [INFO] get idle state:  true
+2026-01-20 20:07:21 [INFO] get idle state:  true
+2026-01-20 20:07:26 [INFO] get idle state:  true
+2026-01-20 20:07:31 [INFO] get idle state:  true
+2026-01-20 20:07:36 [INFO] get idle state:  true
+2026-01-20 20:07:41 [INFO] get idle state:  true
+2026-01-20 20:07:46 [INFO] get idle state:  true
+2026-01-20 20:07:51 [INFO] get idle state:  true
+2026-01-20 20:07:56 [INFO] get idle state:  true
+2026-01-20 20:08:01 [INFO] get idle state:  true
+2026-01-20 20:08:06 [INFO] get idle state:  true
+2026-01-20 20:08:11 [INFO] get idle state:  true
+2026-01-20 20:08:16 [INFO] get idle state:  true
+2026-01-20 20:08:21 [INFO] get idle state:  true
+2026-01-20 20:08:26 [INFO] get idle state:  true
+2026-01-20 20:08:31 [INFO] get idle state:  true
+2026-01-20 20:08:36 [INFO] get idle state:  true
+2026-01-20 20:08:41 [INFO] get idle state:  true
+2026-01-20 20:08:46 [INFO] get idle state:  true
+2026-01-20 20:08:51 [INFO] get idle state:  true
+2026-01-20 20:08:56 [INFO] get idle state:  true
+2026-01-20 20:09:01 [INFO] get idle state:  true
+2026-01-20 20:09:06 [INFO] get idle state:  true
+2026-01-20 20:09:11 [INFO] get idle state:  true
+2026-01-20 20:09:16 [INFO] get idle state:  true
+2026-01-20 20:09:21 [INFO] get idle state:  true
+2026-01-20 20:09:26 [INFO] get idle state:  true
+2026-01-20 20:09:31 [INFO] get idle state:  true
+2026-01-20 20:09:36 [INFO] get idle state:  true
+2026-01-20 20:09:41 [INFO] get idle state:  true
+2026-01-20 20:09:46 [INFO] get idle state:  true
+2026-01-20 20:09:51 [INFO] get idle state:  true
+2026-01-20 20:09:56 [INFO] get idle state:  true
+2026-01-20 20:10:01 [INFO] get idle state:  true
+2026-01-20 20:10:06 [INFO] get idle state:  true
+2026-01-20 20:10:11 [INFO] get idle state:  true
+2026-01-20 20:10:16 [INFO] get idle state:  true
+2026-01-20 20:10:21 [INFO] get idle state:  true
+2026-01-20 20:10:26 [INFO] get idle state:  true
+2026-01-20 20:10:31 [INFO] get idle state:  true
+2026-01-20 20:10:36 [INFO] get idle state:  true
+2026-01-20 20:10:41 [INFO] get idle state:  true
+2026-01-20 20:10:46 [INFO] get idle state:  true
+2026-01-20 20:10:51 [INFO] get idle state:  true
+2026-01-20 20:10:57 [INFO] get idle state:  true
+2026-01-20 20:11:02 [INFO] get idle state:  true
+2026-01-20 20:11:07 [INFO] get idle state:  true
+2026-01-20 20:11:09 [INFO] scene modifyed:  true
+2026-01-20 20:11:09 [WARN] QFSFileEngine::open: No file name specified
+2026-01-20 20:11:09 [WARN] Cannot open file '', because: No file name specified
+2026-01-20 20:11:09 [INFO] uiState:  false
+2026-01-20 20:11:10 [INFO] uiState:  false
+2026-01-20 20:11:10 [INFO] save support file is success!
+2026-01-20 20:11:12 [INFO] get idle state:  true
+2026-01-20 20:11:12 [INFO] AnycubicPhotonWorkshop end!
+2026-01-20 20:11:12 [WARN] QThreadStorage: Thread 0x28b620779b0 exited after QThreadStorage 7 destroyed
+O] get idle state:  true
+2026-01-20 20:10:36 [INFO] get idle state:  true
+2026-01-20 20:10:41 [INFO] get idle state:  true
+2026-01-20 20:10:46 [INFO] get idle state:  true
+2026-01-20 20:10:51 [INFO] get idle state:  true
+2026-01-20 20:10:57 [INFO] get idle state:  true
+2026-01-20 20:11:02 [INFO] get idle state:  true
+2026-01-20 20:11:06 [INFO] uiState:  false
+2026-01-20 20:11:06 [INFO] save support file is success!
+2026-01-20 20:11:07 [INFO] get idle state:  true
+2026-01-20 20:11:07 [INFO] AnycubicPhotonWorkshop end!
+2026-01-20 20:11:07 [WARN] QThreadStorage: Thread 0x1d8410a8160 exited after QThreadStorage 7 destroyed

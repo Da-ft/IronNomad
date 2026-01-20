@@ -12,6 +12,11 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     public event UnityAction JumpCanceledEvent;
     public event UnityAction BuildEvent;
     public event UnityAction FireEvent;
+    public event UnityAction<bool> SprintEvent;
+    public event UnityAction<bool> CrouchEvent;
+    public event UnityAction ToggleBuildEvent;
+    public event UnityAction InteractEvent;
+    public event UnityAction ToggleDemolishEvent;
 
     private GameInput _gameInput;
 
@@ -25,11 +30,8 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
         _gameInput.Gameplay.Enable();
     }
 
-    private void OnDisable()
-    {
-        _gameInput?.Gameplay.Disable();
-    }
-
+    private void OnDisable() => _gameInput?.Gameplay.Disable();
+  
     // Interface Implementation
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -51,13 +53,38 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
 
     public void OnBuild(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
-            BuildEvent?.Invoke();
+        if (context.phase == InputActionPhase.Performed) BuildEvent?.Invoke();
     }
 
     public void OnFireEvent(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
-            FireEvent?.Invoke();
+        if (context.phase == InputActionPhase.Performed) FireEvent?.Invoke();
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed) SprintEvent?.Invoke(true);
+        if (context.canceled) SprintEvent?.Invoke(false);
+    }
+
+    public void OnCrouch(InputAction.CallbackContext context)
+    {
+        if (context.performed) CrouchEvent?.Invoke(true);
+        if (context.canceled) CrouchEvent?.Invoke(false);
+    }
+
+    public void OnToggleBuild(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed) ToggleBuildEvent?.Invoke();
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed) InteractEvent?.Invoke();
+    }
+
+    public void OnDemolishMode(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed) ToggleDemolishEvent?.Invoke();
     }
 }

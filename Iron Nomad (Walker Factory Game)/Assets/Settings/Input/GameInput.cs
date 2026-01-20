@@ -122,9 +122,36 @@ namespace IronNomad.Inputs
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Build"",
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f1f07ba-b609-4872-b41a-315fe8f67243"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc51d098-5f29-460c-a6ec-18913f2797fd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleBuild"",
                     ""type"": ""Button"",
                     ""id"": ""dc068d5e-b832-412e-af39-8c722d776c3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DemolishMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7f174f8-1cf4-4f11-b913-4335347827bc"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -134,6 +161,15 @@ namespace IronNomad.Inputs
                     ""name"": ""FireEvent"",
                     ""type"": ""Button"",
                     ""id"": ""59f2d817-0136-4e09-b3a2-e675ac2919ff"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b6a9c7e-b29b-4441-a9b7-0029e2388440"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -342,11 +378,11 @@ namespace IronNomad.Inputs
                 {
                     ""name"": """",
                     ""id"": ""61176411-c1f2-45d0-b4c3-3c81092ce506"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Build"",
+                    ""action"": ""ToggleBuild"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -358,6 +394,50 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""FireEvent"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75b4e963-c8fa-4de0-adb2-d9fa77691365"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdb71b64-786e-48ea-b355-8e9efa07433f"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""629d8bc5-6689-4da7-8372-0d229551c8ce"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DemolishMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8772613-5974-4fce-b246-c48b81facf0d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -948,8 +1028,12 @@ namespace IronNomad.Inputs
             m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
-            m_Gameplay_Build = m_Gameplay.FindAction("Build", throwIfNotFound: true);
+            m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
+            m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
+            m_Gameplay_ToggleBuild = m_Gameplay.FindAction("ToggleBuild", throwIfNotFound: true);
+            m_Gameplay_DemolishMode = m_Gameplay.FindAction("DemolishMode", throwIfNotFound: true);
             m_Gameplay_FireEvent = m_Gameplay.FindAction("FireEvent", throwIfNotFound: true);
+            m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1046,8 +1130,12 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_Move;
         private readonly InputAction m_Gameplay_Look;
         private readonly InputAction m_Gameplay_Jump;
-        private readonly InputAction m_Gameplay_Build;
+        private readonly InputAction m_Gameplay_Sprint;
+        private readonly InputAction m_Gameplay_Crouch;
+        private readonly InputAction m_Gameplay_ToggleBuild;
+        private readonly InputAction m_Gameplay_DemolishMode;
         private readonly InputAction m_Gameplay_FireEvent;
+        private readonly InputAction m_Gameplay_Interact;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1072,13 +1160,29 @@ namespace IronNomad.Inputs
             /// </summary>
             public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
             /// <summary>
-            /// Provides access to the underlying input action "Gameplay/Build".
+            /// Provides access to the underlying input action "Gameplay/Sprint".
             /// </summary>
-            public InputAction @Build => m_Wrapper.m_Gameplay_Build;
+            public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Crouch".
+            /// </summary>
+            public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/ToggleBuild".
+            /// </summary>
+            public InputAction @ToggleBuild => m_Wrapper.m_Gameplay_ToggleBuild;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/DemolishMode".
+            /// </summary>
+            public InputAction @DemolishMode => m_Wrapper.m_Gameplay_DemolishMode;
             /// <summary>
             /// Provides access to the underlying input action "Gameplay/FireEvent".
             /// </summary>
             public InputAction @FireEvent => m_Wrapper.m_Gameplay_FireEvent;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Interact".
+            /// </summary>
+            public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1114,12 +1218,24 @@ namespace IronNomad.Inputs
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @Build.started += instance.OnBuild;
-                @Build.performed += instance.OnBuild;
-                @Build.canceled += instance.OnBuild;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
+                @ToggleBuild.started += instance.OnToggleBuild;
+                @ToggleBuild.performed += instance.OnToggleBuild;
+                @ToggleBuild.canceled += instance.OnToggleBuild;
+                @DemolishMode.started += instance.OnDemolishMode;
+                @DemolishMode.performed += instance.OnDemolishMode;
+                @DemolishMode.canceled += instance.OnDemolishMode;
                 @FireEvent.started += instance.OnFireEvent;
                 @FireEvent.performed += instance.OnFireEvent;
                 @FireEvent.canceled += instance.OnFireEvent;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
 
             /// <summary>
@@ -1140,12 +1256,24 @@ namespace IronNomad.Inputs
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
-                @Build.started -= instance.OnBuild;
-                @Build.performed -= instance.OnBuild;
-                @Build.canceled -= instance.OnBuild;
+                @Sprint.started -= instance.OnSprint;
+                @Sprint.performed -= instance.OnSprint;
+                @Sprint.canceled -= instance.OnSprint;
+                @Crouch.started -= instance.OnCrouch;
+                @Crouch.performed -= instance.OnCrouch;
+                @Crouch.canceled -= instance.OnCrouch;
+                @ToggleBuild.started -= instance.OnToggleBuild;
+                @ToggleBuild.performed -= instance.OnToggleBuild;
+                @ToggleBuild.canceled -= instance.OnToggleBuild;
+                @DemolishMode.started -= instance.OnDemolishMode;
+                @DemolishMode.performed -= instance.OnDemolishMode;
+                @DemolishMode.canceled -= instance.OnDemolishMode;
                 @FireEvent.started -= instance.OnFireEvent;
                 @FireEvent.performed -= instance.OnFireEvent;
                 @FireEvent.canceled -= instance.OnFireEvent;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
             }
 
             /// <summary>
@@ -1468,12 +1596,33 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnJump(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Build" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnBuild(InputAction.CallbackContext context);
+            void OnSprint(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCrouch(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ToggleBuild" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnToggleBuild(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "DemolishMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDemolishMode(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "FireEvent" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
@@ -1481,6 +1630,13 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnFireEvent(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnInteract(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

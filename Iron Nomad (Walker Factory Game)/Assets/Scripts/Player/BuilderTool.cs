@@ -1,99 +1,116 @@
-using UnityEngine;
 using IronNomad.Inputs;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuilderTool : MonoBehaviour
 {
+    private enum BuildMode { None, Building, Demolishing }
+
     [Header("Dependencies")]
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private Transform _camTransform; 
+    [SerializeField] private Transform _camTransform;
 
-    [Header("Settings")]
-    [SerializeField] private GameObject _buildingPrefab; 
-    [SerializeField] private GameObject _ghostPrefab;    
-    [SerializeField] private float _reachRange = 10f;    
-    [SerializeField] private LayerMask _groundLayer;     
+    [Header("Config")]
+    [SerializeField] private GameObject _ghostPrefab;
+    [SerializeField] private GameObject _buildingPrefab;
+    [SerializeField] private LayerMask _buildLayer;
+    [SerializeField] private LayerMask _demolishLayer;
 
+    private BuildMode _currentMode = BuildMode.None;
     private GameObject _currentGhost;
-    private WalkerGrid _targetGrid; 
-    private Vector3 _targetPosition;  
+    private WalkerGrid _targetGrid;
+    private Vector3 _targetPosition;
 
     private void OnEnable()
     {
-        if (_inputReader == null)
-        {
-            Debug.LogError("BuilderTool: InputReader fehlt!");
-            enabled = false;
-            return;
-        }
-
-        _inputReader.BuildEvent += OnBuild;
-
-        // Ghost einmalig erstellen und verstecken
-        if (_ghostPrefab != null)
-        {
-            _currentGhost = Instantiate(_ghostPrefab);
-            _currentGhost.SetActive(false);
-
-            // WICHTIG: Collider vom Ghost entfernen, sonst trifft der Raycast den Ghost statt den Boden!
-            foreach (var c in _currentGhost.GetComponentsInChildren<Collider>()) Destroy(c);
-        }
+        _inputReader.ToggleBuildEvent += ToggleMode;
+        _inputReader.BuildEvent += ExecuteAction;
     }
 
     private void OnDisable()
     {
-        if (_inputReader != null) _inputReader.BuildEvent -= OnBuild;
         if (_currentGhost != null) Destroy(_currentGhost);
+    }
+
+    private void ToggleMode()
+    {
+        if (_currentMode == BuildMode.None)
+        {
+            _currentMode = BuildMode.Building;
+            if (_ghostPrefab) _currentGhost = Instantiate(_ghostPrefab);
+        }
+        else
+        {
+            _currentMode = BuildMode.None;
+            if (_currentGhost) Destroy(_currentGhost);
+        }
     }
 
     private void Update()
     {
-        HandleRaycast();
+        if (_currentMode == BuildMode.None) return;
+
+        if (_currentMode == BuildMode.Building) HandleBuildPreview();
+        if (_currentMode == BuildMode.Demolishing) HandleDemolishPreview();
     }
 
-    private void HandleRaycast()
+    private void HandleBuildPreview()
     {
-        // Ein Strahl genau aus der Mitte der Kamera
         Ray ray = new Ray(_camTransform.position, _camTransform.forward);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, _reachRange, _groundLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 10f, _buildLayer))
         {
-            // Haben wir ein Grid getroffen?
             if (hit.collider.TryGetComponent(out WalkerGrid grid))
             {
                 _targetGrid = grid;
-
-                // Frag das Grid: Wo ist der nächste Rasterpunkt für diesen Treffer?
                 _targetPosition = grid.GetNearestGridPoint(hit.point);
 
-                // Ghost anzeigen und bewegen
-                if (_currentGhost != null)
+                if (_currentGhost)
                 {
                     _currentGhost.SetActive(true);
                     _currentGhost.transform.position = _targetPosition;
-
-                    // Der Ghost dreht sich mit dem Walker mit WIUWIUWIU
                     _currentGhost.transform.rotation = grid.transform.rotation;
+
+                    // TODO: Prüfen ob Platz belegt ist
                 }
-                return; // Hier brechen wir ab, weil wir erfolgreich waren, so wie ich nachdem ich mit dem Spiel fertig bin roflmaolol
+                return;
+            }
+        }
+        if (_currentGhost) _currentGhost.SetActive(false);
+    }
+
+    private void HandleDemolishPreview()
+    {
+        // TODO: Gebäude fürs Abreißen highlighten
+    }
+
+    private void ExecuteAction()
+    {
+        if (_currentMode == BuildMode.Building)
+        {
+            if (_targetGrid != null)
+            {
+                // TODO: Inventory cost check
+                GameObject building = Instantiate(_buildingPrefab, _targetPosition, _targetGrid.transform.rotation);
+                building.transform.SetParent(_targetGrid.transform);
+
+                // Add component, to dismantle later
+                building.AddComponent<ConstructibleBuilding>();
+
+                building.layer = LayerMask.NameToLayer("Interactable");
             }
         }
 
-        // Wenn wir hier landen, haben wir nichts (oder das Falsche) getroffen
-        _targetGrid = null;
-        if (_currentGhost != null) _currentGhost.SetActive(false);
-    }
-
-    private void OnBuild()
-    {
-        // Nur bauen, wenn wir ein gültiges Grid im Visier haben
-        if (_targetGrid != null && _buildingPrefab != null)
+        else if (_currentMode == BuildMode.Demolishing)
         {
-            // 1. Objekt erzeugen
-            GameObject newBuilding = Instantiate(_buildingPrefab, _targetPosition, _targetGrid.transform.rotation);
-
-            // 2. WICHTIG: Parenting!
-            // Damit das Gebäude mitfährt, muss es ein Kind des Walkers werden.
-            newBuilding.transform.SetParent(_targetGrid.transform);
+            // Raycast auf Gebäude
+            Ray ray = new Ray(_camTransform.position, _camTransform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit, 10f, _demolishLayer))
+            {
+                if (hit.collider.TryGetComponent(out IConstructible building))
+                {
+                    building.Demolish(); // TODO: Refund resources + Destroy
+                }
+            }
         }
     }
 }

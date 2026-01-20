@@ -1,9 +1,9 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class WorldItem : MonoBehaviour
+public class WorldItem : MonoBehaviour, IInteractable
 {
-    public ItemDefinition Definition {  get; private set; }
+    public ItemDefinition Definition { get; private set; }
     private IItemHolder _currentHolder;
 
     // Wird vom Container aufgerufen wenn das item spawned
@@ -30,5 +30,12 @@ public class WorldItem : MonoBehaviour
         }
 
         return null;
+    }
+
+    public string GetInteractPrompt() => $"Nimm {Definition.Name}";
+
+    public void OnInteract()
+    {
+        PickUp();
     }
 }

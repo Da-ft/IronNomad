@@ -1,182 +1,203 @@
 using UnityEngine;
 using IronNomad.Inputs;
 
-[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
-public class FirstPersonController : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+public class FPSController : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private Transform _cameraRoot; // Das Empty Object auf Augenhöhe
+    [SerializeField] private Transform _cameraRoot;
 
-    [Header("Movement (Shooter Feel)")]
-    [SerializeField] private float _walkSpeed = 8f;
-    // TODO: Sprinting and Sliding/Crouching
-    //[SerializeField] private float _sprintSpeed = 12f;
-    [SerializeField] private float _jumpForce = 7f;
-    [SerializeField] private float _airControl = 0.5f; // Multiplikator für Luft-Bewegung
+    [Header("Player Movement")]
+    public float MoveSpeed = 4.0f;
+    public float SprintSpeed = 6.0f;
+    public float SpeedChangeRate = 10.0f;
 
-    [Header("Look Settings")]
-    [SerializeField] private float _mouseSensitivity = 0.1f; // Achtung: Input System liefert oft hohe Werte
-    [SerializeField] private float _maxLookAngle = 89f;
+    [Header("Camera Control")]
+    public float RotationSpeed = 1.0f;
+    public float TopClamp = 90.0f;
+    public float BottomClamp = -90.0f;
 
-    [Header("Physics")]
-    [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _groundDrag = 6f; // Hoher Drag = Schnelles Stoppen
-    [SerializeField] private float _airDrag = 0f;    // Kein Drag in der Luft
+    [Header("Jump & Gravity")]
+    public float JumpHeight = 1.2f;
+    public float Gravity = -15.0f;
+    public float JumpTimeout = 0.1f;
+    public float FallTimeout = 0.15f;
 
-    private Rigidbody _rb;
+    [Header("Ground Check")]
+    public bool Grounded = true;
+    public float GroundedOffset = -0.14f;
+    public float GroundedRadius = 0.5f;
+    public LayerMask GroundLayers;
+
+    // Player State
+    private float _speed;
+    private float _verticalVelocity;
+    private float _terminalVelocity = 53.0f;
+    private float _cameraPitch;
+
+    // Timeout deltatime
+    private float _jumpTimeoutDelta;
+    private float _fallTimeoutDelta;
+
+    // Cache Input
     private Vector2 _moveInput;
     private Vector2 _lookInput;
+    private bool _isSprinting;
     private bool _jumpTriggered;
 
-    // State
-    private bool _isGrounded;
-    private Rigidbody _groundRigidbody; // Der Walker
-    private Quaternion _lastGroundRotation;
-    private float _cameraPitch = 0f; // Vertikale Rotation
+    private CharacterController _controller;
+    private GameObject _mainCamera;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
-        _rb.freezeRotation = true;
-        _rb.interpolation = RigidbodyInterpolation.Interpolate;
-        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        _rb.useGravity = true;
+        _controller = GetComponent<CharacterController>();
 
-        // Maus fangen und verstecken
+        // Maus locken
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void OnEnable()
     {
-        _inputReader.MoveEvent += OnMove;
-        _inputReader.LookEvent += OnLook; // Neues Event für Maus
-        _inputReader.JumpEvent += OnJump;
+        if (_inputReader == null) return;
+
+        _inputReader.MoveEvent += v => _moveInput = v;
+        _inputReader.LookEvent += v => _lookInput = v;
+        _inputReader.SprintEvent += v => _isSprinting = v;
+        _inputReader.JumpEvent += () => _jumpTriggered = true;
     }
 
     private void OnDisable()
     {
-        _inputReader.MoveEvent -= OnMove;
-        _inputReader.LookEvent -= OnLook;
-        _inputReader.JumpEvent -= OnJump;
+        // Inputs unsubscriben wäre hier sauberer
     }
-
-    private void OnMove(Vector2 input) => _moveInput = input;
-    private void OnLook(Vector2 input) => _lookInput = input;
-    private void OnJump() => _jumpTriggered = true;
 
     private void Update()
     {
-        // Kamera-Rotation machen wir im Update für maximale Smoothness (High Framerate)
-        HandleLook();
+        JumpAndGravity();
+        GroundedCheck();
+        Move();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        CheckGround();
+        CameraRotation();
+    }
 
-        if (_isGrounded)
+    private void GroundedCheck()
+    {
+        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
+        Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+    }
+
+    private void CameraRotation()
+    {
+        if (_lookInput.sqrMagnitude >= 0.0001f)
         {
-            HandleGroundedMovement();
-            HandlePlatformRotation();
-            _rb.linearDamping = _groundDrag; // Unity 6: linearDamping (früher drag)
+            _cameraPitch -= _lookInput.y * RotationSpeed;
+
+            _cameraPitch = ClampAngle(_cameraPitch, BottomClamp, TopClamp);
+            _cameraRoot.localRotation = Quaternion.Euler(_cameraPitch, 0.0f, 0.0f);
+
+            float rotationVelocity = _lookInput.x * RotationSpeed;
+            transform.Rotate(Vector3.up * rotationVelocity);
+        }
+    }
+
+    private void Move()
+    {
+        float targetSpeed = _isSprinting ? SprintSpeed : MoveSpeed;
+        if (_moveInput == Vector2.zero) targetSpeed = 0.0f;
+
+        float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+        float speedOffset = 0.1f;
+        float inputMagnitude = _moveInput.magnitude;
+
+        if (Mathf.Abs(currentHorizontalSpeed - targetSpeed) > speedOffset)
+        {
+            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude, Time.deltaTime * SpeedChangeRate);
+            _speed = Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
         {
-            HandleAirMovement();
-            _rb.linearDamping = _airDrag;
+            _speed = targetSpeed * inputMagnitude;
         }
 
-        _jumpTriggered = false;
-    }
+        Vector3 inputDirection = new Vector3(_moveInput.x, 0.0f, _moveInput.y).normalized;
 
-    private void HandleLook()
-    {
-        // 1. Vertikal (Pitch) - Dreht nur die Kamera (CameraRoot)
-        _cameraPitch -= _lookInput.y * _mouseSensitivity;
-        _cameraPitch = Mathf.Clamp(_cameraPitch, -_maxLookAngle, _maxLookAngle);
-        _cameraRoot.localRotation = Quaternion.Euler(_cameraPitch, 0, 0);
-
-        // 2. Horizontal (Yaw) - Dreht den ganzen Körper (Rigidbody)
-        // Wir machen das hier visuell, aber syncen es gleich im FixedUpdate für Physik
-        float yawDelta = _lookInput.x * _mouseSensitivity;
-        Quaternion bodyRotation = Quaternion.Euler(0, yawDelta, 0);
-
-        // WICHTIG: Rigidbody Rotation nur im FixedUpdate?
-        // Für FPS ist es besser, die Rotation sofort anzuwenden, sonst fühlt sich die Maus "laggy" an.
-        // Rigidbody.MoveRotation ist okay, wenn wir interpolation nutzen.
-        _rb.MoveRotation(_rb.rotation * bodyRotation);
-    }
-
-    private void CheckGround()
-    {
-        // Raycast etwas höher starten, um nicht im Boden zu stecken
-        Vector3 start = transform.position + Vector3.up * 0.1f;
-        // Distanz angepasst für Kapsel
-        if (Physics.SphereCast(start, 0.3f, Vector3.down, out RaycastHit hit, 1.05f, _groundLayer))
+        if (_moveInput != Vector2.zero)
         {
-            if (!_isGrounded) _lastGroundRotation = hit.collider.attachedRigidbody.rotation;
+            inputDirection = transform.right * _moveInput.x + transform.forward * _moveInput.y;
+        }
 
-            _isGrounded = true;
-            _groundRigidbody = hit.collider.attachedRigidbody;
+        Vector3 finalMovement = inputDirection.normalized * (_speed * Time.deltaTime) +
+                                new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
+
+        if (Grounded)
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, GroundLayers))
+            {
+                if (hit.collider.attachedRigidbody != null)
+                {
+                    Vector3 platformVel = hit.collider.attachedRigidbody.GetPointVelocity(transform.position);
+
+                    finalMovement += platformVel * Time.deltaTime;
+                }
+            }
+        }
+
+        _controller.Move(finalMovement);
+    }
+
+    private void JumpAndGravity()
+    {
+        if (Grounded)
+        {
+            _fallTimeoutDelta = FallTimeout;
+
+            if (_verticalVelocity < 0.0f)
+            {
+                _verticalVelocity = -2f;
+            }
+
+            if (_jumpTriggered && _jumpTimeoutDelta <= 0.0f)
+            {
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _jumpTriggered = false;
+            }
+
+            if (_jumpTimeoutDelta >= 0.0f) _jumpTimeoutDelta -= Time.deltaTime;
         }
         else
         {
-            _isGrounded = false;
-            _groundRigidbody = null;
+            _jumpTimeoutDelta = JumpTimeout;
+            _jumpTriggered = false;
+
+            if (_fallTimeoutDelta >= 0.0f) _fallTimeoutDelta -= Time.deltaTime;
+        }
+
+        if (_verticalVelocity < _terminalVelocity)
+        {
+            _verticalVelocity += Gravity * Time.deltaTime;
         }
     }
 
-    private void HandleGroundedMovement()
+    private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
-        // Richtung ist jetzt immer relativ zum Spieler (FPS Standard)
-        Vector3 moveDir = transform.right * _moveInput.x + transform.forward * _moveInput.y;
-        moveDir.Normalize();
-
-        Vector3 targetVelocity = moveDir * _walkSpeed;
-
-        // Walker Velocity addieren
-        if (_groundRigidbody != null)
-        {
-            targetVelocity += _groundRigidbody.GetPointVelocity(transform.position);
-        }
-
-        // Snappy Movement: Wir setzen die Velocity direkt (außer Y)
-        if (_jumpTriggered)
-        {
-            // Momentum behalten + Sprung
-            _rb.linearVelocity = new Vector3(targetVelocity.x, _jumpForce, targetVelocity.z);
-        }
-        else
-        {
-            // Am Boden kleben
-            _rb.linearVelocity = new Vector3(targetVelocity.x, _rb.linearVelocity.y, targetVelocity.z);
-        }
+        if (lfAngle < -360f) lfAngle += 360f;
+        if (lfAngle > 360f) lfAngle -= 360f;
+        return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
 
-    private void HandlePlatformRotation()
+    private void OnDrawGizmosSelected()
     {
-        if (_groundRigidbody == null) return;
+        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        Quaternion currentGroundRotation = _groundRigidbody.rotation;
-        Quaternion deltaRotation = currentGroundRotation * Quaternion.Inverse(_lastGroundRotation);
+        if (Grounded) Gizmos.color = transparentGreen;
+        else Gizmos.color = transparentRed;
 
-        // Wir addieren die Plattform-Drehung zur aktuellen Drehung (die wir schon durch die Maus haben)
-        _rb.MoveRotation(deltaRotation * _rb.rotation);
-
-        _lastGroundRotation = currentGroundRotation;
-    }
-
-    private void HandleAirMovement()
-    {
-        // In der Luft geben wir nur kleine Impulse
-        Vector3 moveDir = transform.right * _moveInput.x + transform.forward * _moveInput.y;
-        moveDir.Normalize();
-
-        if (moveDir.magnitude > 0.1f)
-        {
-            _rb.AddForce(moveDir * _walkSpeed * _airControl, ForceMode.Acceleration);
-        }
+        Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 }
