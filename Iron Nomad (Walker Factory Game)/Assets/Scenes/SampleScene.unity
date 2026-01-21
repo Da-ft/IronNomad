@@ -2800,75 +2800,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1 &553589016
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 553589018}
-  - component: {fileID: 553589017}
-  m_Layer: 0
-  m_Name: Local Volumetric Fog
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &553589017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553589016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.HighDefinition.Runtime::UnityEngine.Rendering.HighDefinition.LocalVolumetricFog
-  parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
-    meanFreePath: 1
-    blendingMode: 1
-    priority: 0
-    anisotropy: 0
-    volumeMask: {fileID: 0}
-    textureScrollingSpeed: {x: 0, y: 0, z: 0}
-    textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.025, y: 0.05, z: 0.025}
-    negativeFade: {x: 0.025, y: 0.05, z: 0.025}
-    m_EditorUniformFade: 0.1
-    m_EditorPositiveFade: {x: 0.024999999, y: 0.049999997, z: 0.024999999}
-    m_EditorNegativeFade: {x: 0.024999999, y: 0.049999997, z: 0.024999999}
-    m_EditorAdvancedFade: 0
-    scaleMode: 0
-    size: {x: 4, y: 2, z: 4}
-    invertFade: 0
-    distanceFadeStart: 10000
-    distanceFadeEnd: 10000
-    textureOffset: {x: 0, y: 0, z: 0}
-    falloffMode: 0
-    maskMode: 1
-    materialMask: {fileID: 2100000, guid: d4d7d44c7ce9fdb498fdb2a0ae7de1fc, type: 2}
-  m_Version: 3
---- !u!4 &553589018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553589016}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.5, y: 53.7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &817313657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,7 +4860,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 2500
+      - m_Value: 1000
         m_Name: RaindropSpawnRate
         m_Overridden: 1
       - m_Value: 0
@@ -4941,10 +4872,10 @@ VisualEffect:
       - m_Value: 0.25
         m_Name: RainDropAlpha
         m_Overridden: 1
-      - m_Value: 20
+      - m_Value: 150
         m_Name: RaindropMaxSpeed
         m_Overridden: 1
-      - m_Value: 10
+      - m_Value: 100
         m_Name: RandropMinSpeed
         m_Overridden: 1
     m_Vector2f:
@@ -4954,16 +4885,16 @@ VisualEffect:
       - m_Value: {x: 10, y: 10, z: 10}
         m_Name: SplashArea
         m_Overridden: 1
-      - m_Value: {x: 10, y: 0, z: 10}
+      - m_Value: {x: 50, y: 1.5, z: 50}
         m_Name: RaindropKillBox
-        m_Overridden: 0
+        m_Overridden: 1
       - m_Value: {x: 50, y: 20, z: 50}
         m_Name: RaindropSpawnBox
         m_Overridden: 1
-      - m_Value: {x: 50, y: 2, z: 50}
+      - m_Value: {x: 50, y: 1, z: 50}
         m_Name: RippleSpawnArea
         m_Overridden: 1
-      - m_Value: {x: 150, y: 22, z: 150}
+      - m_Value: {x: 100, y: 22, z: 100}
         m_Name: RainSpawnBox
         m_Overridden: 1
     m_Vector4f:
@@ -4994,7 +4925,7 @@ Transform:
   m_GameObject: {fileID: 838509211}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 70, z: 10}
+  m_LocalPosition: {x: -10, y: 60, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -10983,4 +10914,3 @@ SceneRoots:
   - {fileID: 2130114917}
   - {fileID: 1106723812}
   - {fileID: 838509214}
-  - {fileID: 553589018}
