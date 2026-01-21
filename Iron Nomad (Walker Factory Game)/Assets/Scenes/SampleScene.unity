@@ -4765,11 +4765,41 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 1028
+        m_Name: RaindropSpawnRate
+        m_Overridden: 0
+      - m_Value: 0
+        m_Name: SplashSpawnRate
+        m_Overridden: 0
+      - m_Value: 4
+        m_Name: RaindropSize
+        m_Overridden: 1
+      - m_Value: 0.25
+        m_Name: RainDropAlpha
+        m_Overridden: 1
+      - m_Value: 20
+        m_Name: RaindropMaxSpeed
+        m_Overridden: 1
+      - m_Value: 10
+        m_Name: RandropMinSpeed
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 10, y: 10, z: 10}
+        m_Name: SplashArea
+        m_Overridden: 1
+      - m_Value: {x: 10, y: 0, z: 10}
+        m_Name: RaindropKillBox
+        m_Overridden: 0
+      - m_Value: {x: 50, y: 20, z: 50}
+        m_Name: RaindropSpawnBox
+        m_Overridden: 1
+      - m_Value: {x: 10, y: 2, z: 10}
+        m_Name: RippleSpawnArea
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -4783,7 +4813,10 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: a0ac218646491424095322ea42907b92, type: 3}
+        m_Name: RainMainTex
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!4 &838509214
@@ -4795,7 +4828,7 @@ Transform:
   m_GameObject: {fileID: 838509211}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 30, z: 10}
+  m_LocalPosition: {x: -10, y: 10, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
