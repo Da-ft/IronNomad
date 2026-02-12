@@ -22,7 +22,8 @@ public class Move : MonoBehaviour
         float dt = Time.fixedDeltaTime;
 
         // 1. Position berechnen
-        Vector3 moveOffset = transform.forward * _moveSpeed * dt;
+        Vector3 moveOffset = transform.forward * _moveSpeed;
+        Mathf.Sin(_turnSpeed * Time.deltaTime);
         _rb.MovePosition(_rb.position + moveOffset);
 
         // 2. Rotation berechnen (optional, um GetPointVelocity zu testen)
@@ -30,3 +31,4 @@ public class Move : MonoBehaviour
         _rb.MoveRotation(_rb.rotation * turnOffset);
     }
 }
+

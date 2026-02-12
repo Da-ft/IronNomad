@@ -72,16 +72,16 @@ MonoBehaviour:
     m_Value: 55261.973
   aerosolDensity:
     m_OverrideState: 1
-    m_Value: 0.174
+    m_Value: 0.442
   aerosolTint:
     m_OverrideState: 1
-    m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    m_Value: {r: 0.15585954, g: 0.20754719, b: 0.098878615, a: 1}
   aerosolMaximumAltitude:
     m_OverrideState: 1
-    m_Value: 6000
+    m_Value: 1000
   aerosolAnisotropy:
     m_OverrideState: 1
-    m_Value: 0.62
+    m_Value: 0.27
   ozoneDensityDimmer:
     m_OverrideState: 0
     m_Value: 1
@@ -126,13 +126,13 @@ MonoBehaviour:
     m_Value: 1
   horizonTint:
     m_OverrideState: 1
-    m_Value: {r: 0.7877358, g: 1, b: 0.8837193, a: 1}
+    m_Value: {r: 0.40287519, g: 0.5660378, b: 0.10946956, a: 1}
   zenithTint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.18503025, g: 0.19231835, b: 0.3962264, a: 1}
   horizonZenithShift:
     m_OverrideState: 1
-    m_Value: -0.85
+    m_Value: -0.84
   m_SkyVersion: 3
   m_ObsoleteEarthPreset:
     m_OverrideState: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
     m_Value: {r: 0, g: 1.8490567, b: 0.22945951, a: 1}
   tint:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 2, g: 2, b: 2, a: 1}
   maxFogDistance:
     m_OverrideState: 1
     m_Value: 5000
@@ -271,7 +271,7 @@ MonoBehaviour:
     m_Value: 1
   skyAmbientMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   planetRadius:
     m_OverrideState: 1
     m_Value: 6378.1
