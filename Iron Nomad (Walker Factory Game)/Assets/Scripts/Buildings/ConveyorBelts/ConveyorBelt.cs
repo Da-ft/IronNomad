@@ -1,19 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ConveyorBelt : MonoBehaviour, IItemHolder
+public class ConveyorBelt : BaseGridMachine
 {
     [System.Serializable]
     public class BeltItem
     {
         public ItemDefinition Definition;
         public GameObject VisualObj;
-        public float CurrentDistance; // 0 = Start, Length = Ende
+        public float CurrentDistance;
     }
 
     [Header("Settings")]
     [SerializeField] private float _speed = 2f;
-    [SerializeField] private float _length = 2f; // Muss zur GridSize passen (meist 2)
     [SerializeField] private float _itemSpacing = 0.6f;
 
     [Header("Visual Connections")]
@@ -21,12 +20,11 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
     [SerializeField] private Transform _endPoint;
 
     private List<BeltItem> _items = new List<BeltItem>();
-    private WalkerGrid _grid;
 
-    private void Start()
+    // Override Start, aber ruf base.Start() auf!
+    protected override void Start()
     {
-        // Wir holen uns das Grid vom Walker (Parent)
-        _grid = GetComponentInParent<WalkerGrid>();
+        base.Start();
     }
 
     private void Update()
@@ -39,10 +37,13 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
     {
         if (_items.Count == 0) return;
 
+        // Wir nutzen jetzt GridStepSize statt _length
+        float totalLength = GridStepSize;
+
         for (int i = 0; i < _items.Count; i++)
         {
             BeltItem current = _items[i];
-            float nextObstacleDist = _length;
+            float nextObstacleDist = totalLength;
 
             if (i > 0)
             {
@@ -54,20 +55,14 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
             {
                 current.CurrentDistance += _speed * Time.deltaTime;
                 if (current.CurrentDistance > nextObstacleDist && i > 0)
-                {
                     current.CurrentDistance = nextObstacleDist;
-                }
             }
 
-            // Visual Update (Lerp)
-            float t = current.CurrentDistance / _length;
+            // Visual Update
+            float t = current.CurrentDistance / totalLength;
             if (_startPoint && _endPoint && current.VisualObj)
             {
-                current.VisualObj.transform.localPosition = Vector3.Lerp(
-                    _startPoint.localPosition,
-                    _endPoint.localPosition,
-                    t
-                );
+                current.VisualObj.transform.localPosition = Vector3.Lerp(_startPoint.localPosition, _endPoint.localPosition, t);
             }
         }
     }
@@ -77,9 +72,7 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
         if (_items.Count == 0) return;
 
         BeltItem frontItem = _items[0];
-
-        // Ist das Item am Ende (oder darüber hinaus)?
-        if (frontItem.CurrentDistance >= _length)
+        if (frontItem.CurrentDistance >= GridStepSize) // Check gegen GridStepSize
         {
             TryPushToNext(frontItem);
         }
@@ -89,72 +82,22 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
     {
         if (_grid == null) return;
 
-        // Ziel berechnen
-        Vector3 targetPos = transform.position + (transform.forward * _length);
-
-        // Nachbar suchen
+        Vector3 targetPos = transform.position + (transform.forward * GridStepSize);
         IItemHolder nextHolder = _grid.GetHolderAt(targetPos);
 
-        if (nextHolder != null)
+        if (nextHolder != null && nextHolder.TryAcceptItem(item.Definition, item.VisualObj))
         {
-            // Debug Log: Wer übergibt an wen?
-             Debug.Log($"BAND {gameObject.name}: Versuche Übergabe an {((MonoBehaviour)nextHolder).name}...");
-
-            if (nextHolder.TryAcceptItem(item.Definition))
-            {
-                Debug.Log("... ERFOLG! Item übergeben.");
-                Destroy(item.VisualObj);
-                _items.RemoveAt(0);
-            }
-            else
-            {
-                Debug.Log("... ABGELEHNT! Nachbar ist voll oder blockiert.");
-                item.CurrentDistance = _length; // Stau
-            }
+            _items.RemoveAt(0);
         }
         else
         {
-            Debug.Log($"BAND {gameObject.name}: Kein Nachbar an Position {targetPos} gefunden!");
-            item.CurrentDistance = _length; // Item fällt runter / bleibt liegen
+            item.CurrentDistance = GridStepSize; // Stau
         }
     }
 
-    //private void TryPushToNext(BeltItem item)
-    //{
-    //    if (_grid == null) return;
-
-    //    // --- GRID LOGIK ---
-    //    // Wohin schieben wir? Genau eine Band-Länge nach vorne (lokal Z)
-    //    // Das entspricht genau der Koordinate des nächsten Feldes.
-    //    Vector3 targetPos = transform.position + (transform.forward * _length);
-
-    //    IItemHolder nextHolder = _grid.GetHolderAt(targetPos);
-
-    //    if (nextHolder != null)
-    //    {
-    //        // Übergabe versuchen
-    //        if (nextHolder.TryAcceptItem(item.Definition))
-    //        {
-    //            // Erfolg!
-    //            Destroy(item.VisualObj);
-    //            _items.RemoveAt(0);
-    //        }
-    //        else
-    //        {
-    //            // Nachbar ist voll -> Item bleibt am Ende liegen (Band staut sich)
-    //            item.CurrentDistance = _length;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // Kein Nachbar da -> Item bleibt liegen
-    //        item.CurrentDistance = _length;
-    //    }
-    //}
-
     // --- Interface Implementation ---
 
-    public bool TryTakeItem(WorldItem worldItem)
+    public override bool TryTakeItem(WorldItem worldItem)
     {
         for (int i = 0; i < _items.Count; i++)
         {
@@ -167,46 +110,71 @@ public class ConveyorBelt : MonoBehaviour, IItemHolder
         return false;
     }
 
-    public bool TryAcceptItem(ItemDefinition itemDef)
+    public override bool TryAcceptItem(ItemDefinition itemDef, GameObject existingVisual = null)
     {
-        // Platz am Eingang prüfen
         if (_items.Count > 0)
         {
             BeltItem lastItem = _items[_items.Count - 1];
             if (lastItem.CurrentDistance < _itemSpacing) return false;
         }
 
-        BeltItem newItem = new BeltItem();
-        newItem.Definition = itemDef;
-        newItem.CurrentDistance = 0f;
+        BeltItem newItem = new BeltItem
+        {
+            Definition = itemDef,
+            CurrentDistance = 0f
+        };
 
-        if (itemDef.VisualPrefab != null && _startPoint != null)
+        if (existingVisual != null)
+        {
+            newItem.VisualObj = existingVisual;
+            newItem.VisualObj.transform.SetParent(transform); // Umhängen
+
+            if (_startPoint)
+            {
+                newItem.VisualObj.transform.position = _startPoint.position;
+                newItem.VisualObj.transform.rotation = _startPoint.rotation;
+
+                newItem.VisualObj.transform.localScale = Vector3.one;
+            }
+        }
+
+        else if (itemDef.VisualPrefab != null && _startPoint != null)
         {
             newItem.VisualObj = Instantiate(itemDef.VisualPrefab, _startPoint.position, _startPoint.rotation);
             newItem.VisualObj.transform.SetParent(transform);
 
-            // Components hinzufügen
-            WorldItem wi = newItem.VisualObj.AddComponent<WorldItem>();
-            wi.Initialize(itemDef, this);
-
-            if (!newItem.VisualObj.GetComponent<Collider>())
-            {
-                var box = newItem.VisualObj.AddComponent<BoxCollider>();
-                box.size = Vector3.one * 0.5f;
-            }
+            SetupVisualItem(newItem.VisualObj, itemDef);
         }
 
         _items.Add(newItem);
         return true;
     }
 
-    // --- DEBUG GIZMOS ---
+    private void SetupVisualItem(GameObject obj, ItemDefinition def)
+    {
+        WorldItem wi = obj.GetComponent<WorldItem>();
+
+        if (wi == null) wi = obj.AddComponent<WorldItem>();
+
+        wi.Initialize(def, this);
+
+        if(!obj.GetComponent<Collider>())
+        {
+            var box = obj.AddComponent<BoxCollider>();
+            box.size = Vector3.one * 0.5f;
+            box.isTrigger = true;
+        }
+    }
+
     private void OnDrawGizmos()
     {
-        // Zeichnet einen grünen Pfeil vom Ende des Bandes zum Ziel
         Gizmos.color = Color.green;
-        Vector3 end = transform.position + (transform.forward * _length);
+        // Wir können hier nicht auf GridStepSize zugreifen wenn das Spiel nicht läuft (außer wir holen es auch hier)
+        // Einfachheitshalber nutzen wir lokal 2 oder holen es dynamisch
+        float size = 2f;
+        if (Application.isPlaying) size = GridStepSize;
 
+        Vector3 end = transform.position + (transform.forward * size);
         Gizmos.DrawLine(transform.position, end);
         Gizmos.DrawWireSphere(end, 0.2f);
     }

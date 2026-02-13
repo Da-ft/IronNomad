@@ -8,8 +8,8 @@ public class TextureScroller : MonoBehaviour
 
     private void Update()
     {
-        float offsetX = Time.deltaTime * _speedX;
-        float offsetY = Time.deltaTime * _speedY;
+        float offsetX = Time.time * _speedX;
+        float offsetY = Time.time * _speedY;
         _renderer.material.mainTextureOffset = new Vector2(offsetX, offsetY);
     }
 }

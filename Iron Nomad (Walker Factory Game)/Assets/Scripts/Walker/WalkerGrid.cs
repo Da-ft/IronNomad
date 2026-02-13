@@ -4,6 +4,7 @@ using UnityEngine;
 public class WalkerGrid : MonoBehaviour
 {
     [SerializeField] private float _cellSize = 2f;
+    public float CellSize => _cellSize;
 
     // Datenbank: Koordinate -> Bauteil
     private Dictionary<Vector2Int, IItemHolder> _gridObjects = new Dictionary<Vector2Int, IItemHolder>();
@@ -12,13 +13,11 @@ public class WalkerGrid : MonoBehaviour
     public void RegisterObject(Vector3 worldPos, IItemHolder holder)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
-
         if (_gridObjects.ContainsKey(coords))
         {
-            Debug.LogWarning($"Grid-Konflikt auf {coords}! Altes Objekt überschrieben.");
+            Debug.LogWarning($"Grid-Konflikt auf {coords}! Überschrieben.");
             _gridObjects[coords] = holder;
         }
-
         else
         {
             _gridObjects.Add(coords, holder);
@@ -29,28 +28,20 @@ public class WalkerGrid : MonoBehaviour
     public void UnregisterObject(Vector3 worldPos)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
-        if (_gridObjects.ContainsKey(coords))
-        {
-            _gridObjects.Remove(coords);
-        }
+        if (_gridObjects.ContainsKey(coords)) _gridObjects.Remove(coords);
     }
 
     // Nachbar abfragen
     public IItemHolder GetHolderAt(Vector3 worldPos)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
-
-        if (_gridObjects.TryGetValue(coords, out IItemHolder holder))
-        {
-            return holder;
-        }
-        return null;
+        return _gridObjects.TryGetValue(coords, out IItemHolder holder) ? holder : null;
     }
-    
+
     // Helper Method für World -> Grid Coords
     public Vector2Int WorldToGridCoords(Vector3 worldPos)
     {
-        Vector3 localPos = transform.InverseTransformDirection(worldPos);
+        Vector3 localPos = transform.InverseTransformPoint(worldPos);
         int x = Mathf.RoundToInt(localPos.x / _cellSize);
         int z = Mathf.RoundToInt(localPos.z / _cellSize);
         return new Vector2Int(x, z);
