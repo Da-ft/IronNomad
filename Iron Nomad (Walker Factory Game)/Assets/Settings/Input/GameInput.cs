@@ -131,45 +131,63 @@ namespace IronNomad.Inputs
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Crouch"",
-                    ""type"": ""Button"",
-                    ""id"": ""dc51d098-5f29-460c-a6ec-18913f2797fd"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ToggleBuild"",
-                    ""type"": ""Button"",
-                    ""id"": ""dc068d5e-b832-412e-af39-8c722d776c3d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DemolishMode"",
-                    ""type"": ""Button"",
-                    ""id"": ""f7f174f8-1cf4-4f11-b913-4335347827bc"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""FireEvent"",
-                    ""type"": ""Button"",
-                    ""id"": ""59f2d817-0136-4e09-b3a2-e675ac2919ff"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""9b6a9c7e-b29b-4441-a9b7-0029e2388440"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""1cca31bc-89f0-4107-b114-fd2d673264e4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Hotbar1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0fed754-0fad-46ee-a0b4-70e46dfcbd32"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar2"",
+                    ""type"": ""Button"",
+                    ""id"": ""d32ab647-2831-4d45-81ac-9019a9678db6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar3"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcf3eb99-9101-47af-b2d9-0670228cc28f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar4"",
+                    ""type"": ""Button"",
+                    ""id"": ""a09154d8-4a1c-42cd-9ba5-ed858a42b180"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar5"",
+                    ""type"": ""Button"",
+                    ""id"": ""05b130ba-578d-4d23-8930-a736d51852c8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -377,28 +395,6 @@ namespace IronNomad.Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""61176411-c1f2-45d0-b4c3-3c81092ce506"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""ToggleBuild"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e1f54bb8-e62c-4374-9d79-de2b277ff525"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""FireEvent"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""75b4e963-c8fa-4de0-adb2-d9fa77691365"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -410,34 +406,78 @@ namespace IronNomad.Inputs
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bdb71b64-786e-48ea-b355-8e9efa07433f"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""629d8bc5-6689-4da7-8372-0d229551c8ce"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""DemolishMode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e8772613-5974-4fce-b246-c48b81facf0d"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d707aa3-3a42-4037-841f-9fcbeaffc26a"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bc1df38-156a-40f4-ae30-f4985ededd5d"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""315cac5f-210e-490a-a9fa-673dee1171cb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3868fe5f-136b-4fd7-8e30-da07dd2d15bd"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccc126c3-f5e8-4e10-8220-f51144752650"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ddbd5750-cbdf-40d9-8cb3-8d170e777b4e"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1029,11 +1069,13 @@ namespace IronNomad.Inputs
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
             m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
-            m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
-            m_Gameplay_ToggleBuild = m_Gameplay.FindAction("ToggleBuild", throwIfNotFound: true);
-            m_Gameplay_DemolishMode = m_Gameplay.FindAction("DemolishMode", throwIfNotFound: true);
-            m_Gameplay_FireEvent = m_Gameplay.FindAction("FireEvent", throwIfNotFound: true);
             m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+            m_Gameplay_Scroll = m_Gameplay.FindAction("Scroll", throwIfNotFound: true);
+            m_Gameplay_Hotbar1 = m_Gameplay.FindAction("Hotbar1", throwIfNotFound: true);
+            m_Gameplay_Hotbar2 = m_Gameplay.FindAction("Hotbar2", throwIfNotFound: true);
+            m_Gameplay_Hotbar3 = m_Gameplay.FindAction("Hotbar3", throwIfNotFound: true);
+            m_Gameplay_Hotbar4 = m_Gameplay.FindAction("Hotbar4", throwIfNotFound: true);
+            m_Gameplay_Hotbar5 = m_Gameplay.FindAction("Hotbar5", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1131,11 +1173,13 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_Look;
         private readonly InputAction m_Gameplay_Jump;
         private readonly InputAction m_Gameplay_Sprint;
-        private readonly InputAction m_Gameplay_Crouch;
-        private readonly InputAction m_Gameplay_ToggleBuild;
-        private readonly InputAction m_Gameplay_DemolishMode;
-        private readonly InputAction m_Gameplay_FireEvent;
         private readonly InputAction m_Gameplay_Interact;
+        private readonly InputAction m_Gameplay_Scroll;
+        private readonly InputAction m_Gameplay_Hotbar1;
+        private readonly InputAction m_Gameplay_Hotbar2;
+        private readonly InputAction m_Gameplay_Hotbar3;
+        private readonly InputAction m_Gameplay_Hotbar4;
+        private readonly InputAction m_Gameplay_Hotbar5;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1164,25 +1208,33 @@ namespace IronNomad.Inputs
             /// </summary>
             public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
             /// <summary>
-            /// Provides access to the underlying input action "Gameplay/Crouch".
-            /// </summary>
-            public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
-            /// <summary>
-            /// Provides access to the underlying input action "Gameplay/ToggleBuild".
-            /// </summary>
-            public InputAction @ToggleBuild => m_Wrapper.m_Gameplay_ToggleBuild;
-            /// <summary>
-            /// Provides access to the underlying input action "Gameplay/DemolishMode".
-            /// </summary>
-            public InputAction @DemolishMode => m_Wrapper.m_Gameplay_DemolishMode;
-            /// <summary>
-            /// Provides access to the underlying input action "Gameplay/FireEvent".
-            /// </summary>
-            public InputAction @FireEvent => m_Wrapper.m_Gameplay_FireEvent;
-            /// <summary>
             /// Provides access to the underlying input action "Gameplay/Interact".
             /// </summary>
             public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Scroll".
+            /// </summary>
+            public InputAction @Scroll => m_Wrapper.m_Gameplay_Scroll;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar1".
+            /// </summary>
+            public InputAction @Hotbar1 => m_Wrapper.m_Gameplay_Hotbar1;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar2".
+            /// </summary>
+            public InputAction @Hotbar2 => m_Wrapper.m_Gameplay_Hotbar2;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar3".
+            /// </summary>
+            public InputAction @Hotbar3 => m_Wrapper.m_Gameplay_Hotbar3;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar4".
+            /// </summary>
+            public InputAction @Hotbar4 => m_Wrapper.m_Gameplay_Hotbar4;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar5".
+            /// </summary>
+            public InputAction @Hotbar5 => m_Wrapper.m_Gameplay_Hotbar5;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1221,21 +1273,27 @@ namespace IronNomad.Inputs
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @Crouch.started += instance.OnCrouch;
-                @Crouch.performed += instance.OnCrouch;
-                @Crouch.canceled += instance.OnCrouch;
-                @ToggleBuild.started += instance.OnToggleBuild;
-                @ToggleBuild.performed += instance.OnToggleBuild;
-                @ToggleBuild.canceled += instance.OnToggleBuild;
-                @DemolishMode.started += instance.OnDemolishMode;
-                @DemolishMode.performed += instance.OnDemolishMode;
-                @DemolishMode.canceled += instance.OnDemolishMode;
-                @FireEvent.started += instance.OnFireEvent;
-                @FireEvent.performed += instance.OnFireEvent;
-                @FireEvent.canceled += instance.OnFireEvent;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
+                @Hotbar1.started += instance.OnHotbar1;
+                @Hotbar1.performed += instance.OnHotbar1;
+                @Hotbar1.canceled += instance.OnHotbar1;
+                @Hotbar2.started += instance.OnHotbar2;
+                @Hotbar2.performed += instance.OnHotbar2;
+                @Hotbar2.canceled += instance.OnHotbar2;
+                @Hotbar3.started += instance.OnHotbar3;
+                @Hotbar3.performed += instance.OnHotbar3;
+                @Hotbar3.canceled += instance.OnHotbar3;
+                @Hotbar4.started += instance.OnHotbar4;
+                @Hotbar4.performed += instance.OnHotbar4;
+                @Hotbar4.canceled += instance.OnHotbar4;
+                @Hotbar5.started += instance.OnHotbar5;
+                @Hotbar5.performed += instance.OnHotbar5;
+                @Hotbar5.canceled += instance.OnHotbar5;
             }
 
             /// <summary>
@@ -1259,21 +1317,27 @@ namespace IronNomad.Inputs
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
-                @Crouch.started -= instance.OnCrouch;
-                @Crouch.performed -= instance.OnCrouch;
-                @Crouch.canceled -= instance.OnCrouch;
-                @ToggleBuild.started -= instance.OnToggleBuild;
-                @ToggleBuild.performed -= instance.OnToggleBuild;
-                @ToggleBuild.canceled -= instance.OnToggleBuild;
-                @DemolishMode.started -= instance.OnDemolishMode;
-                @DemolishMode.performed -= instance.OnDemolishMode;
-                @DemolishMode.canceled -= instance.OnDemolishMode;
-                @FireEvent.started -= instance.OnFireEvent;
-                @FireEvent.performed -= instance.OnFireEvent;
-                @FireEvent.canceled -= instance.OnFireEvent;
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
+                @Scroll.started -= instance.OnScroll;
+                @Scroll.performed -= instance.OnScroll;
+                @Scroll.canceled -= instance.OnScroll;
+                @Hotbar1.started -= instance.OnHotbar1;
+                @Hotbar1.performed -= instance.OnHotbar1;
+                @Hotbar1.canceled -= instance.OnHotbar1;
+                @Hotbar2.started -= instance.OnHotbar2;
+                @Hotbar2.performed -= instance.OnHotbar2;
+                @Hotbar2.canceled -= instance.OnHotbar2;
+                @Hotbar3.started -= instance.OnHotbar3;
+                @Hotbar3.performed -= instance.OnHotbar3;
+                @Hotbar3.canceled -= instance.OnHotbar3;
+                @Hotbar4.started -= instance.OnHotbar4;
+                @Hotbar4.performed -= instance.OnHotbar4;
+                @Hotbar4.canceled -= instance.OnHotbar4;
+                @Hotbar5.started -= instance.OnHotbar5;
+                @Hotbar5.performed -= instance.OnHotbar5;
+                @Hotbar5.canceled -= instance.OnHotbar5;
             }
 
             /// <summary>
@@ -1603,40 +1667,54 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSprint(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnCrouch(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "ToggleBuild" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnToggleBuild(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "DemolishMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnDemolishMode(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "FireEvent" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnFireEvent(InputAction.CallbackContext context);
-            /// <summary>
             /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnInteract(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScroll(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar1(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar2(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar3(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar4(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar5(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

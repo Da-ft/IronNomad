@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2649078327ce8624084c9a2461007cb1, type: 3}
-  m_Name: StandardInputReader
-  m_EditorClassIdentifier: Assembly-CSharp::InputReader
+  m_Name: InputReader
+  m_EditorClassIdentifier: Assembly-CSharp::IronNomad.Inputs.InputReader

@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class WorldItem : MonoBehaviour, IInteractable
 {
     public ItemDefinition Definition { get; private set; }
