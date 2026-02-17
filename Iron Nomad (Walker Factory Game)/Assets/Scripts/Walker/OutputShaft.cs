@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OutputShaft : MonoBehaviour, IItemHolder
+public class OutputShaft : BaseGridMachine
 {
     [Header("State")]
     public ItemDefinition CurrentItem { get; private set; }
@@ -10,26 +10,65 @@ public class OutputShaft : MonoBehaviour, IItemHolder
 
     private GameObject _currentVisualObj;
 
-    public bool TryDeposit(ItemDefinition item)
+    // Start wird geerbt, aber wir rufen base auf
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    private void Update()
+    {
+        if (CurrentItem != null) TryPushToNext();
+    }
+
+    private void TryPushToNext()
+    {
+        if (_grid == null) return;
+
+        // Nutze GridStepSize aus der Basisklasse
+        Vector3 targetPos = transform.position + (transform.forward * GridStepSize);
+        IItemHolder nextHolder = _grid.GetHolderAt(targetPos);
+
+        if (nextHolder != null && nextHolder.TryAcceptItem(CurrentItem, _currentVisualObj))
+        {
+            CurrentItem = null;
+            _currentVisualObj = null;
+        }
+    }
+
+    // Methoden vom Interface (aus BaseGridMachine)
+    public override bool TryAcceptItem(ItemDefinition item, GameObject visualObj)
     {
         if (CurrentItem != null) return false;
 
         CurrentItem = item;
-        SpawnVisuals();
+
+        if (visualObj != null)
+        {
+            _currentVisualObj = visualObj;
+            _currentVisualObj.transform.SetParent(_spawnPoint);
+            _currentVisualObj.transform.localPosition = Vector3.zero;
+            _currentVisualObj.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            SpawnVisuals();
+        }
         return true;
     }
 
-    // Interface Implementation: Das Item ruft das auf
-    public bool TryTakeItem(WorldItem itemScript)
+    public override bool TryTakeItem(WorldItem itemScript)
     {
-        // Sicherheitscheck: Ist das wirklich unser Item?
         if (_currentVisualObj != itemScript.gameObject) return false;
-
-        // Item logisch entfernen
         CurrentItem = null;
-        _currentVisualObj = null; // Referenz löschen, das Destroy macht das Item selbst
+        _currentVisualObj = null;
+        return true;
+    }
 
-        return true; // "Ja, du darfst gehen"
+    // Spezifisch für MiningCore (kein Interface Zwang)
+    public bool TryDeposit(ItemDefinition item, GameObject visualObj = null)
+    {
+        return TryAcceptItem(item, visualObj);
     }
 
     private void SpawnVisuals()
@@ -40,18 +79,25 @@ public class OutputShaft : MonoBehaviour, IItemHolder
             _currentVisualObj.transform.localPosition = Vector3.zero;
             _currentVisualObj.transform.localRotation = Quaternion.identity;
 
-            // WICHTIG: Wir kleben das WorldItem Script drauf und initialisieren es
             WorldItem worldItem = _currentVisualObj.AddComponent<WorldItem>();
 
-            // Falls das Prefab noch keinen Collider hat, fügen wir einen hinzu
             if (!_currentVisualObj.TryGetComponent<Collider>(out var col))
             {
-                BoxCollider box = _currentVisualObj.AddComponent<BoxCollider>();
-                box.size = Vector3.one * 0.5f; // Standardgröße
+                var box = _currentVisualObj.AddComponent<BoxCollider>();
+                box.size = Vector3.one * 0.5f;
+                col = box;
             }
+            col.isTrigger = true;
 
-            // Verbindung herstellen: Item kennt jetzt den Schacht
             worldItem.Initialize(CurrentItem, this);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        float size = Application.isPlaying ? GridStepSize : 2f;
+        Gizmos.DrawRay(transform.position, transform.forward * size);
+        Gizmos.DrawWireSphere(transform.position + transform.forward * size, 0.2f);
     }
 }

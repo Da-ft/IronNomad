@@ -13,7 +13,7 @@ public class WorldItem : MonoBehaviour, IInteractable
         _currentHolder = holder;
 
         // Object auf "Interactable" Layer
-        gameObject.layer = LayerMask.NameToLayer("Interactable");
+        gameObject.layer = LayerMask.NameToLayer("Interaction");
     }
 
     // Call durch Player Interaction

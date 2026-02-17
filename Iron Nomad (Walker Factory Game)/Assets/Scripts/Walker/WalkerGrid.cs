@@ -1,55 +1,69 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkerGrid : MonoBehaviour
 {
     [SerializeField] private float _cellSize = 2f;
+    public float CellSize => _cellSize;
 
-    public Vector3 GetNearestGridPoint(Vector3 worldPosition)
+    // Datenbank: Koordinate -> Bauteil
+    private Dictionary<Vector2Int, IItemHolder> _gridObjects = new Dictionary<Vector2Int, IItemHolder>();
+
+    // Objekt Registrieren (wird vom Gebäude beim Bau aufgerufen)
+    public void RegisterObject(Vector3 worldPos, IItemHolder holder)
     {
-        // 1. Welt-Position in Lokale Position des Walkers umrechnen
-        // Das ist wichtig, weil der Walker sich dreht und bewegt!
-        Vector3 localPos = transform.InverseTransformPoint(worldPosition);
-
-        // 2. Auf das Raster runden
-        float x = Mathf.Round(localPos.x / _cellSize) * _cellSize;
-        float z = Mathf.Round(localPos.z / _cellSize) * _cellSize;
-
-        // Wir setzen Y fix auf 0 (oder _cellSize/2), damit es AUF der Oberfläche sitzt
-        // Hier gehen wir davon aus, dass der Pivot des Gebäudes unten mittig ist.
-        float y = _cellSize / 0.04f;
-
-        // 3. Zurück in Welt-Koordinaten rechnen
-        return transform.TransformPoint(new Vector3(x, y, z));
+        Vector2Int coords = WorldToGridCoords(worldPos);
+        if (_gridObjects.ContainsKey(coords))
+        {
+            Debug.LogWarning($"Grid-Konflikt auf {coords}! Überschrieben.");
+            _gridObjects[coords] = holder;
+        }
+        else
+        {
+            _gridObjects.Add(coords, holder);
+        }
     }
 
-    // Only for Editor
+    // Objekt austragen (beim abreißen)
+    public void UnregisterObject(Vector3 worldPos)
+    {
+        Vector2Int coords = WorldToGridCoords(worldPos);
+        if (_gridObjects.ContainsKey(coords)) _gridObjects.Remove(coords);
+    }
+
+    // Nachbar abfragen
+    public IItemHolder GetHolderAt(Vector3 worldPos)
+    {
+        Vector2Int coords = WorldToGridCoords(worldPos);
+        return _gridObjects.TryGetValue(coords, out IItemHolder holder) ? holder : null;
+    }
+
+    // Helper Method für World -> Grid Coords
+    public Vector2Int WorldToGridCoords(Vector3 worldPos)
+    {
+        Vector3 localPos = transform.InverseTransformPoint(worldPos);
+        int x = Mathf.RoundToInt(localPos.x / _cellSize);
+        int z = Mathf.RoundToInt(localPos.z / _cellSize);
+        return new Vector2Int(x, z);
+    }
+
+    // Helper Method für Grid -> Welt (für snapping)
+    public Vector3 GetNearestGridPoint(Vector3 worldPosition)
+    {
+        Vector2Int coords = WorldToGridCoords(worldPosition);
+        Vector3 localSnaped = new Vector3(coords.x * _cellSize, 0, coords.y * _cellSize);
+        return transform.TransformPoint(localSnaped);
+    }
+
+    // Gizmos zur Visualisierung belegter Felder
     private void OnDrawGizmos()
     {
-        // Farbe des Gitters
-        Gizmos.color = new Color(0, 1, 1, 0.3f); // Cyan, halbtransparent
-
-        // Wir nutzen die Matrix des Walkers, damit sich die Gizmos mitdrehen!
-        Matrix4x4 oldMatrix = Gizmos.matrix;
         Gizmos.matrix = transform.localToWorldMatrix;
-
-        // Wie groß soll das gezeichnete Feld sein? (z.B. 20x20 Meter)
-        int width = 10;
-        int length = 10;
-
-        // Zeichne kleine Punkte oder Würfel für jeden Slot
-        for (int x = -width; x <= width; x++)
+        foreach (var kvp in _gridObjects)
         {
-            for (int z = -length; z <= length; z++)
-            {
-                // Position im lokalen Space berechnen
-                Vector3 pos = new Vector3(x * _cellSize, 0, z * _cellSize);
-
-                // Kleinen Würfel zeichnen (stellt einen Bauplatz dar)
-                Gizmos.DrawWireCube(pos, new Vector3(_cellSize, 0.1f, _cellSize) * 0.9f);
-            }
+            Gizmos.color = Color.green;
+            Vector3 pos = new Vector3(kvp.Key.x * _cellSize, 0.5f, kvp.Key.y * _cellSize);
+            Gizmos.DrawWireCube(pos, Vector3.one * _cellSize * 0.8f);
         }
-
-        // Matrix zurücksetzen (Sauberkeit muss sein)
-        Gizmos.matrix = oldMatrix;
     }
 }
