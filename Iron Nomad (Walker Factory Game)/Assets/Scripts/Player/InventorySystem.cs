@@ -1,8 +1,6 @@
 using UnityEngine;
 using IronNomad.Inputs;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.Rendering;
 
 public class InventorySystem : MonoBehaviour
 {

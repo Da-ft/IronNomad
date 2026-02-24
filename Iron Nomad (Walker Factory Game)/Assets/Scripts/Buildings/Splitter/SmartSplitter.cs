@@ -4,12 +4,24 @@ using UnityEngine;
 public class SmartSplitter : BaseGridMachine
 {
     [Header("Settings")]
-    [SerializeField] private float _processTime = 0.5f;
+    [SerializeField] private float _moveSpeed = 3f;
 
-    private Queue<ItemDefinition> _inventory = new Queue<ItemDefinition>();
+    private enum ItemPhase { None, ToCenter, ToExit }
+
+    private ItemDefinition _currentItem;
     private GameObject _currentVisual;
-    private float _timer;
+    private ItemPhase _phase = ItemPhase.None;
+
+    private Vector3 _targetPos;
+    private Vector3 _centerLocal;
+
+    private IItemHolder _exitNeighbor;
+    private Vector3 _exitDir;
+
     private int _lastOutputIndex = 0;
+
+    private float _retryTimer = 0f;
+    private const float RetryInterval = 0.2f;
 
     private readonly Vector3[] _directions = new Vector3[]
     {
@@ -19,48 +31,87 @@ public class SmartSplitter : BaseGridMachine
     protected override void Start()
     {
         base.Start();
+        _centerLocal = Vector3.up * 0.5f;
     }
 
     private void Update()
     {
-        if (_inventory.Count == 0) return;
+        if (_currentItem == null) return;
 
-        _timer += Time.deltaTime;
-        if (_timer >= _processTime)
+        if (_phase == ItemPhase.None)
         {
-            TryDistributeItem();
+            _retryTimer += Time.deltaTime;
+            if (_retryTimer >= RetryInterval)
+            {
+                _retryTimer = 0f;
+                OnReachedCenter();
+            }
+            return;
+        }
+
+        MoveVisual();
+    }
+
+    private void MoveVisual()
+    {
+        if (_currentVisual == null) return;
+
+        _currentVisual.transform.position = Vector3.MoveTowards(
+            _currentVisual.transform.position,
+            _targetPos,
+            _moveSpeed * Time.deltaTime
+        );
+
+        if (Vector3.Distance(_currentVisual.transform.position, _targetPos) < 0.01f)
+        {
+            if (_phase == ItemPhase.ToCenter)
+                OnReachedCenter();
+            else if (_phase == ItemPhase.ToExit)
+                OnReachedExit();
         }
     }
 
-    private void TryDistributeItem()
+    private void OnReachedCenter()
     {
         if (_grid == null) return;
 
-        ItemDefinition itemToPush = _inventory.Peek();
         int attempts = 0;
-
         while (attempts < 4)
         {
             _lastOutputIndex = (_lastOutputIndex + 1) % 4;
-            Vector3 checkDir = _directions[_lastOutputIndex];
-
-            // Lokale Richtung in Weltrichtung umwandeln
-            Vector3 worldDir = transform.TransformDirection(checkDir);
-
-            // Nutze GridStepSize
-            Vector3 targetPos = transform.position + (worldDir * GridStepSize);
-
-            IItemHolder neighbor = _grid.GetHolderAt(targetPos);
+            Vector3 worldDir = transform.TransformDirection(_directions[_lastOutputIndex]);
+            Vector3 neighborPos = transform.position + (worldDir * GridStepSize);
+            IItemHolder neighbor = _grid.GetHolderAt(neighborPos);
 
             if (neighbor != null && IsOutputValid(neighbor, worldDir))
             {
-                if (neighbor.TryAcceptItem(itemToPush, _currentVisual))
-                {
-                    SuccessDispatch(true);
-                    break;
-                }
+                _targetPos = neighborPos + Vector3.up * 0.5f;
+                _exitNeighbor = neighbor;
+                _exitDir = worldDir;
+                _phase = ItemPhase.ToExit;
+                return;
             }
             attempts++;
+        }
+
+        // Alle Ausgänge voll - Retry
+        _phase = ItemPhase.None;
+        _retryTimer = 0f;
+    }
+
+    private void OnReachedExit()
+    {
+        if (_exitNeighbor != null && _exitNeighbor.TryAcceptItem(_currentItem, _currentVisual))
+        {
+            _currentItem = null;
+            _currentVisual = null;
+            _phase = ItemPhase.None;
+        }
+        else
+        {
+            // Nachbar doch voll - zurück zur Mitte
+            _targetPos = transform.TransformPoint(_centerLocal);
+            _phase = ItemPhase.ToCenter;
         }
     }
 
@@ -69,55 +120,33 @@ public class SmartSplitter : BaseGridMachine
         MonoBehaviour mb = holder as MonoBehaviour;
         if (mb != null)
         {
-            float dotProduct = Vector3.Dot(mb.transform.forward, directionToNeighbor);
-            if (dotProduct < -0.9f) return false;
+            if (Vector3.Dot(mb.transform.forward, directionToNeighbor) < -0.9f) return false;
         }
         return true;
-    }
-
-    private void SuccessDispatch(bool visualPassedOn)
-    {
-        _inventory.Dequeue();
-        _timer = 0f;
-        if (visualPassedOn) _currentVisual = null;
-        else
-        {
-            if(_currentVisual != null) Destroy(_currentVisual);
-        }
-
-        if (_inventory.Count > 0) SpawnVisual(_inventory.Peek());
-    }
-
-    public override bool TryTakeItem(WorldItem item)
-    {
-        return false; // Splitter aktuell nicht manuell entnehmbar
     }
 
     public override bool TryAcceptItem(ItemDefinition item, GameObject visualObj)
     {
-        if (_inventory.Count >= 5) return false;
+        if (_currentItem != null) return false;
 
-        if(visualObj != null) Destroy(visualObj);
+        _currentItem = item;
 
-        _inventory.Enqueue(item);
-        if (_inventory.Count == 1) SpawnVisual(item);
+        if (visualObj != null)
+        {
+            _currentVisual = visualObj;
+            _currentVisual.transform.SetParent(transform);
+        }
+        else if (item.VisualPrefab != null)
+        {
+            _currentVisual = Instantiate(item.VisualPrefab, transform);
+        }
+
+        _targetPos = transform.TransformPoint(_centerLocal);
+        _phase = ItemPhase.ToCenter;
         return true;
     }
 
-    private void SpawnVisual(ItemDefinition item)
-    {
-        if (item.VisualPrefab != null)
-        {
-            _currentVisual = Instantiate(item.VisualPrefab, transform);
-            _currentVisual.transform.localPosition = new Vector3(0, 0.5f, 0);
-            _currentVisual.transform.localRotation = Quaternion.identity;
-
-            _currentVisual.transform.localScale = Vector3.one;
-
-            foreach (var c in _currentVisual.GetComponentsInChildren<Collider>()) Destroy(c);
-            Destroy(_currentVisual.GetComponent<WorldItem>());
-        }
-    }
+    public override bool TryTakeItem(WorldItem item) => false;
 
     private void OnDrawGizmos()
     {

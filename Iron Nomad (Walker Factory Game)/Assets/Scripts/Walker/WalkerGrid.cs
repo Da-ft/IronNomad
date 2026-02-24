@@ -6,39 +6,98 @@ public class WalkerGrid : MonoBehaviour
     [SerializeField] private float _cellSize = 2f;
     public float CellSize => _cellSize;
 
-    // Datenbank: Koordinate -> Bauteil
+    // Alle verfügbaren Zellen (begehbare Fläche)
+    private HashSet<Vector2Int> _availableCells = new HashSet<Vector2Int>();
+
+    // Belegte Zellen
     private Dictionary<Vector2Int, IItemHolder> _gridObjects = new Dictionary<Vector2Int, IItemHolder>();
 
-    // Objekt Registrieren (wird vom Gebäude beim Bau aufgerufen)
+    private void Start()
+    {
+        ScanGridSurfaces();
+    }
+
+    private void ScanGridSurfaces()
+    {
+        // Alle Children mit Tag "Grid" finden
+        foreach (Transform child in GetComponentsInChildren<Transform>())
+        {
+            if (!child.CompareTag("Grid")) continue;
+
+            // Bounds der Plane im lokalen Walker-Raum berechnen
+            Renderer renderer = child.GetComponent<Renderer>();
+            if (renderer == null) continue;
+
+            // Bounds in lokale Koordinaten umrechnen
+            Bounds bounds = renderer.bounds;
+
+            // Alle Zellen innerhalb der Bounds registrieren
+            Vector3 min = transform.InverseTransformPoint(bounds.min);
+            Vector3 max = transform.InverseTransformPoint(bounds.max);
+
+            int minX = Mathf.RoundToInt(min.x / _cellSize);
+            int maxX = Mathf.RoundToInt(max.x / _cellSize);
+            int minZ = Mathf.RoundToInt(min.z / _cellSize);
+            int maxZ = Mathf.RoundToInt(max.z / _cellSize);
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int z = minZ; z <= maxZ; z++)
+                {
+                    _availableCells.Add(new Vector2Int(x, z));
+                }
+            }
+            Debug.Log($"Plane: {child.name} | Min: {min} | Max: {max} | Zellen X: {minX}~{maxX} | Z: {minZ}~{maxZ}");
+
+        }
+
+        Debug.Log($"WalkerGrid: {_availableCells.Count} Zellen gefunden.");
+    }
+
+    // --- Public API ---
+
+    public bool IsCellAvailable(Vector2Int coords)
+    {
+        return _availableCells.Contains(coords) && !_gridObjects.ContainsKey(coords);
+    }
+
+    public bool IsCellAvailable(Vector3 worldPos)
+    {
+        return IsCellAvailable(WorldToGridCoords(worldPos));
+    }
+
     public void RegisterObject(Vector3 worldPos, IItemHolder holder)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
+
+        if (!_availableCells.Contains(coords))
+        {
+            Debug.LogWarning($"'{gameObject.name}': Versuch auf ungültiger Zelle {coords} zu registrieren!");
+            return;
+        }
+
         if (_gridObjects.ContainsKey(coords))
         {
             Debug.LogWarning($"Grid-Konflikt auf {coords}! Überschrieben.");
-            _gridObjects[coords] = holder;
         }
-        else
-        {
-            _gridObjects.Add(coords, holder);
-        }
+
+        _gridObjects[coords] = holder;
     }
 
-    // Objekt austragen (beim abreißen)
     public void UnregisterObject(Vector3 worldPos)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
-        if (_gridObjects.ContainsKey(coords)) _gridObjects.Remove(coords);
+        _gridObjects.Remove(coords);
     }
 
-    // Nachbar abfragen
     public IItemHolder GetHolderAt(Vector3 worldPos)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
         return _gridObjects.TryGetValue(coords, out IItemHolder holder) ? holder : null;
     }
 
-    // Helper Method für World -> Grid Coords
+    // --- Helper ---
+
     public Vector2Int WorldToGridCoords(Vector3 worldPos)
     {
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
@@ -47,22 +106,32 @@ public class WalkerGrid : MonoBehaviour
         return new Vector2Int(x, z);
     }
 
-    // Helper Method für Grid -> Welt (für snapping)
-    public Vector3 GetNearestGridPoint(Vector3 worldPosition)
+    public Vector3 GetNearestGridPoint(Vector3 worldPos)
     {
-        Vector2Int coords = WorldToGridCoords(worldPosition);
-        Vector3 localSnaped = new Vector3(coords.x * _cellSize, 0, coords.y * _cellSize);
-        return transform.TransformPoint(localSnaped);
+        Vector2Int coords = WorldToGridCoords(worldPos);
+        Vector3 localSnapped = new Vector3(coords.x * _cellSize, 0, coords.y * _cellSize);
+        return transform.TransformPoint(localSnapped);
     }
 
-    // Gizmos zur Visualisierung belegter Felder
+    // --- Gizmos ---
+
     private void OnDrawGizmos()
     {
         Gizmos.matrix = transform.localToWorldMatrix;
+
+        // Verfügbare Zellen grau
+        Gizmos.color = new Color(1f, 1f, 1f, 0.1f);
+        foreach (var cell in _availableCells)
+        {
+            Vector3 pos = new Vector3(cell.x * _cellSize, 0.05f, cell.y * _cellSize);
+            Gizmos.DrawWireCube(pos, new Vector3(_cellSize, 0f, _cellSize));
+        }
+
+        // Belegte Zellen grün
+        Gizmos.color = Color.green;
         foreach (var kvp in _gridObjects)
         {
-            Gizmos.color = Color.green;
-            Vector3 pos = new Vector3(kvp.Key.x * _cellSize, 0.5f, kvp.Key.y * _cellSize);
+            Vector3 pos = new Vector3(kvp.Key.x * _cellSize, 0.1f, kvp.Key.y * _cellSize);
             Gizmos.DrawWireCube(pos, Vector3.one * _cellSize * 0.8f);
         }
     }

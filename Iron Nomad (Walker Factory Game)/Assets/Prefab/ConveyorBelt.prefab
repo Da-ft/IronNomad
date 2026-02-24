@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 5746429153270297964}
   - component: {fileID: 321704655409009161}
   - component: {fileID: 5252110628828448303}
-  - component: {fileID: 6797065112598564799}
   m_Layer: 6
   m_Name: ConveyorBelt
   m_TagString: Untagged
@@ -160,7 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyorBelt
   _speed: 2
-  _length: 2
   _itemSpacing: 0.6
   _startPoint: {fileID: 3214399628926075436}
   _endPoint: {fileID: 7594175435649423728}
@@ -176,21 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f16e909065251d4b9d13da4aab1b98e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextureScroller
-  _renderer: {fileID: 0}
-  _speedX: 0
-  _speedY: 1
---- !u!114 &6797065112598564799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3316047437547988934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27ae57979b77b44690a5c929337d2dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GridOccupant
 --- !u!1 &8358426981299106657
 GameObject:
   m_ObjectHideFlags: 0

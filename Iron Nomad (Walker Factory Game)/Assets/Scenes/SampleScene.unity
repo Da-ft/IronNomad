@@ -5025,6 +5025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27ae57979b77b44690a5c929337d2dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridOccupant
+  _grid: {fileID: 0}
 --- !u!4 &1518165992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3968292650429648144, guid: 8a91737b5b1d90347a0735cd846d028f, type: 3}
@@ -5577,7 +5578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1806071735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6503,18 +6504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbc81d7536c48d4986cda57783c7621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuilderTool
-  _inputReader: {fileID: 11400000, guid: 6e0667be554d71d498bd93529ce56ab7, type: 2}
-  _camTransform: {fileID: 11684515}
-  _ghostPrefab: {fileID: 4590952866319077197, guid: 37d6e7c7c6fd770489fcf8ce2064c397, type: 3}
-  _buildingPrefab: {fileID: 1983998290963712326, guid: dd18ad350cf851840bbe9a4683aa4da2, type: 3}
-  _buildLayer:
-    m_Bits: 64
-  _demolishLayer:
-    m_Bits: 64
-  _currentMode: 0
-  _currentGhost: {fileID: 0}
-  _targetGrid: {fileID: 0}
-  _targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2065809718
 MonoBehaviour:
   m_ObjectHideFlags: 0
