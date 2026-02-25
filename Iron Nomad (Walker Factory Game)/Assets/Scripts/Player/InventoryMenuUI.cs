@@ -11,7 +11,6 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
 
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
-    [SerializeField] private Transform _hotbarContainer;  // HLG_Hotbar
     [SerializeField] private Transform _inventoryContainer; // GLG_InventoryGrid
 
     [Header("Prefabs")]
@@ -21,7 +20,6 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     private bool _isOpen = false;
 
     private List<HotbarSlotUI> _allSlots = new List<HotbarSlotUI>();
-    private int _selectedIndex = 0;
 
     private void OnEnable()
     {
@@ -74,14 +72,6 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
 
     private void BuildSlots()
     {
-        // Hotbar Slots (oben im Inventar)
-        for (int i = 0; i < _inventory.HotbarSize; i++)
-        {
-            GameObject obj = Instantiate(_slotPrefab, _hotbarContainer);
-            _allSlots.Add(obj.GetComponent<HotbarSlotUI>());
-        }
-
-        // Rest der Slots
         for (int i = _inventory.HotbarSize; i < _inventory.TotalSlots; i++)
         {
             GameObject obj = Instantiate(_slotPrefab, _inventoryContainer);
@@ -93,9 +83,9 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     {
         for (int i = 0; i < _allSlots.Count; i++)
         {
-            InventorySlot data = _inventory.GetSlotAt(i);
+            InventorySlot data = _inventory.GetSlotAt(i + _inventory.HotbarSize);
             if (data != null)
-                _allSlots[i].UpdateSlot(data, i == _selectedIndex);
+                _allSlots[i].UpdateSlot(data, false);
         }
     }
 

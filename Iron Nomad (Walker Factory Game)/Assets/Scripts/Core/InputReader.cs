@@ -89,6 +89,10 @@ namespace IronNomad.Inputs
         public void OnHotbar3(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(2); }
         public void OnHotbar4(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(3); }
         public void OnHotbar5(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(4); }
+        public void OnHotbar6(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(5); }
+        public void OnHotbar7(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(6); }
+        public void OnHotbar8(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(7); }
+        public void OnHotbar9(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(8); }
 
         public void OnRotate(InputAction.CallbackContext context)
         {

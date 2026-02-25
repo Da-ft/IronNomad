@@ -33,15 +33,11 @@ public class InventorySystem : MonoBehaviour
     private void OnEnable()
     {
         if (_inputReader == null) return;
-        _inputReader.ScrollEvent += HandleScroll;
-        _inputReader.HotbarSelectEvent += HandleHotbarKey;
     }
 
     private void OnDisable()
     {
         if (_inputReader == null) return;
-        _inputReader.ScrollEvent -= HandleScroll;
-        _inputReader.HotbarSelectEvent -= HandleHotbarKey;
     }
 
     public InventorySlot GetSlotAt(int index)

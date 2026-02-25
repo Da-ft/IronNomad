@@ -3,35 +3,34 @@ using UnityEngine;
 
 public class HotbarUI : MonoBehaviour
 {
-    [SerializeField] private InventorySystem _inventory;
+    [Header("Dependencies")]
+    [SerializeField] private ToolbeltSystem _toolbelt;
+
+    [Header("UI")]
     [SerializeField] private GameObject _slotPrefab;
     [SerializeField] private Transform _slotContainer;
 
     private List<HotbarSlotUI> _slots = new List<HotbarSlotUI>();
-    private int _selectedIndex = 0;
 
     private void Start()
     {
         BuildSlots();
-        Refresh();
+        Refresh(_toolbelt.SelectedIndex);
     }
 
     private void OnEnable()
     {
-        _inventory.OnInventoryChanged += Refresh;
-        _inventory.OnSelectionChanged += OnSelectionChanged;
+        _toolbelt.OnSelectionChanged += Refresh;
     }
 
     private void OnDisable()
     {
-        _inventory.OnInventoryChanged -= Refresh;
-        _inventory.OnSelectionChanged -= OnSelectionChanged;
+        _toolbelt.OnSelectionChanged -= Refresh;
     }
 
     private void BuildSlots()
     {
-        // Hotbar Größe aus InventorySystem holen
-        for (int i = 0; i < _inventory.HotbarSize; i++)
+        for (int i = 0; i < _toolbelt.ToolCount; i++)
         {
             GameObject obj = Instantiate(_slotPrefab, _slotContainer);
             HotbarSlotUI slot = obj.GetComponent<HotbarSlotUI>();
@@ -39,18 +38,15 @@ public class HotbarUI : MonoBehaviour
         }
     }
 
-    private void Refresh()
+    private void Refresh(int selectedIndex)
     {
         for (int i = 0; i < _slots.Count; i++)
         {
-            InventorySlot data = _inventory.GetSlotAt(i);
-            _slots[i].UpdateSlot(data, i == _selectedIndex);
+            ToolDefinition tool = _toolbelt.GetToolAt(i);
+            if (tool != null)
+                _slots[i].UpdateToolSlot(tool, i == selectedIndex);
+            else
+                _slots[i].SetEmpty(i == selectedIndex);
         }
-    }
-
-    private void OnSelectionChanged(int index)
-    {
-        _selectedIndex = index;
-        Refresh();
     }
 }

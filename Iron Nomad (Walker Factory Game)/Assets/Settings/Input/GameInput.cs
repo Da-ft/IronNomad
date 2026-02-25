@@ -194,6 +194,42 @@ namespace IronNomad.Inputs
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Hotbar6"",
+                    ""type"": ""Button"",
+                    ""id"": ""0bd18146-d756-4b9f-836e-a4683a402fd1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar7"",
+                    ""type"": ""Button"",
+                    ""id"": ""188a2a22-7d4c-435d-a31d-05c2087164f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar8"",
+                    ""type"": ""Button"",
+                    ""id"": ""2e7d7cbc-1874-47d2-a90c-f2f09339fa6c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hotbar9"",
+                    ""type"": ""Button"",
+                    ""id"": ""71c57c7f-4a44-410a-9e34-063d7b7c4dcf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ToggleBuild"",
                     ""type"": ""Button"",
                     ""id"": ""a4659e87-d6cf-4ff8-81c4-6bdc0ae4e2d4"",
@@ -541,6 +577,50 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Hotbar5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""314c5064-3a67-4110-82dc-f47d9721c257"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4989da4c-b095-4ea0-976f-0a8b7550c348"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e51593f-2891-4cec-b937-082c99139416"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afec1f2a-cc9e-4f79-8a3a-16f8deba4a55"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Hotbar9"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1216,6 +1296,10 @@ namespace IronNomad.Inputs
             m_Gameplay_Hotbar3 = m_Gameplay.FindAction("Hotbar3", throwIfNotFound: true);
             m_Gameplay_Hotbar4 = m_Gameplay.FindAction("Hotbar4", throwIfNotFound: true);
             m_Gameplay_Hotbar5 = m_Gameplay.FindAction("Hotbar5", throwIfNotFound: true);
+            m_Gameplay_Hotbar6 = m_Gameplay.FindAction("Hotbar6", throwIfNotFound: true);
+            m_Gameplay_Hotbar7 = m_Gameplay.FindAction("Hotbar7", throwIfNotFound: true);
+            m_Gameplay_Hotbar8 = m_Gameplay.FindAction("Hotbar8", throwIfNotFound: true);
+            m_Gameplay_Hotbar9 = m_Gameplay.FindAction("Hotbar9", throwIfNotFound: true);
             m_Gameplay_ToggleBuild = m_Gameplay.FindAction("ToggleBuild", throwIfNotFound: true);
             m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
             m_Gameplay_Place = m_Gameplay.FindAction("Place", throwIfNotFound: true);
@@ -1327,6 +1411,10 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_Hotbar3;
         private readonly InputAction m_Gameplay_Hotbar4;
         private readonly InputAction m_Gameplay_Hotbar5;
+        private readonly InputAction m_Gameplay_Hotbar6;
+        private readonly InputAction m_Gameplay_Hotbar7;
+        private readonly InputAction m_Gameplay_Hotbar8;
+        private readonly InputAction m_Gameplay_Hotbar9;
         private readonly InputAction m_Gameplay_ToggleBuild;
         private readonly InputAction m_Gameplay_Rotate;
         private readonly InputAction m_Gameplay_Place;
@@ -1389,6 +1477,22 @@ namespace IronNomad.Inputs
             /// Provides access to the underlying input action "Gameplay/Hotbar5".
             /// </summary>
             public InputAction @Hotbar5 => m_Wrapper.m_Gameplay_Hotbar5;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar6".
+            /// </summary>
+            public InputAction @Hotbar6 => m_Wrapper.m_Gameplay_Hotbar6;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar7".
+            /// </summary>
+            public InputAction @Hotbar7 => m_Wrapper.m_Gameplay_Hotbar7;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar8".
+            /// </summary>
+            public InputAction @Hotbar8 => m_Wrapper.m_Gameplay_Hotbar8;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Hotbar9".
+            /// </summary>
+            public InputAction @Hotbar9 => m_Wrapper.m_Gameplay_Hotbar9;
             /// <summary>
             /// Provides access to the underlying input action "Gameplay/ToggleBuild".
             /// </summary>
@@ -1476,6 +1580,18 @@ namespace IronNomad.Inputs
                 @Hotbar5.started += instance.OnHotbar5;
                 @Hotbar5.performed += instance.OnHotbar5;
                 @Hotbar5.canceled += instance.OnHotbar5;
+                @Hotbar6.started += instance.OnHotbar6;
+                @Hotbar6.performed += instance.OnHotbar6;
+                @Hotbar6.canceled += instance.OnHotbar6;
+                @Hotbar7.started += instance.OnHotbar7;
+                @Hotbar7.performed += instance.OnHotbar7;
+                @Hotbar7.canceled += instance.OnHotbar7;
+                @Hotbar8.started += instance.OnHotbar8;
+                @Hotbar8.performed += instance.OnHotbar8;
+                @Hotbar8.canceled += instance.OnHotbar8;
+                @Hotbar9.started += instance.OnHotbar9;
+                @Hotbar9.performed += instance.OnHotbar9;
+                @Hotbar9.canceled += instance.OnHotbar9;
                 @ToggleBuild.started += instance.OnToggleBuild;
                 @ToggleBuild.performed += instance.OnToggleBuild;
                 @ToggleBuild.canceled += instance.OnToggleBuild;
@@ -1541,6 +1657,18 @@ namespace IronNomad.Inputs
                 @Hotbar5.started -= instance.OnHotbar5;
                 @Hotbar5.performed -= instance.OnHotbar5;
                 @Hotbar5.canceled -= instance.OnHotbar5;
+                @Hotbar6.started -= instance.OnHotbar6;
+                @Hotbar6.performed -= instance.OnHotbar6;
+                @Hotbar6.canceled -= instance.OnHotbar6;
+                @Hotbar7.started -= instance.OnHotbar7;
+                @Hotbar7.performed -= instance.OnHotbar7;
+                @Hotbar7.canceled -= instance.OnHotbar7;
+                @Hotbar8.started -= instance.OnHotbar8;
+                @Hotbar8.performed -= instance.OnHotbar8;
+                @Hotbar8.canceled -= instance.OnHotbar8;
+                @Hotbar9.started -= instance.OnHotbar9;
+                @Hotbar9.performed -= instance.OnHotbar9;
+                @Hotbar9.canceled -= instance.OnHotbar9;
                 @ToggleBuild.started -= instance.OnToggleBuild;
                 @ToggleBuild.performed -= instance.OnToggleBuild;
                 @ToggleBuild.canceled -= instance.OnToggleBuild;
@@ -1939,6 +2067,34 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnHotbar5(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar6" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar6(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar7" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar7(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar8" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar8(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Hotbar9" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnHotbar9(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "ToggleBuild" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

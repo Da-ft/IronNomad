@@ -111,12 +111,5 @@ public class BuildMenu : MonoBehaviour, IMenu
     {
         Close();
         _builderTool.SelectBuilding(building);
-        StartCoroutine(EnableBuildModeNextFrame());
-    }
-
-    private System.Collections.IEnumerator EnableBuildModeNextFrame()
-    {
-        yield return null;
-        _builderTool.EnableBuildMode();
     }
 }

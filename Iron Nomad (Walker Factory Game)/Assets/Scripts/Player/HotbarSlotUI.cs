@@ -8,9 +8,9 @@ public class HotbarSlotUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _count;
     [SerializeField] private Image _selectionHighlight;
 
+    // Für Inventar-Slots (Items)
     public void UpdateSlot(InventorySlot slot, bool isSelected)
     {
-        // Icon
         if (!slot.IsEmpty && slot.Item.Icon != null)
         {
             _icon.sprite = slot.Item.Icon;
@@ -22,10 +22,33 @@ public class HotbarSlotUI : MonoBehaviour
             _icon.enabled = false;
         }
 
-        // Count
         _count.text = !slot.IsEmpty && slot.Count > 1 ? slot.Count.ToString() : "";
+        _selectionHighlight.enabled = isSelected;
+    }
 
-        // Selection Highlight
+    // Für Toolbelt-Slots (Werkzeuge)
+    public void UpdateToolSlot(ToolDefinition tool, bool isSelected)
+    {
+        if (tool != null && tool.Icon != null)
+        {
+            _icon.sprite = tool.Icon;
+            _icon.enabled = true;
+        }
+        else
+        {
+            _icon.sprite = null;
+            _icon.enabled = false;
+        }
+
+        _count.text = "";
+        _selectionHighlight.enabled = isSelected;
+    }
+
+    public void SetEmpty(bool isSelected)
+    {
+        _icon.sprite = null;
+        _icon.enabled = false;
+        _count.text = "";
         _selectionHighlight.enabled = isSelected;
     }
 }

@@ -33,8 +33,13 @@ public class WorldItem : MonoBehaviour, IInteractable
 
     public string GetInteractPrompt() => $"Nimm {Definition.Name}";
 
-    public void OnInteract()
+    public void OnInteract(InventorySystem inventory)
     {
-        PickUp();
+        if (inventory == null) return;
+
+        if (inventory.AddItem(Definition))
+            PickUp();
+        else
+            Debug.Log("Inventar voll!");
     }
 }

@@ -106,6 +106,42 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Hotbar6",
+                    "type": "Button",
+                    "id": "0bd18146-d756-4b9f-836e-a4683a402fd1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hotbar7",
+                    "type": "Button",
+                    "id": "188a2a22-7d4c-435d-a31d-05c2087164f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hotbar8",
+                    "type": "Button",
+                    "id": "2e7d7cbc-1874-47d2-a90c-f2f09339fa6c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Hotbar9",
+                    "type": "Button",
+                    "id": "71c57c7f-4a44-410a-9e34-063d7b7c4dcf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ToggleBuild",
                     "type": "Button",
                     "id": "a4659e87-d6cf-4ff8-81c4-6bdc0ae4e2d4",
@@ -453,6 +489,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Hotbar5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "314c5064-3a67-4110-82dc-f47d9721c257",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hotbar6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4989da4c-b095-4ea0-976f-0a8b7550c348",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hotbar7",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e51593f-2891-4cec-b937-082c99139416",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hotbar8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afec1f2a-cc9e-4f79-8a3a-16f8deba4a55",
+                    "path": "<Keyboard>/9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Hotbar9",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

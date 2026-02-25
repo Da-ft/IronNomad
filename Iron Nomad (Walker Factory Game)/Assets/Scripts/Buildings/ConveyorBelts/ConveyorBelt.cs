@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ConveyorBelt : BaseGridMachine
+public class ConveyorBelt : BaseGridMachine, IInteractable
 {
     [System.Serializable]
     public class BeltItem
@@ -166,16 +166,32 @@ public class ConveyorBelt : BaseGridMachine
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        // Wir können hier nicht auf GridStepSize zugreifen wenn das Spiel nicht läuft (außer wir holen es auch hier)
-        // Einfachheitshalber nutzen wir lokal 2 oder holen es dynamisch
-        float size = 2f;
-        if (Application.isPlaying) size = GridStepSize;
+    // --- IInteractable ---
 
-        Vector3 end = transform.position + (transform.forward * size);
-        Gizmos.DrawLine(transform.position, end);
-        Gizmos.DrawWireSphere(end, 0.2f);
+    public string GetInteractPrompt()
+    {
+        if (_items.Count == 0) return "";
+        return $"[E] {_items[0].Definition.Name} aufheben";
+    }
+
+    public void OnInteract(InventorySystem inventory)
+    {
+        if (_items.Count == 0) return;
+
+        BeltItem frontItem = _items[0];
+
+        if (inventory.AddItem(frontItem.Definition))
+        {
+            // Visual zerstören
+            if (frontItem.VisualObj != null)
+                Destroy(frontItem.VisualObj);
+
+            _items.RemoveAt(0);
+            Debug.Log($"{frontItem.Definition.Name} aufgehoben!");
+        }
+        else
+        {
+            Debug.Log("Inventar voll!");
+        }
     }
 }
