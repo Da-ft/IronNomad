@@ -9,7 +9,10 @@ public class WalkerGrid : MonoBehaviour
     // Alle verfügbaren Zellen (begehbare Fläche)
     private HashSet<Vector2Int> _availableCells = new HashSet<Vector2Int>();
 
-    // Belegte Zellen
+    // Belegte Zellen (durch BuilderTool gesetzt)
+    private HashSet<Vector2Int> _occupiedCells = new HashSet<Vector2Int>();
+
+    // Item-Pipeline: Koordinate -> IItemHolder (Maschinen)
     private Dictionary<Vector2Int, IItemHolder> _gridObjects = new Dictionary<Vector2Int, IItemHolder>();
 
     private void Start()
@@ -19,19 +22,14 @@ public class WalkerGrid : MonoBehaviour
 
     private void ScanGridSurfaces()
     {
-        // Alle Children mit Tag "Grid" finden
         foreach (Transform child in GetComponentsInChildren<Transform>())
         {
             if (!child.CompareTag("Grid")) continue;
 
-            // Bounds der Plane im lokalen Walker-Raum berechnen
             Renderer renderer = child.GetComponent<Renderer>();
             if (renderer == null) continue;
 
-            // Bounds in lokale Koordinaten umrechnen
             Bounds bounds = renderer.bounds;
-
-            // Alle Zellen innerhalb der Bounds registrieren
             Vector3 min = transform.InverseTransformPoint(bounds.min);
             Vector3 max = transform.InverseTransformPoint(bounds.max);
 
@@ -41,24 +39,35 @@ public class WalkerGrid : MonoBehaviour
             int maxZ = Mathf.RoundToInt(max.z / _cellSize);
 
             for (int x = minX; x <= maxX; x++)
-            {
                 for (int z = minZ; z <= maxZ; z++)
-                {
                     _availableCells.Add(new Vector2Int(x, z));
-                }
-            }
-            Debug.Log($"Plane: {child.name} | Min: {min} | Max: {max} | Zellen X: {minX}~{maxX} | Z: {minZ}~{maxZ}");
-
         }
 
         Debug.Log($"WalkerGrid: {_availableCells.Count} Zellen gefunden.");
     }
 
-    // --- Public API ---
+    // --- Zellen-Belegung (BuilderTool) ---
+
+    public void OccupyCell(Vector3 worldPos)
+    {
+        Vector2Int coords = WorldToGridCoords(worldPos);
+        if (!_availableCells.Contains(coords))
+        {
+            Debug.LogWarning($"OccupyCell: Zelle {coords} ist nicht verfügbar!");
+            return;
+        }
+        _occupiedCells.Add(coords);
+    }
+
+    public void FreeCell(Vector3 worldPos)
+    {
+        _occupiedCells.Remove(WorldToGridCoords(worldPos));
+    }
 
     public bool IsCellAvailable(Vector2Int coords)
     {
-        return _availableCells.Contains(coords) && !_gridObjects.ContainsKey(coords);
+        return _availableCells.Contains(coords)
+            && !_occupiedCells.Contains(coords);
     }
 
     public bool IsCellAvailable(Vector3 worldPos)
@@ -66,28 +75,19 @@ public class WalkerGrid : MonoBehaviour
         return IsCellAvailable(WorldToGridCoords(worldPos));
     }
 
+    // --- Item-Pipeline (BaseGridMachine) ---
+
     public void RegisterObject(Vector3 worldPos, IItemHolder holder)
     {
         Vector2Int coords = WorldToGridCoords(worldPos);
-
-        if (!_availableCells.Contains(coords))
-        {
-            Debug.LogWarning($"'{gameObject.name}': Versuch auf ungültiger Zelle {coords} zu registrieren!");
-            return;
-        }
-
         if (_gridObjects.ContainsKey(coords))
-        {
             Debug.LogWarning($"Grid-Konflikt auf {coords}! Überschrieben.");
-        }
-
         _gridObjects[coords] = holder;
     }
 
     public void UnregisterObject(Vector3 worldPos)
     {
-        Vector2Int coords = WorldToGridCoords(worldPos);
-        _gridObjects.Remove(coords);
+        _gridObjects.Remove(WorldToGridCoords(worldPos));
     }
 
     public IItemHolder GetHolderAt(Vector3 worldPos)
@@ -129,9 +129,9 @@ public class WalkerGrid : MonoBehaviour
 
         // Belegte Zellen grün
         Gizmos.color = Color.green;
-        foreach (var kvp in _gridObjects)
+        foreach (var coords in _occupiedCells)
         {
-            Vector3 pos = new Vector3(kvp.Key.x * _cellSize, 0.1f, kvp.Key.y * _cellSize);
+            Vector3 pos = new Vector3(coords.x * _cellSize, 0.1f, coords.y * _cellSize);
             Gizmos.DrawWireCube(pos, Vector3.one * _cellSize * 0.8f);
         }
     }

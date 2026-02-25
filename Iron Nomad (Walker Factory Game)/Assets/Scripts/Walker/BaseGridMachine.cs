@@ -15,6 +15,7 @@ public abstract class BaseGridMachine : MonoBehaviour, IItemHolder
             return;
         }
 
+        // Nur noch für Item-Pipeline registrieren, keine Zellen-Belegung mehr
         _grid.RegisterObject(transform.position, this);
     }
 
@@ -23,6 +24,7 @@ public abstract class BaseGridMachine : MonoBehaviour, IItemHolder
         if (_grid != null)
         {
             _grid.UnregisterObject(transform.position);
+            _grid.FreeCell(transform.position); // Zelle freigeben
         }
     }
 

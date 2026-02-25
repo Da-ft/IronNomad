@@ -192,6 +192,33 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleBuild"",
+                    ""type"": ""Button"",
+                    ""id"": ""a4659e87-d6cf-4ff8-81c4-6bdc0ae4e2d4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""5600fb5f-3225-4454-87af-e77fef1ff524"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Place"",
+                    ""type"": ""Button"",
+                    ""id"": ""64c08c1e-5fb7-4642-a1ac-a02498cd0246"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -478,6 +505,39 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Hotbar5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""903d693c-91ef-4795-b150-7421ee7f1998"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ToggleBuild"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3f4db33-9816-42e0-b07d-c7d9d3819282"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52519980-4e20-4e8b-8e46-dd3c52c54b2b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Place"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1076,6 +1136,9 @@ namespace IronNomad.Inputs
             m_Gameplay_Hotbar3 = m_Gameplay.FindAction("Hotbar3", throwIfNotFound: true);
             m_Gameplay_Hotbar4 = m_Gameplay.FindAction("Hotbar4", throwIfNotFound: true);
             m_Gameplay_Hotbar5 = m_Gameplay.FindAction("Hotbar5", throwIfNotFound: true);
+            m_Gameplay_ToggleBuild = m_Gameplay.FindAction("ToggleBuild", throwIfNotFound: true);
+            m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
+            m_Gameplay_Place = m_Gameplay.FindAction("Place", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1180,6 +1243,9 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_Hotbar3;
         private readonly InputAction m_Gameplay_Hotbar4;
         private readonly InputAction m_Gameplay_Hotbar5;
+        private readonly InputAction m_Gameplay_ToggleBuild;
+        private readonly InputAction m_Gameplay_Rotate;
+        private readonly InputAction m_Gameplay_Place;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1235,6 +1301,18 @@ namespace IronNomad.Inputs
             /// Provides access to the underlying input action "Gameplay/Hotbar5".
             /// </summary>
             public InputAction @Hotbar5 => m_Wrapper.m_Gameplay_Hotbar5;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/ToggleBuild".
+            /// </summary>
+            public InputAction @ToggleBuild => m_Wrapper.m_Gameplay_ToggleBuild;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Rotate".
+            /// </summary>
+            public InputAction @Rotate => m_Wrapper.m_Gameplay_Rotate;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Place".
+            /// </summary>
+            public InputAction @Place => m_Wrapper.m_Gameplay_Place;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1294,6 +1372,15 @@ namespace IronNomad.Inputs
                 @Hotbar5.started += instance.OnHotbar5;
                 @Hotbar5.performed += instance.OnHotbar5;
                 @Hotbar5.canceled += instance.OnHotbar5;
+                @ToggleBuild.started += instance.OnToggleBuild;
+                @ToggleBuild.performed += instance.OnToggleBuild;
+                @ToggleBuild.canceled += instance.OnToggleBuild;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
+                @Place.started += instance.OnPlace;
+                @Place.performed += instance.OnPlace;
+                @Place.canceled += instance.OnPlace;
             }
 
             /// <summary>
@@ -1338,6 +1425,15 @@ namespace IronNomad.Inputs
                 @Hotbar5.started -= instance.OnHotbar5;
                 @Hotbar5.performed -= instance.OnHotbar5;
                 @Hotbar5.canceled -= instance.OnHotbar5;
+                @ToggleBuild.started -= instance.OnToggleBuild;
+                @ToggleBuild.performed -= instance.OnToggleBuild;
+                @ToggleBuild.canceled -= instance.OnToggleBuild;
+                @Rotate.started -= instance.OnRotate;
+                @Rotate.performed -= instance.OnRotate;
+                @Rotate.canceled -= instance.OnRotate;
+                @Place.started -= instance.OnPlace;
+                @Place.performed -= instance.OnPlace;
+                @Place.canceled -= instance.OnPlace;
             }
 
             /// <summary>
@@ -1715,6 +1811,27 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnHotbar5(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ToggleBuild" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnToggleBuild(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Rotate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnRotate(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Place" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPlace(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

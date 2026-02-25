@@ -18,6 +18,11 @@ namespace IronNomad.Inputs
         public event UnityAction<float> ScrollEvent;
         public event UnityAction<int> HotbarSelectEvent;
 
+        // --- Build Mode ---
+        public event UnityAction BuildModeEvent;
+        public event UnityAction RotateEvent;
+        public event UnityAction PlaceEvent;
+
         // --- Interface Implementation ---
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -59,5 +64,19 @@ namespace IronNomad.Inputs
         public void OnHotbar3(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(2); }
         public void OnHotbar4(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(3); }
         public void OnHotbar5(InputAction.CallbackContext context) { if (context.performed) HotbarSelectEvent?.Invoke(4); }
+        public void OnToggleBuild(InputAction.CallbackContext context)
+        {
+            if (context.performed) BuildModeEvent?.Invoke();
+        }
+
+        public void OnRotate(InputAction.CallbackContext context)
+        {
+            if (context.performed) RotateEvent?.Invoke();
+        }
+
+        public void OnPlace(InputAction.CallbackContext context)
+        {
+            if (context.performed) PlaceEvent?.Invoke();
+        }
     }
 }

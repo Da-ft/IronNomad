@@ -1,116 +1,204 @@
-//using IronNomad.Inputs;
-//using UnityEngine;
-//using UnityEngine.UIElements;
+using UnityEngine;
+using IronNomad.Inputs;
 
-//public class BuilderTool : MonoBehaviour
-//{
-//    private enum BuildMode { None, Building, Demolishing }
+public class BuilderTool : MonoBehaviour
+{
+    [Header("Dependencies")]
+    [SerializeField] private InputReader _inputReader;
+    [SerializeField] private Transform _cameraRoot;
+    [SerializeField] private WalkerGrid _grid;
 
-//    [Header("Dependencies")]
-//    [SerializeField] private InputReader _inputReader;
-//    [SerializeField] private Transform _camTransform;
+    [Header("Config")]
+    [SerializeField] private float _raycastRange = 10f;
 
-//    [Header("Config")]
-//    [SerializeField] private GameObject _ghostPrefab;
-//    [SerializeField] private GameObject _buildingPrefab;
-//    [SerializeField] private LayerMask _buildLayer;
-//    [SerializeField] private LayerMask _demolishLayer;
+    // State
+    private bool _isInBuildMode = false;
+    private BuildingDefinition _selectedBuilding;
+    private GameObject _ghostInstance;
+    private int _currentRotation = 0; // 0, 90, 180, 270
 
-//    private BuildMode _currentMode = BuildMode.None;
-//    private GameObject _currentGhost;
-//    private WalkerGrid _targetGrid;
-//    private Vector3 _targetPosition;
+    [Header("Debug")]
+    [SerializeField] private BuildingDefinition _debugBuilding;
 
-//    private void OnEnable()
-//    {
-//        _inputReader.ToggleBuildEvent += ToggleMode;
-//        _inputReader.BuildEvent += ExecuteAction;
-//    }
+    private void OnEnable()
+    {
+        _inputReader.BuildModeEvent += ToggleBuildMode;
+        _inputReader.RotateEvent += RotateGhost;
+        _inputReader.PlaceEvent += TryPlace;
+    }
 
-//    private void OnDisable()
-//    {
-//        if (_currentGhost != null) Destroy(_currentGhost);
-//    }
+    private void OnDisable()
+    {
+        _inputReader.BuildModeEvent -= ToggleBuildMode;
+        _inputReader.RotateEvent -= RotateGhost;
+        _inputReader.PlaceEvent -= TryPlace;
 
-//    private void ToggleMode()
-//    {
-//        if (_currentMode == BuildMode.None)
-//        {
-//            _currentMode = BuildMode.Building;
-//            if (_ghostPrefab) _currentGhost = Instantiate(_ghostPrefab);
-//        }
-//        else
-//        {
-//            _currentMode = BuildMode.None;
-//            if (_currentGhost) Destroy(_currentGhost);
-//        }
-//    }
+        DestroyGhost();
+    }
 
-//    private void Update()
-//    {
-//        if (_currentMode == BuildMode.None) return;
+    private void Update()
+    {
+        if (_debugBuilding != null && _selectedBuilding == null)
+            SelectBuilding(_debugBuilding);
 
-//        if (_currentMode == BuildMode.Building) HandleBuildPreview();
-//        if (_currentMode == BuildMode.Demolishing) HandleDemolishPreview();
-//    }
+        if (!_isInBuildMode || _selectedBuilding == null) return;
 
-//    private void HandleBuildPreview()
-//    {
-//        Ray ray = new Ray(_camTransform.position, _camTransform.forward);
-//        if (Physics.Raycast(ray, out RaycastHit hit, 10f, _buildLayer))
-//        {
-//            if (hit.collider.TryGetComponent(out WalkerGrid grid))
-//            {
-//                _targetGrid = grid;
-//                _targetPosition = grid.GetNearestGridPoint(hit.point);
+        UpdateGhostPosition();
+    }
 
-//                if (_currentGhost)
-//                {
-//                    _currentGhost.SetActive(true);
-//                    _currentGhost.transform.position = _targetPosition;
-//                    _currentGhost.transform.rotation = grid.transform.rotation;
+    // --- Build Mode ---
 
-//                    // TODO: Prüfen ob Platz belegt ist
-//                }
-//                return;
-//            }
-//        }
-//        if (_currentGhost) _currentGhost.SetActive(false);
-//    }
+    private void ToggleBuildMode()
+    {
+        _isInBuildMode = !_isInBuildMode;
+        Debug.Log($"Baumodus: {_isInBuildMode} | Gebäude: {_selectedBuilding?.DisplayName ?? "KEINS"}");
 
-//    private void HandleDemolishPreview()
-//    {
-//        // TODO: Gebäude fürs Abreißen highlighten
-//    }
+        if (_isInBuildMode)
+        {
+            if (_selectedBuilding != null) SpawnGhost();
+        }
+        else
+        {
+            DestroyGhost();
+        }
+    }
 
-//    private void ExecuteAction()
-//    {
-//        if (_currentMode == BuildMode.Building)
-//        {
-//            if (_targetGrid != null)
-//            {
-//                // TODO: Inventory cost check
-//                GameObject building = Instantiate(_buildingPrefab, _targetPosition, _targetGrid.transform.rotation);
-//                building.transform.SetParent(_targetGrid.transform);
+    // Wird später vom Bau-Menü aufgerufen
+    public void SelectBuilding(BuildingDefinition building)
+    {
+        _selectedBuilding = building;
+        _currentRotation = 0;
 
-//                // Add component, to dismantle later
-//                building.AddComponent<ConstructibleBuilding>();
+        DestroyGhost();
 
-//                building.layer = LayerMask.NameToLayer("Interactable");
-//            }
-//        }
+        // Nur Ghost spawnen wenn wir bereits im Baumodus sind
+        if (_isInBuildMode) SpawnGhost();
+    }
 
-//        else if (_currentMode == BuildMode.Demolishing)
-//        {
-//            // Raycast auf Gebäude
-//            Ray ray = new Ray(_camTransform.position, _camTransform.forward);
-//            if (Physics.Raycast(ray, out RaycastHit hit, 10f, _demolishLayer))
-//            {
-//                if (hit.collider.TryGetComponent(out IConstructible building))
-//                {
-//                    building.Demolish(); // TODO: Refund resources + Destroy
-//                }
-//            }
-//        }
-//    }
-//}
+    // --- Ghost ---
+
+    private void SpawnGhost()
+    {
+        if (_selectedBuilding?.BuildingPrefab == null) return;
+
+        _ghostInstance = Instantiate(_selectedBuilding.BuildingPrefab);
+
+        // Ghost Material auf alle Renderer anwenden
+        if (_selectedBuilding.GhostMaterial != null)
+        {
+            foreach (var renderer in _ghostInstance.GetComponentsInChildren<Renderer>())
+            {
+                // Alle Material-Slots mit Ghost Material ersetzen
+                Material[] mats = new Material[renderer.materials.Length];
+                for (int i = 0; i < mats.Length; i++)
+                    mats[i] = _selectedBuilding.GhostMaterial;
+                renderer.materials = mats;
+            }
+        }
+
+        // Collider deaktivieren damit der Ghost nicht mit der Welt interagiert
+        foreach (var col in _ghostInstance.GetComponentsInChildren<Collider>())
+            col.enabled = false;
+
+        // Alle MonoBehaviours deaktivieren damit keine Logik läuft
+        foreach (var mb in _ghostInstance.GetComponentsInChildren<MonoBehaviour>())
+            mb.enabled = false;
+    }
+
+    private void DestroyGhost()
+    {
+        if (_ghostInstance != null)
+        {
+            Destroy(_ghostInstance);
+            _ghostInstance = null;
+        }
+    }
+
+    private void UpdateGhostPosition()
+    {
+        if (_ghostInstance == null) return;
+
+        Ray ray = new Ray(_cameraRoot.position, _cameraRoot.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _raycastRange))
+        {
+            if (!hit.collider.CompareTag("Grid"))
+            {
+                _ghostInstance.SetActive(false);
+                return;
+            }
+
+            Vector3 snappedPos = _grid.GetNearestGridPoint(hit.point);
+            Vector2Int coords = _grid.WorldToGridCoords(hit.point);
+
+            _ghostInstance.SetActive(true);
+            _ghostInstance.transform.position = snappedPos;
+            _ghostInstance.transform.rotation = _grid.transform.rotation *
+                Quaternion.Euler(0, _currentRotation, 0);
+
+            // Farbe je nach Verfügbarkeit (optional: zwei Ghost Materials)
+            bool canPlace = _grid.IsCellAvailable(coords);
+            foreach (var renderer in _ghostInstance.GetComponentsInChildren<Renderer>())
+            {
+                // Tint: Grün = frei, Rot = belegt
+                renderer.material.color = canPlace
+                    ? new Color(0f, 1f, 0f, 0.5f)
+                    : new Color(1f, 0f, 0f, 0.5f);
+            }
+        }
+        else
+        {
+            // Kein Grid getroffen - Ghost verstecken
+            _ghostInstance.SetActive(false);
+        }
+    }
+
+    // --- Rotation ---
+
+    private void RotateGhost()
+    {
+        if (!_isInBuildMode || _ghostInstance == null) return;
+
+        _currentRotation = (_currentRotation + 90) % 360;
+        _ghostInstance.transform.rotation = _grid.transform.rotation *
+            Quaternion.Euler(0, _currentRotation, 0);
+    }
+
+    // --- Platzieren ---
+
+    private void TryPlace()
+    {
+        if (!_isInBuildMode || _selectedBuilding == null) return;
+
+        Ray ray = new Ray(_cameraRoot.position, _cameraRoot.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _raycastRange))
+        {
+            if (!hit.collider.CompareTag("Grid")) return;
+
+            Vector2Int coords = _grid.WorldToGridCoords(hit.point);
+
+            if (!_grid.IsCellAvailable(coords))
+            {
+                Debug.Log("Zelle belegt!");
+                return;
+            }
+
+            Vector3 snappedPos = _grid.GetNearestGridPoint(hit.point);
+            Quaternion rotation = _grid.transform.rotation * Quaternion.Euler(0, _currentRotation, 0);
+
+            GameObject building = Instantiate(
+                _selectedBuilding.BuildingPrefab,
+                snappedPos,
+                rotation
+            );
+
+            building.transform.SetParent(_grid.transform);
+
+            // Einheitlich: BuilderTool belegt immer die Zelle
+            _grid.OccupyCell(snappedPos);
+
+            Debug.Log($"{_selectedBuilding.DisplayName} platziert auf {coords}");
+        }
+    }
+}
