@@ -7,6 +7,9 @@ namespace IronNomad.Inputs
     [CreateAssetMenu(fileName = "InputReader", menuName = "IronNomad/InputReader")]
     public class InputReader : ScriptableObject
     {
+        // Input Flag
+        private bool _inputEnabled = true;       
+
         // --- Move Vars ---
         public event UnityAction<Vector2> MoveEvent;
         public event UnityAction<Vector2> LookEvent;
@@ -23,35 +26,49 @@ namespace IronNomad.Inputs
         public event UnityAction RotateEvent;
         public event UnityAction PlaceEvent;
 
+        // --- Demolish Mode ---
+        public event UnityAction DemolishEvent;
+        public event UnityAction DemolishConfirmEvent;
+
+        // --- Inventory Mode ---
+        public event UnityAction InventoryEvent;
+        public event UnityAction CloseMenuEvent;
+
         // --- Interface Implementation ---
         public void OnMove(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             MoveEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnLook(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             LookEvent?.Invoke(context.ReadValue<Vector2>());
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed) JumpEvent?.Invoke();
         }
 
         public void OnSprint(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed) SprintEvent?.Invoke(true);
             else if (context.canceled) SprintEvent?.Invoke(false);
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed) InteractEvent?.Invoke();
         }
 
         public void OnScroll(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed)
             {
                 float scroll = context.ReadValue<Vector2>().y;
@@ -71,12 +88,46 @@ namespace IronNomad.Inputs
 
         public void OnRotate(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed) RotateEvent?.Invoke();
         }
 
         public void OnPlace(InputAction.CallbackContext context)
         {
+            if (!_inputEnabled) return;
             if (context.performed) PlaceEvent?.Invoke();
+        }
+
+        public void DisableGameplay() => _inputEnabled = false;
+        public void EnableGameplay() => _inputEnabled = true;
+
+        public void ResetLook()
+        {
+            LookEvent?.Invoke(Vector2.zero);
+        }
+
+        public void OnDemolish(InputAction.CallbackContext context)
+        {
+            if (!_inputEnabled) return;
+            if (context.performed) DemolishEvent?.Invoke();
+        }
+
+        public void OnDemolishConfirm(InputAction.CallbackContext context)
+        {
+            if (!_inputEnabled) return;
+            if (context.performed) DemolishConfirmEvent?.Invoke();
+        }
+
+        public void OnInventory(InputAction.CallbackContext context)
+        {
+            if (!_inputEnabled) return;
+            if (context.performed) InventoryEvent?.Invoke();
+        }
+
+        public void OnCloseMenu(InputAction.CallbackContext context)
+        {
+            // Kein _inputEnabled check - immer feuern!
+            if (context.performed) CloseMenuEvent?.Invoke();
         }
     }
 }

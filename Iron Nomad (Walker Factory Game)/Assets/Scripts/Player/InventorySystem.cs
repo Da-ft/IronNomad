@@ -8,6 +8,9 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
 
     [Header("Config")]
+    public int HotbarSize => _hotbarSize;
+    public int TotalSlots => _totalSlots;
+
     [SerializeField] private int _hotbarSize = 5;
     [SerializeField] private int _totalSlots = 20;
     [SerializeField] private int _maxStackSize = 64;
@@ -39,6 +42,12 @@ public class InventorySystem : MonoBehaviour
         if (_inputReader == null) return;
         _inputReader.ScrollEvent -= HandleScroll;
         _inputReader.HotbarSelectEvent -= HandleHotbarKey;
+    }
+
+    public InventorySlot GetSlotAt(int index)
+    {
+        if (index < 0 || index >= _slots.Count) return null;
+        return _slots[index];
     }
 
     // --- Input Handling ---

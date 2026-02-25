@@ -219,6 +219,42 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Demolish"",
+                    ""type"": ""Button"",
+                    ""id"": ""d219f485-9379-495f-9763-36100c8cb90a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DemolishConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""3bf82538-7ec4-440d-b51d-626cdacd6236"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""0308f4c5-5062-403c-ad53-84d631b10660"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""cca2dfb1-f42b-43d6-a5b8-2fc5e1920ada"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -538,6 +574,72 @@ namespace IronNomad.Inputs
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Place"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee3d5ca9-3fe3-4f7c-8ba4-29dde3903a91"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Demolish"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2aeb300c-60c6-4361-a1f6-d97318be22f5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""DemolishConfirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""878499b0-811d-442a-964e-e202ffaa3ae9"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a077312-e893-4c1a-8277-d0efabee8ee4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9726e5b0-51fd-4cc7-b676-2305eba9fe01"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e91c052-73c9-4983-b9c6-15ddac0f57b2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1139,6 +1241,10 @@ namespace IronNomad.Inputs
             m_Gameplay_ToggleBuild = m_Gameplay.FindAction("ToggleBuild", throwIfNotFound: true);
             m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
             m_Gameplay_Place = m_Gameplay.FindAction("Place", throwIfNotFound: true);
+            m_Gameplay_Demolish = m_Gameplay.FindAction("Demolish", throwIfNotFound: true);
+            m_Gameplay_DemolishConfirm = m_Gameplay.FindAction("DemolishConfirm", throwIfNotFound: true);
+            m_Gameplay_Inventory = m_Gameplay.FindAction("Inventory", throwIfNotFound: true);
+            m_Gameplay_CloseMenu = m_Gameplay.FindAction("CloseMenu", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1246,6 +1352,10 @@ namespace IronNomad.Inputs
         private readonly InputAction m_Gameplay_ToggleBuild;
         private readonly InputAction m_Gameplay_Rotate;
         private readonly InputAction m_Gameplay_Place;
+        private readonly InputAction m_Gameplay_Demolish;
+        private readonly InputAction m_Gameplay_DemolishConfirm;
+        private readonly InputAction m_Gameplay_Inventory;
+        private readonly InputAction m_Gameplay_CloseMenu;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1314,6 +1424,22 @@ namespace IronNomad.Inputs
             /// </summary>
             public InputAction @Place => m_Wrapper.m_Gameplay_Place;
             /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Demolish".
+            /// </summary>
+            public InputAction @Demolish => m_Wrapper.m_Gameplay_Demolish;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/DemolishConfirm".
+            /// </summary>
+            public InputAction @DemolishConfirm => m_Wrapper.m_Gameplay_DemolishConfirm;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Inventory".
+            /// </summary>
+            public InputAction @Inventory => m_Wrapper.m_Gameplay_Inventory;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/CloseMenu".
+            /// </summary>
+            public InputAction @CloseMenu => m_Wrapper.m_Gameplay_CloseMenu;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -1381,6 +1507,18 @@ namespace IronNomad.Inputs
                 @Place.started += instance.OnPlace;
                 @Place.performed += instance.OnPlace;
                 @Place.canceled += instance.OnPlace;
+                @Demolish.started += instance.OnDemolish;
+                @Demolish.performed += instance.OnDemolish;
+                @Demolish.canceled += instance.OnDemolish;
+                @DemolishConfirm.started += instance.OnDemolishConfirm;
+                @DemolishConfirm.performed += instance.OnDemolishConfirm;
+                @DemolishConfirm.canceled += instance.OnDemolishConfirm;
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
             }
 
             /// <summary>
@@ -1434,6 +1572,18 @@ namespace IronNomad.Inputs
                 @Place.started -= instance.OnPlace;
                 @Place.performed -= instance.OnPlace;
                 @Place.canceled -= instance.OnPlace;
+                @Demolish.started -= instance.OnDemolish;
+                @Demolish.performed -= instance.OnDemolish;
+                @Demolish.canceled -= instance.OnDemolish;
+                @DemolishConfirm.started -= instance.OnDemolishConfirm;
+                @DemolishConfirm.performed -= instance.OnDemolishConfirm;
+                @DemolishConfirm.canceled -= instance.OnDemolishConfirm;
+                @Inventory.started -= instance.OnInventory;
+                @Inventory.performed -= instance.OnInventory;
+                @Inventory.canceled -= instance.OnInventory;
+                @CloseMenu.started -= instance.OnCloseMenu;
+                @CloseMenu.performed -= instance.OnCloseMenu;
+                @CloseMenu.canceled -= instance.OnCloseMenu;
             }
 
             /// <summary>
@@ -1832,6 +1982,34 @@ namespace IronNomad.Inputs
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnPlace(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Demolish" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDemolish(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "DemolishConfirm" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDemolishConfirm(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Inventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnInventory(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "CloseMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnCloseMenu(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

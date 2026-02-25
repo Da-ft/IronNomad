@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class ConstructibleBuilding : MonoBehaviour, IConstructible
 {
-    [SerializeField] private ItemDefinition _refundItem;
+    public BuildingDefinition Definition { get; private set; }
+
+    public void Initialize(BuildingDefinition definition)
+    {
+        Definition = definition;
+    }
 
     public ItemDefinition GetRefundResource()
     {
-        return _refundItem;
+        return Definition?.Costs.Length > 0 ? Definition.Costs[0].Item : null;
     }
 
     public void Demolish()
     {
-        // TODO: Play FX for demolish
-        Debug.Log($" Building {gameObject.name} abgerissen!");
-
         Destroy(gameObject);
     }
 }
