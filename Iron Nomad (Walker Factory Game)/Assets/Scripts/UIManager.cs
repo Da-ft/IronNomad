@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
 
     public void OpenMenu(IMenu menu)
     {
-        // Alle anderen schlieﬂen
         foreach (var m in _menus)
         {
             if (m != menu && m.IsOpen)

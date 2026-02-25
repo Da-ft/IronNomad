@@ -20,7 +20,7 @@ public class WalkerMiningCore : MonoBehaviour
 
         if (_timer >= timePerItem)
         {
-            Debug.Log("We Try to distribute!");
+            //Debug.Log("We Try to distribute!");
             TryDistributeOre();
             {
                 _timer = 0f; // Reset or -= timePerItem für exaktere Zeit
@@ -37,7 +37,7 @@ public class WalkerMiningCore : MonoBehaviour
             if (shaft.TryDeposit(_resourceToMine))
             {
                 // We did it!
-                Debug.Log("Erz gefördert!");
+                //Debug.Log("Erz gefördert!");
                 return;
             }
         }

@@ -17,9 +17,6 @@ public class BuilderTool : MonoBehaviour
     [SerializeField] private Material _demolishHighlightMaterial;
     [SerializeField] private LayerMask _demolishLayer;
 
-    [Header("Debug")]
-    [SerializeField] private BuildingDefinition _debugBuilding;
-
     // Build State
     private bool _isInBuildMode = false;
     private BuildingDefinition _selectedBuilding;
@@ -53,9 +50,6 @@ public class BuilderTool : MonoBehaviour
 
     private void Update()
     {
-        if (_debugBuilding != null && _selectedBuilding == null)
-            SelectBuilding(_debugBuilding);
-
         if (_isInDemolishMode)
         {
             UpdateDemolishPreview();

@@ -49,6 +49,7 @@ public class BuildMenu : MonoBehaviour, IMenu
         Cursor.visible = true;
         _inputReader.DisableGameplay();
         _inputReader.ResetLook();
+        _inputReader.ResetMove();
     }
 
     public void Close()

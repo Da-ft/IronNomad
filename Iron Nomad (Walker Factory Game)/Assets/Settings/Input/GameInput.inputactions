@@ -524,28 +524,6 @@
                 },
                 {
                     "name": "",
-                    "id": "2a077312-e893-4c1a-8277-d0efabee8ee4",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9726e5b0-51fd-4cc7-b676-2305eba9fe01",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CloseMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2e91c052-73c9-4983-b9c6-15ddac0f57b2",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

@@ -1,6 +1,7 @@
+using IronNomad.Inputs;
 using System.Collections.Generic;
 using UnityEngine;
-using IronNomad.Inputs;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class InventoryMenuUI : MonoBehaviour, IMenu
 {
@@ -22,8 +23,16 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     private List<HotbarSlotUI> _allSlots = new List<HotbarSlotUI>();
     private int _selectedIndex = 0;
 
-    private void OnEnable() => _inputReader.InventoryEvent += ToggleMenu;
-    private void OnDisable() => _inputReader.InventoryEvent -= ToggleMenu;
+    private void OnEnable()
+    {
+        _inputReader.InventoryEvent += OpenInventory;  
+        _inputReader.CloseMenuEvent += TryClose;     
+    }
+    private void OnDisable()
+    {
+        _inputReader.InventoryEvent -= OpenInventory;
+        _inputReader.CloseMenuEvent -= TryClose;
+    }
 
     private void Start()
     {
@@ -47,6 +56,7 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         Cursor.visible = true;
         _inputReader.DisableGameplay();
         _inputReader.ResetLook();
+        _inputReader.ResetMove();
         Refresh();
     }
 
@@ -59,13 +69,6 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         _inputReader.EnableGameplay();
     }
 
-    private void ToggleMenu()
-    {
-        if (_isOpen)
-            Close();
-        else
-            UIManager.Instance.OpenMenu(this);
-    }
 
     // --- Slots ---
 
@@ -94,5 +97,18 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
             if (data != null)
                 _allSlots[i].UpdateSlot(data, i == _selectedIndex);
         }
+    }
+
+    private void OpenInventory()
+    {
+        if (_isOpen)
+            Close();
+        else
+            UIManager.Instance.OpenMenu(this);
+    }
+
+    private void TryClose()
+    {
+        if (_isOpen) Close();
     }
 }
