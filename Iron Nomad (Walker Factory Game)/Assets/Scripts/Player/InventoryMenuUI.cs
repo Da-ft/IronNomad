@@ -1,7 +1,6 @@
 using IronNomad.Inputs;
 using System.Collections.Generic;
 using UnityEngine;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class InventoryMenuUI : MonoBehaviour, IMenu
 {
@@ -11,7 +10,7 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
 
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
-    [SerializeField] private Transform _inventoryContainer; // GLG_InventoryGrid
+    [SerializeField] private Transform _inventoryContainer;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _slotPrefab;
@@ -19,17 +18,20 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
 
-    private List<HotbarSlotUI> _allSlots = new List<HotbarSlotUI>();
+    private List<HotbarSlotUI> _slots = new List<HotbarSlotUI>();
 
     private void OnEnable()
     {
-        _inputReader.InventoryEvent += OpenInventory;  
-        _inputReader.CloseMenuEvent += TryClose;     
+        _inputReader.InventoryEvent += OpenInventory;
+        _inputReader.CloseMenuEvent += TryClose;
+        _inventory.OnInventoryChanged += Refresh;
     }
+
     private void OnDisable()
     {
         _inputReader.InventoryEvent -= OpenInventory;
         _inputReader.CloseMenuEvent -= TryClose;
+        _inventory.OnInventoryChanged -= Refresh;
     }
 
     private void Start()
@@ -67,25 +69,24 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         _inputReader.EnableGameplay();
     }
 
-
     // --- Slots ---
 
     private void BuildSlots()
     {
-        for (int i = _inventory.HotbarSize; i < _inventory.TotalSlots; i++)
+        for (int i = 0; i < _inventory.TotalSlots; i++)
         {
             GameObject obj = Instantiate(_slotPrefab, _inventoryContainer);
-            _allSlots.Add(obj.GetComponent<HotbarSlotUI>());
+            _slots.Add(obj.GetComponent<HotbarSlotUI>());
         }
     }
 
     private void Refresh()
     {
-        for (int i = 0; i < _allSlots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
-            InventorySlot data = _inventory.GetSlotAt(i + _inventory.HotbarSize);
+            InventorySlot data = _inventory.GetSlotAt(i);
             if (data != null)
-                _allSlots[i].UpdateSlot(data, false);
+                _slots[i].UpdateSlot(data, false);
         }
     }
 

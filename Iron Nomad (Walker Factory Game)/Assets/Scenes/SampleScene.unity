@@ -3293,6 +3293,118 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3968292650429648144, guid: 8a91737b5b1d90347a0735cd846d028f, type: 3}
   m_PrefabInstance: {fileID: 445765864}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &640585523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640585524}
+  - component: {fileID: 640585528}
+  - component: {fileID: 640585527}
+  - component: {fileID: 640585526}
+  - component: {fileID: 640585525}
+  m_Layer: 0
+  m_Name: Toolbelt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &640585524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640585523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2065809716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &640585525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640585523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ad9a0eebca54440a18988ccbd394c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MiningTool
+  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
+  _cameraRoot: {fileID: 11684515}
+  _inventory: {fileID: 2065809732}
+  _raycastRange: 5
+  _miningDamage: 25
+  _mineableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &640585526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640585523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9803d21550799342bd98a254824993f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DemolishTool
+  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
+  _cameraRoot: {fileID: 11684515}
+  _grid: {fileID: 338633675}
+  _inventory: {fileID: 2065809732}
+  _raycastRange: 5
+  _highlightMaterial: {fileID: 2100000, guid: 37a7a98ae2f09c0448759a653968b1a2, type: 2}
+  _demolishLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &640585527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640585523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbc81d7536c48d4986cda57783c7621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuilderTool
+  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
+  _cameraRoot: {fileID: 11684515}
+  _grid: {fileID: 338633675}
+  _raycastRange: 5
+--- !u!114 &640585528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640585523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6d5d1ed1a8a5764db0ff9274b0912c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToolbeltSystem
+  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
+  _tools:
+  - {fileID: 11400000, guid: b92b80b7cc09ca94fb13d8a8184251cf, type: 2}
+  - {fileID: 11400000, guid: 78e922615ae659f4c8bfac6f25406d8c, type: 2}
+  - {fileID: 11400000, guid: 132c18f3ef59f554ab4b144f23140ff6, type: 2}
+  _builderTool: {fileID: 640585527}
+  _demolishTool: {fileID: 640585526}
+  _miningTool: {fileID: 640585525}
 --- !u!4 &703918606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3968292650429648144, guid: 8a91737b5b1d90347a0735cd846d028f, type: 3}
@@ -3976,6 +4088,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1151388028547126963, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
       insertIndex: -1
       addedObject: {fileID: 11684515}
+    - targetCorrespondingSourceObject: {fileID: 1151388028547126963, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 640585524}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
       insertIndex: -1
@@ -3992,18 +4107,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2065809732}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2065809738}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2065809737}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2065809736}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2065809735}
   m_SourcePrefab: {fileID: 100100000, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
 --- !u!1001 &1119307874
 PrefabInstance:
@@ -4164,7 +4267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00248f36d971774f92f4f77ce7b847e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HotbarUI
-  _toolbelt: {fileID: 2065809738}
+  _toolbelt: {fileID: 640585528}
   _slotPrefab: {fileID: 8423086155480688810, guid: bb746cfe7fe04584b968bf413920950d, type: 3}
   _slotContainer: {fileID: 96350134}
 --- !u!1001 &1191444863
@@ -4670,7 +4773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildMenu
   _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _builderTool: {fileID: 2065809737}
+  _builderTool: {fileID: 0}
   _menuRoot: {fileID: 322300745}
   _categoryList: {fileID: 401970531}
   _buildingGrid: {fileID: 1322719198}
@@ -6359,88 +6462,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
   _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _hotbarSize: 9
   _totalSlots: 45
   _maxStackSize: 64
   _slots: []
   _selectedHotbarIndex: 0
---- !u!114 &2065809735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065809715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8ad9a0eebca54440a18988ccbd394c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MiningTool
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _cameraRoot: {fileID: 11684515}
-  _inventory: {fileID: 2065809732}
-  _raycastRange: 5
-  _miningDamage: 25
-  _mineableLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!114 &2065809736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065809715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9803d21550799342bd98a254824993f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DemolishTool
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _cameraRoot: {fileID: 11684515}
-  _grid: {fileID: 338633675}
-  _inventory: {fileID: 2065809732}
-  _raycastRange: 5
-  _highlightMaterial: {fileID: 2100000, guid: 37a7a98ae2f09c0448759a653968b1a2, type: 2}
-  _demolishLayer:
-    serializedVersion: 2
-    m_Bits: 64
---- !u!114 &2065809737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065809715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbc81d7536c48d4986cda57783c7621, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BuilderTool
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _cameraRoot: {fileID: 11684515}
-  _grid: {fileID: 338633675}
-  _raycastRange: 5
---- !u!114 &2065809738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065809715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6d5d1ed1a8a5764db0ff9274b0912c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToolbeltSystem
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-  _tools:
-  - {fileID: 11400000, guid: b92b80b7cc09ca94fb13d8a8184251cf, type: 2}
-  - {fileID: 11400000, guid: 78e922615ae659f4c8bfac6f25406d8c, type: 2}
-  - {fileID: 11400000, guid: 132c18f3ef59f554ab4b144f23140ff6, type: 2}
-  _builderTool: {fileID: 2065809737}
-  _demolishTool: {fileID: 2065809736}
-  _miningTool: {fileID: 2065809735}
 --- !u!4 &2101039431 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3968292650429648144, guid: 8a91737b5b1d90347a0735cd846d028f, type: 3}

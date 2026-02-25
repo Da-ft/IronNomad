@@ -11,15 +11,17 @@ public class HotbarSlotUI : MonoBehaviour
     // Für Inventar-Slots (Items)
     public void UpdateSlot(InventorySlot slot, bool isSelected)
     {
-        if (!slot.IsEmpty && slot.Item.Icon != null)
+        if (!slot.IsEmpty)
         {
-            _icon.sprite = slot.Item.Icon;
             _icon.enabled = true;
+            _icon.sprite = slot.Item.Icon;
+            _icon.color = slot.Item.Icon != null ? Color.white : Color.gray;
         }
         else
         {
-            _icon.sprite = null;
             _icon.enabled = false;
+            _icon.sprite = null;
+            _icon.color = Color.white;
         }
 
         _count.text = !slot.IsEmpty && slot.Count > 1 ? slot.Count.ToString() : "";

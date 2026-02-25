@@ -8,11 +8,9 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
 
     [Header("Config")]
-    public int HotbarSize => _hotbarSize;
     public int TotalSlots => _totalSlots;
 
-    [SerializeField] private int _hotbarSize = 5;
-    [SerializeField] private int _totalSlots = 20;
+    [SerializeField] private int _totalSlots = 36;
     [SerializeField] private int _maxStackSize = 64;
 
     [Header("Debug View")]
@@ -20,7 +18,6 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private int _selectedHotbarIndex = 0;
 
     public event System.Action OnInventoryChanged;
-    public event System.Action<int> OnSelectionChanged;
 
     private void Awake()
     {
@@ -44,31 +41,6 @@ public class InventorySystem : MonoBehaviour
     {
         if (index < 0 || index >= _slots.Count) return null;
         return _slots[index];
-    }
-
-    // --- Input Handling ---
-    private void HandleScroll(float direction)
-    {
-        // direction ist +1 (hoch) oder -1 (runter)
-        if (direction > 0) _selectedHotbarIndex--;
-        else _selectedHotbarIndex++;
-
-        // Wrap around
-        if (_selectedHotbarIndex < 0) _selectedHotbarIndex = _hotbarSize - 1;
-        if (_selectedHotbarIndex >= _hotbarSize) _selectedHotbarIndex = 0;
-
-        OnSelectionChanged?.Invoke(_selectedHotbarIndex);
-        Debug.Log($"Hotbar Selected: {_selectedHotbarIndex}");
-    }
-
-    private void HandleHotbarKey(int index)
-    {
-        if (index >= 0 && index < _hotbarSize)
-        {
-            _selectedHotbarIndex = index;
-            OnSelectionChanged?.Invoke(_selectedHotbarIndex);
-            Debug.Log($"Hotbar Key: {_selectedHotbarIndex}");
-        }
     }
 
     // --- Public API ---
