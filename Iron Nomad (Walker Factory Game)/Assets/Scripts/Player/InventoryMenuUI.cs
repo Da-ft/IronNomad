@@ -76,7 +76,9 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         for (int i = 0; i < _inventory.TotalSlots; i++)
         {
             GameObject obj = Instantiate(_slotPrefab, _inventoryContainer);
-            _slots.Add(obj.GetComponent<HotbarSlotUI>());
+            HotbarSlotUI slot = obj.GetComponent<HotbarSlotUI>();
+            slot.Setup(i, _inventory);
+            _slots.Add(slot);
         }
     }
 

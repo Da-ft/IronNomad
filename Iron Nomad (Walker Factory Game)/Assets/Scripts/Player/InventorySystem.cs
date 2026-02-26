@@ -135,4 +135,76 @@ public class InventorySystem : MonoBehaviour
         _totalSlots += extraSlots;
         OnInventoryChanged?.Invoke();
     }
+
+    public void SwapSlots(int indexA, int indexB)
+    {
+        if (indexA < 0 || indexA >= _slots.Count) return;
+        if (indexB < 0 || indexB >= _slots.Count) return;
+
+        InventorySlot temp = new InventorySlot();
+        temp.Add(_slots[indexA].Item, _slots[indexA].Count);
+
+        if (_slots[indexB].IsEmpty)
+            _slots[indexA].Clear();
+        else
+            _slots[indexA].Add(_slots[indexB].Item, _slots[indexB].Count);
+
+        _slots[indexB].Clear();
+        if (!temp.IsEmpty)
+            _slots[indexB].Add(temp.Item, temp.Count);
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void SortByType()
+    {
+        // Leere Slots ans Ende, Items nach Name sortieren
+        _slots.Sort((a, b) =>
+        {
+            if (a.IsEmpty && b.IsEmpty) return 0;
+            if (a.IsEmpty) return 1;
+            if (b.IsEmpty) return -1;
+            return string.Compare(a.Item.Name, b.Item.Name);
+        });
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void NotifyChanged() => OnInventoryChanged?.Invoke();
+
+    public void SplitStack(int slotIndex)
+    {
+        InventorySlot slot = GetSlotAt(slotIndex);
+        if (slot == null || slot.IsEmpty || slot.Count < 2) return;
+
+        int half = slot.Count / 2;
+        int remainder = slot.Count - half;
+
+        // Freien Slot suchen
+        for (int i = 0; i < _slots.Count; i++)
+        {
+            if (i == slotIndex) continue;
+            if (_slots[i].IsEmpty)
+            {
+                _slots[i].Add(slot.Item, half);
+                slot.Count = remainder;
+                OnInventoryChanged?.Invoke();
+                return;
+            }
+        }
+
+        Debug.Log("Kein freier Slot zum Teilen!");
+    }
+
+    public bool TakeFromStack(int slotIndex, int amount)
+    {
+        InventorySlot slot = GetSlotAt(slotIndex);
+        if (slot == null || slot.IsEmpty || slot.Count < amount) return false;
+
+        slot.Count -= amount;
+        if (slot.Count <= 0) slot.Clear();
+
+        OnInventoryChanged?.Invoke();
+        return true;
+    }
 }
