@@ -371,7 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7173535329325932732}
   - component: {fileID: 5915633734612981211}
-  - component: {fileID: 7779146767272054353}
+  - component: {fileID: 8523137257213128096}
   m_Layer: 5
   m_Name: HotbarSlot
   m_TagString: Untagged
@@ -410,7 +410,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423086155480688810}
   m_CullTransparentMesh: 1
---- !u!114 &7779146767272054353
+--- !u!114 &8523137257213128096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,9 +419,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8423086155480688810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d15187ad428cf74fa7ece710d628512, type: 3}
+  m_Script: {fileID: 11500000, guid: aea69b9b785ca654b94f744fa52d0d7b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HotbarSlotUI
+  m_EditorClassIdentifier: Assembly-CSharp::SlotUI
   _icon: {fileID: 1990645523944593748}
   _count: {fileID: 3850491871385113898}
   _selectionHighlight: {fileID: 7886981071042780423}
