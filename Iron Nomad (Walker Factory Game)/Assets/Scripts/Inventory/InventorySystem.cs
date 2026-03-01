@@ -20,11 +20,15 @@ public class InventorySystem : MonoBehaviour
             _slots.Add(new InventorySlot());
     }
 
+    // --- Slot Zugriff ---
+
     public InventorySlot GetSlotAt(int index)
     {
         if (index < 0 || index >= _slots.Count) return null;
         return _slots[index];
     }
+
+    // --- Items hinzufügen / entfernen ---
 
     public bool AddItem(ItemDefinition item, int amount = 1)
     {
@@ -60,6 +64,7 @@ public class InventorySystem : MonoBehaviour
         return false;
     }
 
+    // Entfernt eine bestimmte Anzahl eines Items per Item-Typ (sucht über alle Stacks)
     public bool RemoveItem(ItemDefinition item, int amount = 1)
     {
         int totalCount = 0;
@@ -85,6 +90,21 @@ public class InventorySystem : MonoBehaviour
         return true;
     }
 
+    // Entfernt eine bestimmte Anzahl direkt aus einem Slot per Index (z.B. für Atomizer)
+    public bool TakeFromStack(int slotIndex, int amount)
+    {
+        InventorySlot slot = GetSlotAt(slotIndex);
+        if (slot == null || slot.IsEmpty || slot.Count < amount) return false;
+
+        slot.Count -= amount;
+        if (slot.Count <= 0) slot.Clear();
+
+        OnInventoryChanged?.Invoke();
+        return true;
+    }
+
+    // --- Slot Operationen ---
+
     public void SwapSlots(int indexA, int indexB)
     {
         if (indexA < 0 || indexA >= _slots.Count) return;
@@ -104,19 +124,6 @@ public class InventorySystem : MonoBehaviour
         _slots[indexB].Clear();
         if (!temp.IsEmpty)
             _slots[indexB].Add(temp.Item, temp.Count);
-
-        OnInventoryChanged?.Invoke();
-    }
-
-    public void SortByType()
-    {
-        _slots.Sort((a, b) =>
-        {
-            if (a.IsEmpty && b.IsEmpty) return 0;
-            if (a.IsEmpty) return 1;
-            if (b.IsEmpty) return -1;
-            return string.Compare(a.Item.Name, b.Item.Name);
-        });
 
         OnInventoryChanged?.Invoke();
     }
@@ -142,6 +149,19 @@ public class InventorySystem : MonoBehaviour
         }
 
         Debug.Log("Kein freier Slot zum Teilen!");
+    }
+
+    public void SortByType()
+    {
+        _slots.Sort((a, b) =>
+        {
+            if (a.IsEmpty && b.IsEmpty) return 0;
+            if (a.IsEmpty) return 1;
+            if (b.IsEmpty) return -1;
+            return string.Compare(a.Item.Name, b.Item.Name);
+        });
+
+        OnInventoryChanged?.Invoke();
     }
 
     public void ExpandInventory(int extraSlots)
