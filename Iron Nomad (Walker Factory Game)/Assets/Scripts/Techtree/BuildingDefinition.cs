@@ -26,5 +26,7 @@ public class BuildingDefinition : ScriptableObject
     public BuildingCost[] Costs;
 
     [Header("Tech Tree")]
-    public bool IsUnlockedByDefault = true;
+    public bool IsUnlockedByDefault = false;
+    public ItemDefinition[] ItemRequirements;
+    public BuildingDefinition[] BuildingRequirements;
 }
