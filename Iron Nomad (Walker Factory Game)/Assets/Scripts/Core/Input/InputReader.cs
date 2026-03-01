@@ -7,41 +7,32 @@ namespace IronNomad.Inputs
     [CreateAssetMenu(fileName = "InputReader", menuName = "IronNomad/InputReader")]
     public class InputReader : ScriptableObject
     {
-        // Input Flag
         private bool _inputEnabled = true;
 
-        // ScriptableObjects persistieren im Editor zwischen Play-Sessions
-        // OnEnable stellt sicher dass der Flag immer resettet wird
-        private void OnEnable()
-        {
-            _inputEnabled = true;
-        }
+        private void OnEnable() => _inputEnabled = true;
 
-        // --- Move Vars ---
+        // --- Events ---
         public event UnityAction<Vector2> MoveEvent;
         public event UnityAction<Vector2> LookEvent;
         public event UnityAction JumpEvent;
         public event UnityAction<bool> SprintEvent;
 
-        // --- Inventory System ---
         public event UnityAction InteractEvent;
         public event UnityAction<float> ScrollEvent;
         public event UnityAction<int> HotbarSelectEvent;
 
-        // --- Build Mode ---
         public event UnityAction BuildModeEvent;
         public event UnityAction RotateEvent;
         public event UnityAction PlaceEvent;
 
-        // --- Demolish Mode ---
         public event UnityAction DemolishEvent;
         public event UnityAction DemolishConfirmEvent;
 
-        // --- Menus ---
         public event UnityAction InventoryEvent;
         public event UnityAction CloseMenuEvent;
 
-        // --- Interface Implementation ---
+        // --- Input Callbacks ---
+
         public void OnMove(InputAction.CallbackContext context)
         {
             if (!_inputEnabled) return;
@@ -67,10 +58,15 @@ namespace IronNomad.Inputs
             else if (context.canceled) SprintEvent?.Invoke(false);
         }
 
+        // Interact feuert immer – wenn Gameplay disabled, dient es als "Menü schließen"
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if (!_inputEnabled) return;
-            if (context.performed) InteractEvent?.Invoke();
+            if (!context.performed) return;
+
+            if (_inputEnabled)
+                InteractEvent?.Invoke();
+            else
+                CloseMenuEvent?.Invoke();
         }
 
         public void OnScroll(InputAction.CallbackContext context)
@@ -135,17 +131,11 @@ namespace IronNomad.Inputs
         }
 
         // --- Helpers ---
+
         public void DisableGameplay() => _inputEnabled = false;
         public void EnableGameplay() => _inputEnabled = true;
 
-        public void ResetLook()
-        {
-            LookEvent?.Invoke(Vector2.zero);
-        }
-
-        public void ResetMove()
-        {
-            MoveEvent?.Invoke(Vector2.zero);
-        }
+        public void ResetLook() => LookEvent?.Invoke(Vector2.zero);
+        public void ResetMove() => MoveEvent?.Invoke(Vector2.zero);
     }
 }

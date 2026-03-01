@@ -16,31 +16,23 @@ public class BuilderTool : BaseTool
 
     public override void OnEquip()
     {
-        _inputReader.RotateEvent += RotateGhost;
         _inputReader.PlaceEvent += TryPlace;
-        _inputReader.BuildModeEvent += OpenBuildMenu;
-
-        if (_selectedBuilding != null) SpawnGhost();
+        _inputReader.RotateEvent += RotateGhost;
     }
 
     public override void OnUnequip()
     {
-        _inputReader.RotateEvent -= RotateGhost;
         _inputReader.PlaceEvent -= TryPlace;
-        _inputReader.BuildModeEvent -= OpenBuildMenu;
+        _inputReader.RotateEvent -= RotateGhost;
 
         DestroyGhost();
+        _selectedBuilding = null;
     }
 
     private void Update()
     {
         if (_selectedBuilding == null) return;
         UpdateGhostPosition();
-    }
-
-    private void OpenBuildMenu()
-    {
-        UIManager.Instance.OpenMenu(FindAnyObjectByType<BuildMenu>());
     }
 
     public void SelectBuilding(BuildingDefinition building)

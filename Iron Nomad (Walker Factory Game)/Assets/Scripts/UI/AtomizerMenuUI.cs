@@ -18,16 +18,6 @@ public class AtomizerMenuUI : MonoBehaviour, IMenu
     private bool _isOpen = false;
     private InventorySystem _inventory;
 
-    private void OnEnable()
-    {
-        _inputReader.CloseMenuEvent += TryClose;
-    }
-
-    private void OnDisable()
-    {
-        _inputReader.CloseMenuEvent -= TryClose;
-    }
-
     private void Start()
     {
         UIManager.Instance.RegisterMenu(this);
@@ -60,17 +50,12 @@ public class AtomizerMenuUI : MonoBehaviour, IMenu
         SetFeedback("");
     }
 
+    // Close macht nur das UI zu – gibt Item zurück ins Inventar
     public void Close()
     {
         _isOpen = false;
-
-        // Item zurück ins Inventar falls noch im Slot
         _itemSlot.ReturnItemToInventory();
-
         _menuRoot.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        _inputReader.EnableGameplay();
     }
 
     // --- Atomize ---
@@ -91,7 +76,6 @@ public class AtomizerMenuUI : MonoBehaviour, IMenu
             return;
         }
 
-        // Item aus Slot entfernen und atomisieren
         _itemSlot.ClearSlot();
         TechTreeSystem.Instance.Discover(item);
         SetFeedback($"{item.Name} atomisiert!");
@@ -101,10 +85,5 @@ public class AtomizerMenuUI : MonoBehaviour, IMenu
     {
         if (_feedbackText != null)
             _feedbackText.text = message;
-    }
-
-    private void TryClose()
-    {
-        if (_isOpen) Close();
     }
 }

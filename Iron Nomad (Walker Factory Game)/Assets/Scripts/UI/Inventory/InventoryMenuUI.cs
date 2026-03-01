@@ -12,7 +12,7 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
     [SerializeField] private Transform _inventoryContainer;
-    [SerializeField] private Button _sortButton; // SortButtonUI ist jetzt hier integriert
+    [SerializeField] private Button _sortButton;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _slotPrefab;
@@ -24,15 +24,13 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
 
     private void OnEnable()
     {
-        _inputReader.InventoryEvent += OpenInventory;
-        _inputReader.CloseMenuEvent += TryClose;
+        _inputReader.InventoryEvent += ToggleInventory;
         _inventory.OnInventoryChanged += Refresh;
     }
 
     private void OnDisable()
     {
-        _inputReader.InventoryEvent -= OpenInventory;
-        _inputReader.CloseMenuEvent -= TryClose;
+        _inputReader.InventoryEvent -= ToggleInventory;
         _inventory.OnInventoryChanged -= Refresh;
     }
 
@@ -65,13 +63,11 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         Refresh();
     }
 
+    // Close macht nur das UI zu – Cursor/Gameplay regelt UIManager.CloseAll()
     public void Close()
     {
         _isOpen = false;
         _menuRoot.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        _inputReader.EnableGameplay();
     }
 
     // --- Slots ---
@@ -97,14 +93,9 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         }
     }
 
-    private void OpenInventory()
+    private void ToggleInventory()
     {
-        if (_isOpen) Close();
+        if (_isOpen) UIManager.Instance.CloseAll();
         else UIManager.Instance.OpenMenu(this);
-    }
-
-    private void TryClose()
-    {
-        if (_isOpen) Close();
     }
 }

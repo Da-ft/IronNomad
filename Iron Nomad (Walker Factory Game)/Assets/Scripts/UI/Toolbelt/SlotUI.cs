@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-// Ehemals HotbarSlotUI – wird für Inventar-Slots UND Toolbelt-Slots verwendet
 public class SlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler,
     IPointerClickHandler
@@ -39,14 +38,6 @@ public class SlotUI : MonoBehaviour,
         }
 
         _count.text = !slot.IsEmpty && slot.Count > 1 ? slot.Count.ToString() : "";
-        _selectionHighlight.enabled = isSelected;
-    }
-
-    public void UpdateToolSlot(ToolDefinition tool, bool isSelected)
-    {
-        _icon.sprite = tool?.Icon;
-        _icon.enabled = tool?.Icon != null;
-        _count.text = "";
         _selectionHighlight.enabled = isSelected;
     }
 

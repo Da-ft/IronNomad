@@ -7,7 +7,6 @@ public class BuildMenu : MonoBehaviour, IMenu
 {
     [Header("Dependencies")]
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private BuilderTool _builderTool;
 
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
@@ -23,9 +22,8 @@ public class BuildMenu : MonoBehaviour, IMenu
 
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
-
-    private void OnEnable() => _inputReader.BuildModeEvent += ToggleMenu;
-    private void OnDisable() => _inputReader.BuildModeEvent -= ToggleMenu;
+    private bool _isEnabled = false;
+    private BuilderTool _builderTool;
 
     private void Start()
     {
@@ -39,10 +37,22 @@ public class BuildMenu : MonoBehaviour, IMenu
         UIManager.Instance?.UnregisterMenu(this);
     }
 
+    public void SetEnabled(bool enabled, BuilderTool tool)
+    {
+        _isEnabled = enabled;
+        _builderTool = enabled ? tool : null;
+
+        if (enabled)
+            _inputReader.BuildModeEvent += ToggleMenu;
+        else
+            _inputReader.BuildModeEvent -= ToggleMenu;
+    }
+
     // --- IMenu ---
 
     public void Open()
     {
+        if (!_isEnabled) return;
         _isOpen = true;
         _menuRoot.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -52,21 +62,17 @@ public class BuildMenu : MonoBehaviour, IMenu
         _inputReader.ResetMove();
     }
 
+    // Close macht nur das UI zu
     public void Close()
     {
         _isOpen = false;
         _menuRoot.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        _inputReader.EnableGameplay();
     }
 
     private void ToggleMenu()
     {
-        if (_isOpen)
-            Close();
-        else
-            UIManager.Instance.OpenMenu(this);
+        if (_isOpen) UIManager.Instance.CloseAll();
+        else UIManager.Instance.OpenMenu(this);
     }
 
     // --- Category & Building Lists ---
@@ -109,7 +115,7 @@ public class BuildMenu : MonoBehaviour, IMenu
 
     private void OnBuildingSelected(BuildingDefinition building)
     {
-        Close();
-        _builderTool.SelectBuilding(building);
+        UIManager.Instance.CloseAll();
+        _builderTool?.SelectBuilding(building);
     }
 }
