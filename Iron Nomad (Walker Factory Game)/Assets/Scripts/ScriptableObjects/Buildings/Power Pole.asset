@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6110c864c6a2e9f498fb69cde51003ad, type: 3}
-  m_Name: Splitter
+  m_Name: Power Pole
   m_EditorClassIdentifier: Assembly-CSharp::BuildingDefinition
-  DisplayName: Splitter
+  DisplayName: Power Pole
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: This is a Splitter!
-  Category: {fileID: 11400000, guid: f144be1df5e8d3b4d83c1808276b0074, type: 2}
-  BuildingPrefab: {fileID: 3410701040214658711, guid: 8c092de52b3bd4a4c90766074d52ce55, type: 3}
+  Description: This is a Power Pole!
+  Category: {fileID: 11400000, guid: 14205f7a6694f95499ef5b3b06c6cd2c, type: 2}
+  BuildingPrefab: {fileID: 6091608410641460752, guid: eacc3ae415c55634ab5398ff1b3c2774, type: 3}
   GhostMaterial: {fileID: 2100000, guid: 0b4b0a6341d8d5b4a8e8ea173c23b2b6, type: 2}
   Costs: []
   IsUnlockedByDefault: 1

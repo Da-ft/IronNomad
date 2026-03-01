@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc9bc0948857294086131d452097eab, type: 3}
+  m_Script: {fileID: 11500000, guid: 6110c864c6a2e9f498fb69cde51003ad, type: 3}
   m_Name: Foundry
   m_EditorClassIdentifier: Assembly-CSharp::BuildingDefinition
   DisplayName: Foundry
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: This is a Foundry!
+  Description: This is a Foundry
   Category: {fileID: 11400000, guid: 521c11d875f3fb443b5db6aa7b6e3369, type: 2}
   BuildingPrefab: {fileID: 5896019318494756091, guid: d73df6dec7aaeea4e950ab2a55aad6f3, type: 3}
   GhostMaterial: {fileID: 2100000, guid: 0b4b0a6341d8d5b4a8e8ea173c23b2b6, type: 2}
   Costs: []
   IsUnlockedByDefault: 1
+  ItemRequirements: []
+  BuildingRequirements: []

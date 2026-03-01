@@ -3446,7 +3446,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0faa2edc68841b94ba7908a21b2c5c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TechTreeSystem
-  _allBuildings: []
+  _allBuildings:
+  - {fileID: 0}
 --- !u!4 &539623702
 Transform:
   m_ObjectHideFlags: 0
@@ -3780,7 +3781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &773461071
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5513,6 +5514,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a57da090e353ac6488056637b73de2f2, type: 2}
   - {fileID: 11400000, guid: c062be0e7ccccf64ca3bd098f20a615b, type: 2}
   - {fileID: 11400000, guid: dd3293421fc79a34abf627bdb35a1b72, type: 2}
+  - {fileID: 11400000, guid: 85103b818a2e27d4f846af95632b293d, type: 2}
 --- !u!4 &1487100547
 Transform:
   m_ObjectHideFlags: 0
