@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Deko
   m_EditorClassIdentifier: Assembly-CSharp::BuildingCategory
   DisplayName: Deko
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: Deco for all Decoratives!
+  Icon: {fileID: 0}
+  Description: This is fancy!

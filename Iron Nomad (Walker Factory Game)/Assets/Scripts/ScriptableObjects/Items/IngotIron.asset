@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef3977070b1b31a4aac287e1593a7656, type: 3}
-  m_Name: IronOre
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDefiniton
-  Name: Iron Ore
+  m_Name: IngotIron
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  Name: Iron Ingot
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  VisualPrefab: {fileID: 5154904628276600311, guid: 0c1d0d3d3c24974468219bb499d00f67, type: 3}
-  Description: This is Iron Ore!
+  VisualPrefab: {fileID: 0}
+  Description: Isnt it ironic?

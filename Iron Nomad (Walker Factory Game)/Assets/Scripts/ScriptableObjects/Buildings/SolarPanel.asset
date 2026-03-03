@@ -10,21 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6110c864c6a2e9f498fb69cde51003ad, type: 3}
-  m_Name: Power Pole
+  m_Name: SolarPanel
   m_EditorClassIdentifier: Assembly-CSharp::BuildingDefinition
-  DisplayName: Power Pole
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: This is a Power Pole!
+  DisplayName: Solar Panel
+  Icon: {fileID: 0}
+  Description: It generates energy with the power of the SUN!
   Category: {fileID: 11400000, guid: 14205f7a6694f95499ef5b3b06c6cd2c, type: 2}
-  BuildingPrefab: {fileID: 6091608410641460752, guid: eacc3ae415c55634ab5398ff1b3c2774, type: 3}
+  BuildingPrefab: {fileID: 0}
   GhostMaterial: {fileID: 2100000, guid: 0b4b0a6341d8d5b4a8e8ea173c23b2b6, type: 2}
   Costs:
-  - Item: {fileID: 11400000, guid: 677d6990bfdc36143a7b769c9e2a1ae4, type: 2}
-    Amount: 1
   - Item: {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
+    Amount: 5
+  - Item: {fileID: 11400000, guid: 59d7665e183c9fc4d87f45654e90ed8f, type: 2}
     Amount: 3
+  - Item: {fileID: 11400000, guid: 101675364220978458f06bc56c7b6d59, type: 2}
+    Amount: 5
   IsUnlockedByDefault: 0
   ItemRequirements:
-  - {fileID: 11400000, guid: 677d6990bfdc36143a7b769c9e2a1ae4, type: 2}
   - {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
-  BuildingRequirements: []
+  - {fileID: 11400000, guid: 59d7665e183c9fc4d87f45654e90ed8f, type: 2}
+  - {fileID: 11400000, guid: 101675364220978458f06bc56c7b6d59, type: 2}
+  BuildingRequirements:
+  - {fileID: 11400000, guid: 85103b818a2e27d4f846af95632b293d, type: 2}
