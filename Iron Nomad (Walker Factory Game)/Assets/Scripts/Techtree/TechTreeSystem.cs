@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class TechTreeSystem : MonoBehaviour
@@ -15,6 +16,8 @@ public class TechTreeSystem : MonoBehaviour
 
     private void Awake()
     {
+        _allBuildings = new List<BuildingDefinition>(Resources.LoadAll<BuildingDefinition>("Buildings"));
+
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
