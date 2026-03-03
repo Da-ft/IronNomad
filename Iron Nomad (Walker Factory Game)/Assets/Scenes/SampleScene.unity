@@ -5722,12 +5722,12 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1205055028}
   - {fileID: 877177620}
   - {fileID: 908322815}
   - {fileID: 322300746}
   - {fileID: 560092806}
   - {fileID: 1849560448}
+  - {fileID: 1205055028}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6935,6 +6935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractor
   _interactionRange: 3
+  _interactionRadius: 0.3
   _interactionLayer:
     serializedVersion: 2
     m_Bits: 64

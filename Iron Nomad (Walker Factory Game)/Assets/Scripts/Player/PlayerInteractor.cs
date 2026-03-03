@@ -5,6 +5,7 @@ public class PlayerInteractor : MonoBehaviour
 {
     [Header("Config")]
     [SerializeField] private float _interactionRange = 3f;
+    [SerializeField] private float _interactionRadius = 0.3f; // SphereCast Radius
     [SerializeField] private LayerMask _interactionLayer;
 
     [Header("Dependencies")]
@@ -24,7 +25,9 @@ public class PlayerInteractor : MonoBehaviour
     private void TryInteract()
     {
         Ray ray = new Ray(_cameraRoot.position, _cameraRoot.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, _interactionRange, _interactionLayer))
+
+        // SphereCast statt Raycast - verzeiht ungenaues Anvisieren
+        if (Physics.SphereCast(ray, _interactionRadius, out RaycastHit hit, _interactionRange, _interactionLayer))
         {
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
             if (interactable != null)

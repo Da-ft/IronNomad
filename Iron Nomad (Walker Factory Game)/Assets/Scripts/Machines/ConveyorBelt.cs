@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections.Generic;
 
 public class ConveyorBelt : BaseGridMachine, IInteractable
@@ -62,7 +62,7 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
             float t = current.CurrentDistance / totalLength;
             if (_startPoint && _endPoint && current.VisualObj)
             {
-                current.VisualObj.transform.localPosition = Vector3.Lerp(_startPoint.localPosition, _endPoint.localPosition, t);
+                current.VisualObj.transform.position = Vector3.Lerp(_startPoint.position, _endPoint.position, t);
             }
         }
     }
@@ -127,41 +127,43 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
         if (existingVisual != null)
         {
             newItem.VisualObj = existingVisual;
-            newItem.VisualObj.transform.SetParent(transform); // Umhängen
-
-            if (_startPoint)
-            {
-                newItem.VisualObj.transform.position = _startPoint.position;
-                newItem.VisualObj.transform.rotation = _startPoint.rotation;
-
-                newItem.VisualObj.transform.localScale = Vector3.one;
-            }
+            PlaceVisualOnBelt(newItem.VisualObj, itemDef);
         }
-
         else if (itemDef.VisualPrefab != null && _startPoint != null)
         {
-            newItem.VisualObj = Instantiate(itemDef.VisualPrefab, _startPoint.position, _startPoint.rotation);
-            newItem.VisualObj.transform.SetParent(transform);
-
-            SetupVisualItem(newItem.VisualObj, itemDef);
+            newItem.VisualObj = Instantiate(itemDef.VisualPrefab, _startPoint.position, Quaternion.identity);
+            PlaceVisualOnBelt(newItem.VisualObj, itemDef);
         }
 
         _items.Add(newItem);
         return true;
     }
 
-    private void SetupVisualItem(GameObject obj, ItemDefinition def)
+    private void PlaceVisualOnBelt(GameObject obj, ItemDefinition def)
     {
+        // Erst losloesen damit kein falscher Parent-Scale drinsteckt
+        obj.transform.SetParent(null);
+        Vector3 worldScale = obj.transform.localScale;
+        obj.transform.SetParent(transform);
+
+        // Scale in World-Space wiederherstellen
+        obj.transform.localScale = new Vector3(
+            worldScale.x / transform.lossyScale.x,
+            worldScale.y / transform.lossyScale.y,
+            worldScale.z / transform.lossyScale.z
+        );
+
+        obj.transform.position = _startPoint != null ? _startPoint.position : transform.position;
+        obj.transform.rotation = Quaternion.identity;
+
         WorldItem wi = obj.GetComponent<WorldItem>();
-
         if (wi == null) wi = obj.AddComponent<WorldItem>();
-
         wi.Initialize(def, this);
 
-        if(!obj.GetComponent<Collider>())
+        if (!obj.GetComponent<Collider>())
         {
             var box = obj.AddComponent<BoxCollider>();
-            box.size = Vector3.one * 0.5f;
+            box.size = Vector3.one * 0.4f;
             box.isTrigger = true;
         }
     }
@@ -182,7 +184,7 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
 
         if (inventory.AddItem(frontItem.Definition))
         {
-            // Visual zerstören
+            // Visual zerstï¿½ren
             if (frontItem.VisualObj != null)
                 Destroy(frontItem.VisualObj);
 

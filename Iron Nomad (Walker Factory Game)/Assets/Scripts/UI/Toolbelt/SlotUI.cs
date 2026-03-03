@@ -20,8 +20,6 @@ public class SlotUI : MonoBehaviour,
         _inventory = inventory;
     }
 
-    // --- Display ---
-
     public void UpdateSlot(InventorySlot slot, bool isSelected)
     {
         if (!slot.IsEmpty)
@@ -36,7 +34,6 @@ public class SlotUI : MonoBehaviour,
             _icon.sprite = null;
             _icon.color = Color.white;
         }
-
         _count.text = !slot.IsEmpty && slot.Count > 1 ? slot.Count.ToString() : "";
         _selectionHighlight.enabled = isSelected;
     }
@@ -49,15 +46,11 @@ public class SlotUI : MonoBehaviour,
         _selectionHighlight.enabled = isSelected;
     }
 
-    // --- Drag & Drop ---
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left) return;
-
         InventorySlot slot = _inventory?.GetSlotAt(SlotIndex);
         if (slot == null || slot.IsEmpty) return;
-
         DragDropManager.Instance.BeginDrag(SlotIndex, slot.Item.Icon);
         _icon.enabled = false;
     }
@@ -69,32 +62,30 @@ public class SlotUI : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragDropManager.Instance.EndDrag();
+        // Icon wiederherstellen - OnDrop hat zu diesem Punkt bereits gefeuert
         InventorySlot slot = _inventory?.GetSlotAt(SlotIndex);
         if (slot != null && !slot.IsEmpty)
             _icon.enabled = true;
+
+        // EndDrag NACH Icon-Update aufrufen
+        DragDropManager.Instance.EndDrag();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
+        // Feuert VOR OnEndDrag - IsDragging ist hier noch true
         if (!DragDropManager.Instance.IsDragging) return;
-
         int fromIndex = DragDropManager.Instance.DraggedSlotIndex;
         if (fromIndex == SlotIndex) return;
-
         _inventory?.SwapSlots(fromIndex, SlotIndex);
     }
-
-    // --- Rechtsklick: Stack halbieren ---
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_inventory == null) return;
         if (eventData.button != PointerEventData.InputButton.Right) return;
-
         InventorySlot slot = _inventory.GetSlotAt(SlotIndex);
         if (slot == null || slot.IsEmpty) return;
-
         _inventory.SplitStack(SlotIndex);
     }
 }

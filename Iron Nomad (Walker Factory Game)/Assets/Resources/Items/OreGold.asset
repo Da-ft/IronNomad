@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OreGold
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Gold Ore
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 5eedf5cfd8346bd43b566520a78ae308, type: 3}
   VisualPrefab: {fileID: 0}
   Description: This is Gold Ore!

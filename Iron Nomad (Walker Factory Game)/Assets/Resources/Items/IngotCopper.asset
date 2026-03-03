@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: IngotCopper
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Copper Ingot
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 0dad8f671d0375246b213d52092cedee, type: 3}
   VisualPrefab: {fileID: 0}
   Description: Onge.
