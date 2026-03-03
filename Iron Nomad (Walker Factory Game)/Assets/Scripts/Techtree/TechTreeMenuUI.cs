@@ -15,13 +15,18 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _nodePrefab;
-    [SerializeField] private GameObject _linePrefab; // Einfaches Image (1px hoch, weiß)
+    [SerializeField] private GameObject _linePrefab;
 
     [Header("Layout Config")]
     [SerializeField] private float _nodeWidth = 200f;
     [SerializeField] private float _nodeHeight = 120f;
     [SerializeField] private float _horizontalSpacing = 280f;
-    [SerializeField] private float _verticalSpacing = 160f;
+    [SerializeField] private float _verticalSpacing = 200f;
+
+    [Header("Zoom")]
+    [SerializeField] private float _zoomMin = 0.3f;
+    [SerializeField] private float _zoomMax = 1f;
+    [SerializeField] private float _zoomStep = 0.1f;
 
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
@@ -29,6 +34,11 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
     private Dictionary<BuildingDefinition, TechTreeNodeUI> _nodes = new();
     private List<GameObject> _lines = new();
 
+    private void Awake()
+    {
+        _allBuildings = new List<BuildingDefinition>(Resources.LoadAll<BuildingDefinition>("Buildings"));
+
+    }
     private void Start()
     {
         UIManager.Instance.RegisterMenu(this);
@@ -41,8 +51,6 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         UIManager.Instance?.UnregisterMenu(this);
     }
 
-    // --- IMenu ---
-
     public void Open()
     {
         _isOpen = true;
@@ -52,31 +60,51 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         _inputReader.DisableGameplay();
         _inputReader.ResetLook();
         _inputReader.ResetMove();
+        _inputReader.ScrollEvent += HandleZoom;
     }
 
     public void Close()
     {
         _isOpen = false;
         _menuRoot.SetActive(false);
+        _inputReader.ScrollEvent -= HandleZoom;
     }
 
-    // --- Graph ---
+    private void HandleZoom(float direction)
+    {
+        float currentScale = _graphContainer.localScale.x;
+        float newScale = Mathf.Clamp(currentScale + direction * _zoomStep, _zoomMin, _zoomMax);
+        if (Mathf.Approximately(currentScale, newScale)) return;
+
+        // Mausposition relativ zum GraphContainer vor dem Zoom
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _graphContainer,
+            UnityEngine.InputSystem.Mouse.current.position.ReadValue(),
+            null,
+            out Vector2 localMousePos
+        );
+
+        // Skalieren
+        _graphContainer.localScale = Vector3.one * newScale;
+
+        // Position verschieben damit der Punkt unter der Maus stabil bleibt
+        float scaleDelta = newScale - currentScale;
+        _graphContainer.anchoredPosition -= localMousePos * scaleDelta;
+    }
 
     private void BuildGraph()
     {
         Dictionary<BuildingDefinition, int> depths = CalculateDepths();
-        Dictionary<int, List<BuildingDefinition>> columns = GroupByDepth(depths);
+        Dictionary<int, List<BuildingDefinition>> rows = GroupByDepth(depths);
 
-        // Nodes spawnen und positionieren
-        foreach (var (depth, buildings) in columns)
+        foreach (var (depth, buildings) in rows)
         {
             int count = buildings.Count;
             for (int i = 0; i < count; i++)
             {
                 BuildingDefinition building = buildings[i];
-
-                float x = depth * _horizontalSpacing;
-                float y = (i - (count - 1) / 2f) * -_verticalSpacing;
+                float x = (i - (count - 1) / 2f) * _horizontalSpacing;
+                float y = -depth * _verticalSpacing;
 
                 GameObject obj = Instantiate(_nodePrefab, _graphContainer);
                 RectTransform rt = obj.GetComponent<RectTransform>();
@@ -89,13 +117,7 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
             }
         }
 
-        // Verbindungslinien zeichnen (nach dem nächsten Frame damit Positionen stimmen)
-        StartCoroutine(DrawLinesNextFrame());
-    }
-
-    private System.Collections.IEnumerator DrawLinesNextFrame()
-    {
-        yield return null;
+        Canvas.ForceUpdateCanvases();
         DrawLines();
     }
 
@@ -114,12 +136,11 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
     private void DrawLine(RectTransform from, RectTransform to)
     {
         GameObject lineObj = Instantiate(_linePrefab, _graphContainer);
-        lineObj.transform.SetAsFirstSibling(); // Linien hinter Nodes
+        lineObj.transform.SetAsFirstSibling();
 
         RectTransform line = lineObj.GetComponent<RectTransform>();
-
-        Vector2 fromPos = from.anchoredPosition;
-        Vector2 toPos = to.anchoredPosition;
+        Vector2 fromPos = from.anchoredPosition + new Vector2(0, -_nodeHeight / 2f);
+        Vector2 toPos = to.anchoredPosition + new Vector2(0, _nodeHeight / 2f);
 
         Vector2 dir = toPos - fromPos;
         float distance = dir.magnitude;
@@ -132,26 +153,20 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         _lines.Add(lineObj);
     }
 
-    // --- Layout Helpers ---
-
-    // Berechnet die Tiefe jedes Gebäudes im Graphen (0 = kein Requirement)
     private Dictionary<BuildingDefinition, int> CalculateDepths()
     {
         Dictionary<BuildingDefinition, int> depths = new();
-
         foreach (var building in _allBuildings)
             CalculateDepth(building, depths, new HashSet<BuildingDefinition>());
-
         return depths;
     }
 
     private int CalculateDepth(BuildingDefinition building, Dictionary<BuildingDefinition, int> depths, HashSet<BuildingDefinition> visited)
     {
         if (depths.TryGetValue(building, out int cached)) return cached;
-        if (visited.Contains(building)) return 0; // Zirkuläre Abhängigkeit verhindern
+        if (visited.Contains(building)) return 0;
 
         visited.Add(building);
-
         int maxDepth = 0;
         foreach (var req in building.BuildingRequirements)
         {
@@ -165,15 +180,13 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
 
     private Dictionary<int, List<BuildingDefinition>> GroupByDepth(Dictionary<BuildingDefinition, int> depths)
     {
-        Dictionary<int, List<BuildingDefinition>> columns = new();
-
+        Dictionary<int, List<BuildingDefinition>> rows = new();
         foreach (var (building, depth) in depths)
         {
-            if (!columns.ContainsKey(depth))
-                columns[depth] = new List<BuildingDefinition>();
-            columns[depth].Add(building);
+            if (!rows.ContainsKey(depth))
+                rows[depth] = new List<BuildingDefinition>();
+            rows[depth].Add(building);
         }
-
-        return columns;
+        return rows;
     }
 }

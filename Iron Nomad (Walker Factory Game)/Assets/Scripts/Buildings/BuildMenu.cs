@@ -25,6 +25,11 @@ public class BuildMenu : MonoBehaviour, IMenu
     private bool _isEnabled = false;
     private BuilderTool _builderTool;
 
+    private void Awake()
+    {
+        _allBuildings = new List<BuildingDefinition>(Resources.LoadAll<BuildingDefinition>("Buildings"));
+    }
+
     private void Start()
     {
         UIManager.Instance.RegisterMenu(this);

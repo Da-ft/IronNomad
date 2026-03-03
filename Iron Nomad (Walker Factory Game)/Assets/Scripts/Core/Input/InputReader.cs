@@ -69,9 +69,9 @@ namespace IronNomad.Inputs
                 CloseMenuEvent?.Invoke();
         }
 
+        // Kein _inputEnabled check - Scroll feuert immer (z.B. Zoom im Techtree)
         public void OnScroll(InputAction.CallbackContext context)
         {
-            if (!_inputEnabled) return;
             if (context.performed)
             {
                 float scroll = context.ReadValue<Vector2>().y;
