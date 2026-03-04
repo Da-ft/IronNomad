@@ -93,6 +93,8 @@ public class OutputShaft : BaseGridMachine
         }
     }
 
+    public override bool IsFull => CurrentItem != null;
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

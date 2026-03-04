@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class MachineMenuUI : MonoBehaviour, IMenu
 {
@@ -14,25 +13,34 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
     [SerializeField] private TextMeshProUGUI _machineName;
-    [SerializeField] private Transform _recipeList;
 
-    [Header("Recipe Info")]
+    [Header("View: Recipe Selection")]
+    [SerializeField] private GameObject _viewRecipeSelection;
+    [SerializeField] private Transform _recipeList;
     [SerializeField] private GameObject _recipeInfoPanel;
     [SerializeField] private TextMeshProUGUI _recipeInputText;
     [SerializeField] private TextMeshProUGUI _recipeOutputText;
     [SerializeField] private TextMeshProUGUI _recipeDurationText;
+    [SerializeField] private Button _btnSelectRecipe;
+
+    [Header("View: Production")]
+    [SerializeField] private GameObject _viewProduction;
+    [SerializeField] private TextMeshProUGUI _activeRecipeText;
+    [SerializeField] private TextMeshProUGUI _inputPerMinText;
+    [SerializeField] private TextMeshProUGUI _outputPerMinText;
+    [SerializeField] private Image _progressFill;
+    [SerializeField] private Button _btnChangeRecipe;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _recipeButtonPrefab;
 
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
-
     private IMachine _currentMachine;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this) { Destroy(this); return; }
         Instance = this;
     }
 
@@ -40,7 +48,9 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     {
         UIManager.Instance.RegisterMenu(this);
         _menuRoot.SetActive(false);
-        _recipeInfoPanel.SetActive(false);
+
+        _btnSelectRecipe.onClick.AddListener(OnSelectRecipeConfirmed);
+        _btnChangeRecipe.onClick.AddListener(ShowRecipeSelection);
     }
 
     private void OnDestroy()
@@ -48,84 +58,131 @@ public class MachineMenuUI : MonoBehaviour, IMenu
         UIManager.Instance?.UnregisterMenu(this);
     }
 
+    private void Update()
+    {
+        if (!_isOpen || _currentMachine == null) return;
+        if (_viewProduction == null || !_viewProduction.activeSelf) return;
+
+        _progressFill.fillAmount = _currentMachine.GetProgress();
+        _inputPerMinText.text = $"Input: {_currentMachine.GetInputPerMinute():F1}/min";
+        _outputPerMinText.text = $"Output: {_currentMachine.GetOutputPerMinute():F1}/min";
+    }
+
+    // --- IMenu ---
+
     public void Open(IMachine machine)
     {
         _currentMachine = machine;
         UIManager.Instance.OpenMenu(this);
     }
 
-    // --- IMenu ---
-
     public void Open()
     {
         _isOpen = true;
         _menuRoot.SetActive(true);
-
-        // Einen Frame warten bevor Gameplay disabled wird
         StartCoroutine(DisableNextFrame());
 
-        BuildRecipeList();
-        if (_currentMachine.GetCurrentRecipe() != null)
-            ShowRecipeInfo(_currentMachine.GetCurrentRecipe());
+        // Kein Rezept aktiv → Rezeptauswahl zeigen
+        if (_currentMachine.GetCurrentRecipe() == null)
+            ShowRecipeSelection();
+        else
+            ShowProduction();
     }
 
     public void Close()
     {
         _isOpen = false;
         _menuRoot.SetActive(false);
-        _recipeInfoPanel.SetActive(false);
         _currentMachine = null;
     }
 
-    // --- Recipe List ---
+    // --- Views ---
+
+    private void ShowRecipeSelection()
+    {
+        _viewRecipeSelection.SetActive(true);
+        _viewProduction.SetActive(false);
+        _recipeInfoPanel.SetActive(false);
+        _btnSelectRecipe.interactable = false;
+
+        BuildRecipeList();
+    }
+
+    private void ShowProduction()
+    {
+        _viewRecipeSelection.SetActive(false);
+        _viewProduction.SetActive(true);
+
+        CraftingRecipe active = _currentMachine.GetCurrentRecipe();
+        if (active != null)
+        {
+            _activeRecipeText.text = active.Output.Name;
+            _progressFill.sprite = active.Output.Icon;  // ← NEU
+            _progressFill.color = Color.white;
+        }
+    }
+
+    // --- Recipe Selection ---
 
     private void BuildRecipeList()
     {
         foreach (Transform child in _recipeList)
-            Destroy(child.gameObject);
+            DestroyImmediate(child.gameObject);
 
         CraftingRecipe[] recipes = _currentMachine.GetRecipes();
-
-        _machineName.text = recipes.Length > 0 ? "Rezepte" : "Keine Rezepte verfügbar";
+        _machineName.text = recipes.Length > 0 ? "Rezept wählen" : "Keine Rezepte verfügbar";
 
         foreach (CraftingRecipe recipe in recipes)
         {
             GameObject obj = Instantiate(_recipeButtonPrefab, _recipeList);
 
-            // Button Text
             TextMeshProUGUI label = obj.GetComponentInChildren<TextMeshProUGUI>();
-            if (label != null)
-                label.text = recipe.Output.Name;
+            if (label != null) label.text = recipe.Output.Name;
 
-            // Highlight falls aktuelles Rezept
             Image bg = obj.GetComponent<Image>();
-            if (bg != null)
-                bg.color = recipe == _currentMachine.GetCurrentRecipe()
-                    ? new Color(0.3f, 0.8f, 0.3f, 1f)
-                    : Color.white;
 
             Button btn = obj.GetComponent<Button>();
             if (btn != null)
             {
-                btn.onClick.AddListener(() => Debug.Log("CLICK"));  // ← temporär
                 CraftingRecipe captured = recipe;
-                btn.onClick.AddListener(() => OnRecipeSelected(captured));
+                btn.onClick.AddListener(() => OnRecipeHighlighted(captured, bg));
             }
         }
     }
 
-    private void OnRecipeSelected(CraftingRecipe recipe)
+    private CraftingRecipe _highlightedRecipe;
+
+    private void OnRecipeHighlighted(CraftingRecipe recipe, Image bg)
     {
-        _currentMachine.SetRecipe(recipe);
+        // Alle Buttons zurücksetzen
+        foreach (Transform child in _recipeList)
+        {
+            Image childBg = child.GetComponent<Image>();
+            if (childBg != null) childBg.color = Color.white;
+        }
+
+        // Diesen highlighten
+        if (bg != null) bg.color = new Color(0.3f, 0.8f, 0.3f, 1f);
+
+        _highlightedRecipe = recipe;
+        _btnSelectRecipe.interactable = true;
+
+        // Info anzeigen
         ShowRecipeInfo(recipe);
-        BuildRecipeList(); // Highlight updaten
+    }
+
+    private void OnSelectRecipeConfirmed()
+    {
+        if (_highlightedRecipe == null) return;
+        _currentMachine.SetRecipe(_highlightedRecipe);
+        _highlightedRecipe = null;
+        ShowProduction();
     }
 
     private void ShowRecipeInfo(CraftingRecipe recipe)
     {
         _recipeInfoPanel.SetActive(true);
 
-        // Inputs zusammenbauen
         System.Text.StringBuilder inputs = new System.Text.StringBuilder();
         for (int i = 0; i < recipe.Inputs.Length; i++)
         {
@@ -133,7 +190,6 @@ public class MachineMenuUI : MonoBehaviour, IMenu
             inputs.AppendLine($"• {amount}x {recipe.Inputs[i].Name}");
         }
         _recipeInputText.text = inputs.ToString();
-
         _recipeOutputText.text = $"• {recipe.OutputAmount}x {recipe.Output.Name}";
         _recipeDurationText.text = $"{recipe.Duration}s";
     }

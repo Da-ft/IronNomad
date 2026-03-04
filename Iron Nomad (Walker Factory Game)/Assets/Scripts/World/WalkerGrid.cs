@@ -75,18 +75,29 @@ public class WalkerGrid : MonoBehaviour
 
     // --- Item-Pipeline (BaseGridMachine) ---
 
-    public void RegisterObject(Vector3 worldPos, IItemHolder holder)
+    public void RegisterObject(Vector3 worldPos, Vector2Int gridSize, int rotation, IItemHolder holder)
     {
-        Vector2Int coords = WorldToGridCoords(worldPos);
-        if (_gridObjects.ContainsKey(coords))
-            Debug.LogWarning($"Grid-Konflikt auf {coords}! Überschrieben.");
-        _gridObjects[coords] = holder;
+        Vector2Int origin = WorldToGridCoords(worldPos);
+        foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
+        {
+            if (_gridObjects.ContainsKey(cell))
+                Debug.LogWarning($"Grid-Konflikt auf {cell}! Überschrieben.");
+            _gridObjects[cell] = holder;
+        }
     }
 
-    public void UnregisterObject(Vector3 worldPos)
+    public void UnregisterObject(Vector3 worldPos, Vector2Int gridSize, int rotation)
     {
-        _gridObjects.Remove(WorldToGridCoords(worldPos));
+        Vector2Int origin = WorldToGridCoords(worldPos);
+        foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
+            _gridObjects.Remove(cell);
     }
+
+    public void RegisterObject(Vector3 worldPos, IItemHolder holder)
+    => RegisterObject(worldPos, Vector2Int.one, 0, holder);
+
+    public void UnregisterObject(Vector3 worldPos)
+        => UnregisterObject(worldPos, Vector2Int.one, 0);
 
     public IItemHolder GetHolderAt(Vector3 worldPos)
     {
@@ -158,6 +169,13 @@ public class WalkerGrid : MonoBehaviour
     public void FreeCell(Vector3 worldPos)
     {
         FreeCell(worldPos, Vector2Int.one, 0);
+    }
+
+    public Vector3 GetDirectionWorldPos(Vector3 origin, Vector2Int direction, int rotation)
+    {
+        Vector2Int rotated = RotateCoord(direction.x, direction.y, rotation);
+        Vector3 offset = new Vector3(rotated.x, 0, rotated.y) * _cellSize;
+        return origin + transform.TransformDirection(offset);
     }
 
     // --- Gizmos ---

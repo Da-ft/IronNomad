@@ -16,3 +16,5 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 45f31d2f0c1fa7740812bab81c93014b, type: 3}
   VisualPrefab: {fileID: 5154904628276600311, guid: 0c1d0d3d3c24974468219bb499d00f67, type: 3}
   Description: This is Iron Ore!
+  Type: 1
+  MaxStackSize: 100

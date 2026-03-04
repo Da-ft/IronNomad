@@ -12,7 +12,7 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
     }
 
     [Header("Settings")]
-    [SerializeField] private float _speed = 2f;
+    [SerializeField] private float _itemsPerMinute = 60f;
     [SerializeField] private float _itemSpacing = 0.6f;
 
     [Header("Visual Connections")]
@@ -20,11 +20,19 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
     [SerializeField] private Transform _endPoint;
 
     private List<BeltItem> _items = new List<BeltItem>();
+    private float _beltLength;
+    private float _speed;
 
-    // Override Start, aber ruf base.Start() auf!
     protected override void Start()
     {
         base.Start();
+        CalculateSpeed();
+    }
+
+    private void CalculateSpeed()
+    {
+        _beltLength = Vector3.Distance(_startPoint.position, _endPoint.position);
+        _speed = _beltLength / (60f / _itemsPerMinute);
     }
 
     private void Update()
@@ -37,13 +45,10 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
     {
         if (_items.Count == 0) return;
 
-        // Wir nutzen jetzt GridStepSize statt _length
-        float totalLength = GridStepSize;
-
         for (int i = 0; i < _items.Count; i++)
         {
             BeltItem current = _items[i];
-            float nextObstacleDist = totalLength;
+            float nextObstacleDist = _beltLength;
 
             if (i > 0)
             {
@@ -51,18 +56,35 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
                 nextObstacleDist = itemAhead.CurrentDistance - _itemSpacing;
             }
 
+            // Vorderstes Item — Nachfolger prüfen
+            if (i == 0)
+            {
+                ConstructibleBuilding constructible = GetComponent<ConstructibleBuilding>();
+                IItemHolder nextHolder = constructible?.Definition != null
+                    ? GetNextHolder(constructible.Definition.OutputDirections, constructible.Rotation)
+                    : _grid?.GetHolderAt(transform.position + transform.forward * GridStepSize);
+
+                if (nextHolder != null && nextHolder.IsFull)
+                    nextObstacleDist = Mathf.Min(nextObstacleDist, _beltLength);
+                else if (nextHolder == null)
+                    nextObstacleDist = Mathf.Min(nextObstacleDist, _beltLength);
+            }
+
             if (current.CurrentDistance < nextObstacleDist)
             {
                 current.CurrentDistance += _speed * Time.deltaTime;
-                if (current.CurrentDistance > nextObstacleDist && i > 0)
-                    current.CurrentDistance = nextObstacleDist;
+                current.CurrentDistance = Mathf.Min(current.CurrentDistance, nextObstacleDist);
             }
 
-            // Visual Update
-            float t = current.CurrentDistance / totalLength;
+            // Position im Worldspace
             if (_startPoint && _endPoint && current.VisualObj)
             {
-                current.VisualObj.transform.position = Vector3.Lerp(_startPoint.position, _endPoint.position, t);
+                float t = Mathf.Clamp01(current.CurrentDistance / _beltLength);
+                current.VisualObj.transform.position = Vector3.Lerp(
+                    _startPoint.position,
+                    _endPoint.position,
+                    t
+                );
             }
         }
     }
@@ -72,56 +94,69 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
         if (_items.Count == 0) return;
 
         BeltItem frontItem = _items[0];
-        if (frontItem.CurrentDistance >= GridStepSize) // Check gegen GridStepSize
-        {
+        if (frontItem.CurrentDistance >= _beltLength)
             TryPushToNext(frontItem);
-        }
     }
 
     private void TryPushToNext(BeltItem item)
     {
-        if (_grid == null) return;
+        if (_items.Count == 0 || _items[0] != item) return;
 
-        Vector3 targetPos = transform.position + (transform.forward * GridStepSize);
-        IItemHolder nextHolder = _grid.GetHolderAt(targetPos);
+        ConstructibleBuilding constructible = GetComponent<ConstructibleBuilding>();
+        IItemHolder nextHolder = constructible?.Definition != null
+            ? GetNextHolder(constructible.Definition.OutputDirections, constructible.Rotation)
+            : _grid.GetHolderAt(transform.position + transform.forward * GridStepSize);
 
-        if (nextHolder != null && nextHolder.TryAcceptItem(item.Definition, item.VisualObj))
+        if (nextHolder == null || nextHolder.IsFull)
         {
-            _items.RemoveAt(0);
+            item.CurrentDistance = _beltLength;
+            return;
         }
+        Debug.Log($"Item Weltpos: {item.VisualObj.transform.position}");
+        Debug.Log($"Alter EndPoint: {_endPoint.position}");
+        if (nextHolder.TryAcceptItem(item.Definition, item.VisualObj))
+            _items.RemoveAt(0);
         else
+            item.CurrentDistance = _beltLength;
+
+        Debug.Log($"Versuche Übergabe: Items im Belt vorher: {_items.Count}");
+        if (nextHolder.TryAcceptItem(item.Definition, item.VisualObj))
         {
-            item.CurrentDistance = GridStepSize; // Stau
+            Debug.Log($"Übergabe erfolgreich, Items danach: {_items.Count - 1}");
+            _items.RemoveAt(0);
         }
     }
 
-    // --- Interface Implementation ---
-
-    public override bool TryTakeItem(WorldItem worldItem)
+    public override bool IsFull
     {
-        for (int i = 0; i < _items.Count; i++)
+        get
         {
-            if (_items[i].VisualObj == worldItem.gameObject)
-            {
-                _items.RemoveAt(i);
-                return true;
-            }
+            if (_items.Count == 0) return false;
+            BeltItem last = _items[_items.Count - 1];
+            return last.CurrentDistance < _itemSpacing;
         }
-        return false;
     }
 
     public override bool TryAcceptItem(ItemDefinition itemDef, GameObject existingVisual = null)
     {
-        if (_items.Count > 0)
+        Debug.Log($"TryAcceptItem aufgerufen, existingVisual null: {existingVisual == null}");
+
+        if (IsFull) return false;
+
+        float startDistance = 0f;
+        if (existingVisual != null && _startPoint != null && _endPoint != null)
         {
-            BeltItem lastItem = _items[_items.Count - 1];
-            if (lastItem.CurrentDistance < _itemSpacing) return false;
+            // Weltposition vor PlaceVisualOnBelt speichern
+            Vector3 worldPos = existingVisual.transform.position;
+            Vector3 beltDir = (_endPoint.position - _startPoint.position).normalized;
+            Vector3 toItem = worldPos - _startPoint.position;
+            startDistance = Mathf.Clamp(Vector3.Dot(toItem, beltDir), 0f, _beltLength);
         }
 
         BeltItem newItem = new BeltItem
         {
             Definition = itemDef,
-            CurrentDistance = 0f
+            CurrentDistance = startDistance
         };
 
         if (existingVisual != null)
@@ -134,26 +169,24 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
             newItem.VisualObj = Instantiate(itemDef.VisualPrefab, _startPoint.position, Quaternion.identity);
             PlaceVisualOnBelt(newItem.VisualObj, itemDef);
         }
-
+        Debug.Log($"Neuer StartPoint: {_startPoint.position}");
+        Debug.Log($"Berechnete startDistance: {startDistance}");
         _items.Add(newItem);
         return true;
     }
 
     private void PlaceVisualOnBelt(GameObject obj, ItemDefinition def)
     {
-        // Erst losloesen damit kein falscher Parent-Scale drinsteckt
-        obj.transform.SetParent(null);
-        Vector3 worldScale = obj.transform.localScale;
+        // Weltposition vor Parent-Wechsel merken
+        Vector3 worldPos = obj.transform.position;
+
         obj.transform.SetParent(transform);
+        obj.transform.localScale = def.VisualPrefab != null
+            ? def.VisualPrefab.transform.localScale
+            : Vector3.one;
 
-        // Scale in World-Space wiederherstellen
-        obj.transform.localScale = new Vector3(
-            worldScale.x / transform.lossyScale.x,
-            worldScale.y / transform.lossyScale.y,
-            worldScale.z / transform.lossyScale.z
-        );
-
-        obj.transform.position = _startPoint != null ? _startPoint.position : transform.position;
+        // Weltposition wiederherstellen — kein Sprung
+        obj.transform.position = worldPos;
         obj.transform.rotation = Quaternion.identity;
 
         WorldItem wi = obj.GetComponent<WorldItem>();
@@ -168,7 +201,18 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
         }
     }
 
-    // --- IInteractable ---
+    public override bool TryTakeItem(WorldItem worldItem)
+    {
+        for (int i = 0; i < _items.Count; i++)
+        {
+            if (_items[i].VisualObj == worldItem.gameObject)
+            {
+                _items.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public string GetInteractPrompt()
     {
@@ -181,15 +225,11 @@ public class ConveyorBelt : BaseGridMachine, IInteractable
         if (_items.Count == 0) return;
 
         BeltItem frontItem = _items[0];
-
         if (inventory.AddItem(frontItem.Definition))
         {
-            // Visual zerst�ren
             if (frontItem.VisualObj != null)
                 Destroy(frontItem.VisualObj);
-
             _items.RemoveAt(0);
-            Debug.Log($"{frontItem.Definition.Name} aufgehoben!");
         }
         else
         {

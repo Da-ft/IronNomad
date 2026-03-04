@@ -7,7 +7,6 @@ public class InventorySystem : MonoBehaviour
     public int TotalSlots => _totalSlots;
 
     [SerializeField] private int _totalSlots = 36;
-    [SerializeField] private int _maxStackSize = 64;
 
     [Header("Debug View")]
     [SerializeField] private List<InventorySlot> _slots = new List<InventorySlot>();
@@ -28,12 +27,12 @@ public class InventorySystem : MonoBehaviour
 
     public bool AddItem(ItemDefinition item, int amount = 1)
     {
-        // Erst in existierende Stacks auff�llen
+        // Erst in existierende Stacks auffüllen
         foreach (var slot in _slots)
         {
-            if (!slot.IsEmpty && slot.Item == item && slot.Count < _maxStackSize)
+            if (!slot.IsEmpty && slot.Item == item && slot.Count < item.MaxStackSize)
             {
-                int toAdd = Mathf.Min(_maxStackSize - slot.Count, amount);
+                int toAdd = Mathf.Min(item.MaxStackSize - slot.Count, amount);
                 slot.Count += toAdd;
                 amount -= toAdd;
 
@@ -46,18 +45,27 @@ public class InventorySystem : MonoBehaviour
         }
 
         // Dann leere Slots suchen
-        foreach (var slot in _slots)
+        while (amount > 0)
         {
-            if (slot.IsEmpty)
+            InventorySlot emptySlot = null;
+            foreach (var slot in _slots)
             {
-                slot.Add(item, amount);
-                OnInventoryChanged?.Invoke();
-                return true;
+                if (slot.IsEmpty) { emptySlot = slot; break; }
             }
+
+            if (emptySlot == null)
+            {
+                Debug.Log("Inventar voll!");
+                return false;
+            }
+
+            int toAdd = Mathf.Min(item.MaxStackSize, amount);
+            emptySlot.Add(item, toAdd);
+            amount -= toAdd;
         }
 
-        Debug.Log("Inventar voll!");
-        return false;
+        OnInventoryChanged?.Invoke();
+        return true;
     }
 
     public bool RemoveItem(ItemDefinition item, int amount = 1)
@@ -93,10 +101,11 @@ public class InventorySystem : MonoBehaviour
         InventorySlot slotA = _slots[indexA];
         InventorySlot slotB = _slots[indexB];
 
-        // Gleicher Typ: zusammenfuehren statt tauschen
+        // Gleicher Typ: zusammenführen
         if (!slotA.IsEmpty && !slotB.IsEmpty && slotA.Item == slotB.Item)
         {
-            int space = _maxStackSize - slotB.Count;
+            int maxStack = slotB.Item.MaxStackSize;
+            int space = maxStack - slotB.Count;
             int transfer = Mathf.Min(space, slotA.Count);
 
             slotB.Count += transfer;
@@ -109,7 +118,7 @@ public class InventorySystem : MonoBehaviour
             return;
         }
 
-        // Unterschiedliche Items: Werte direkt tauschen ohne neue Objekte
+        // Unterschiedliche Items: tauschen
         ItemDefinition tempItem = slotA.Item;
         int tempCount = slotA.Count;
 
@@ -124,10 +133,8 @@ public class InventorySystem : MonoBehaviour
 
     public void SortByType()
     {
-        // Schritt 1: Gleiche Items zusammenfuehren
         MergeStacks();
 
-        // Schritt 2: Alphabetisch sortieren, leere Slots ans Ende
         _slots.Sort((a, b) =>
         {
             if (a.IsEmpty && b.IsEmpty) return 0;
@@ -145,14 +152,15 @@ public class InventorySystem : MonoBehaviour
         {
             if (_slots[i].IsEmpty) continue;
 
+            int maxStack = _slots[i].Item.MaxStackSize;
+
             for (int j = i + 1; j < _slots.Count; j++)
             {
                 if (_slots[j].IsEmpty) continue;
                 if (_slots[j].Item != _slots[i].Item) continue;
 
-                // Gleicher Typ - zusammenfuehren
-                int space = _maxStackSize - _slots[i].Count;
-                if (space <= 0) break; // Slot i voll, naechsten suchen
+                int space = maxStack - _slots[i].Count;
+                if (space <= 0) break;
 
                 int transfer = Mathf.Min(space, _slots[j].Count);
                 _slots[i].Count += transfer;

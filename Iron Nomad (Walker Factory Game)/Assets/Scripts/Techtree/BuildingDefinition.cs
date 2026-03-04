@@ -32,4 +32,8 @@ public class BuildingDefinition : ScriptableObject
 
     [Header("Grid")]
     public Vector2Int GridSize = Vector2Int.one;
+
+    [Header("Verbindungen")]
+    public Vector2Int[] InputDirections = { new Vector2Int(0, -1) };
+    public Vector2Int[] OutputDirections = { new Vector2Int(0, 1) };
 }

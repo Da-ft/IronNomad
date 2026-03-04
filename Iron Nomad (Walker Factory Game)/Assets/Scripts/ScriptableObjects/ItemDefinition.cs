@@ -10,4 +10,5 @@ public class ItemDefinition : ScriptableObject
     public GameObject VisualPrefab;
     [TextArea] public string Description;
     public ItemType Type;
+    public int MaxStackSize = 64; // NEU
 }

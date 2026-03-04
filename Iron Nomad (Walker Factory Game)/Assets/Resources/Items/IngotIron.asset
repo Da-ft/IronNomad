@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Iron Ingot
   Icon: {fileID: 21300000, guid: 24eebf47fbe070e418f8bbf843b128d8, type: 3}
-  VisualPrefab: {fileID: 0}
+  VisualPrefab: {fileID: 5160796851986138443, guid: c5de27915e8f62f4c95a81f210d4d4e5, type: 3}
   Description: Isnt it ironic?
+  Type: 2
+  MaxStackSize: 100
