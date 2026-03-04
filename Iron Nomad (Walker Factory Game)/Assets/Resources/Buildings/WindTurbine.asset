@@ -32,3 +32,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
   BuildingRequirements:
   - {fileID: 11400000, guid: 85103b818a2e27d4f846af95632b293d, type: 2}
+  GridSize: {x: 3, y: 3}

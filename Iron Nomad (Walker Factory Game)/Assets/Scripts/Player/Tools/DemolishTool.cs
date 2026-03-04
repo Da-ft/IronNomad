@@ -81,17 +81,14 @@ public class DemolishTool : BaseTool
     private void TryDemolishConfirm()
     {
         if (_demolishTarget == null) return;
-
         ConstructibleBuilding building = _demolishTarget.GetComponent<ConstructibleBuilding>();
         if (building == null) return;
 
         if (building.Definition != null && _inventory != null)
-        {
             foreach (var cost in building.Definition.Costs)
                 _inventory.AddItem(cost.Item, cost.Amount);
-        }
 
-        _grid.FreeCell(building.transform.position);
+        _grid.FreeCell(building.transform.position, building.Definition.GridSize, building.Rotation);
         ClearHighlight();
         building.Demolish();
     }

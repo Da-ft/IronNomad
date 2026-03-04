@@ -48,16 +48,19 @@ public class SlotUI : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        Debug.Log($"BeginDrag auf Slot {SlotIndex}");
+
         if (eventData.button != PointerEventData.InputButton.Left) return;
         InventorySlot slot = _inventory?.GetSlotAt(SlotIndex);
         if (slot == null || slot.IsEmpty) return;
-        DragDropManager.Instance.BeginDrag(SlotIndex, slot.Item.Icon);
-        _icon.enabled = false;
+        DragDropManager.Instance.BeginDrag(SlotIndex, slot.Item.Icon, slot.Count);
+        _icon.color = new Color(1f, 1f, 1f, 0.4f);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         DragDropManager.Instance.UpdateDragPosition(eventData.position);
+        Debug.Log($"Drag über: {eventData.pointerCurrentRaycast.gameObject?.name}");
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -65,7 +68,15 @@ public class SlotUI : MonoBehaviour,
         // Icon wiederherstellen - OnDrop hat zu diesem Punkt bereits gefeuert
         InventorySlot slot = _inventory?.GetSlotAt(SlotIndex);
         if (slot != null && !slot.IsEmpty)
+        {
             _icon.enabled = true;
+            _icon.color = Color.white;
+        }
+        else
+        {
+            _icon.enabled = false;
+            _icon.color = Color.white;
+        }
 
         // EndDrag NACH Icon-Update aufrufen
         DragDropManager.Instance.EndDrag();
@@ -73,9 +84,14 @@ public class SlotUI : MonoBehaviour,
 
     public void OnDrop(PointerEventData eventData)
     {
-        // Feuert VOR OnEndDrag - IsDragging ist hier noch true
-        if (!DragDropManager.Instance.IsDragging) return;
+
+        if (!DragDropManager.Instance.IsDragging)
+        {
+            return;
+        }
+
         int fromIndex = DragDropManager.Instance.DraggedSlotIndex;
+
         if (fromIndex == SlotIndex) return;
         _inventory?.SwapSlots(fromIndex, SlotIndex);
     }

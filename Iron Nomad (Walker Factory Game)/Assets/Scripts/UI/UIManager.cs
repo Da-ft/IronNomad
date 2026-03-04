@@ -35,6 +35,13 @@ public class UIManager : MonoBehaviour
         foreach (var m in _menus)
             if (m != menu && m.IsOpen) m.Close();
         menu.Open();
+
+        // Erst NACH dem Öffnen aller Menüs Gameplay disablen
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _inputReader.DisableGameplay();
+        _inputReader.ResetLook();
+        _inputReader.ResetMove();
     }
 
     // Öffnet ein Menü zusätzlich ohne andere zu schließen

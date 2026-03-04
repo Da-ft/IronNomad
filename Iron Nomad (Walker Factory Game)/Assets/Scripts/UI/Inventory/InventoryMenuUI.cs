@@ -55,11 +55,6 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     {
         _isOpen = true;
         _menuRoot.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        _inputReader.DisableGameplay();
-        _inputReader.ResetLook();
-        _inputReader.ResetMove();
         Refresh();
     }
 

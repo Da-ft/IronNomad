@@ -22,3 +22,4 @@ MonoBehaviour:
   IsUnlockedByDefault: 0
   ItemRequirements: []
   BuildingRequirements: []
+  GridSize: {x: 3, y: 3}

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class DragDropManager : MonoBehaviour
 
     [SerializeField] private Image _dragIcon;
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private TextMeshProUGUI _dragCountText;
 
     public int DraggedSlotIndex { get; private set; } = -1;
     public bool IsDragging => DraggedSlotIndex >= 0;
@@ -15,14 +17,16 @@ public class DragDropManager : MonoBehaviour
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
+        _dragIcon.raycastTarget = false;
         _dragIcon.gameObject.SetActive(false);
     }
 
-    public void BeginDrag(int slotIndex, Sprite icon)
+    public void BeginDrag(int slotIndex, Sprite icon, int count)
     {
         DraggedSlotIndex = slotIndex;
         _dragIcon.sprite = icon;
         _dragIcon.color = icon != null ? Color.white : Color.gray;
+        _dragCountText.text = count > 1 ? count.ToString() : "";
         _dragIcon.gameObject.SetActive(true);
     }
 

@@ -29,4 +29,7 @@ public class BuildingDefinition : ScriptableObject
     public bool IsUnlockedByDefault = false;
     public ItemDefinition[] ItemRequirements;
     public BuildingDefinition[] BuildingRequirements;
+
+    [Header("Grid")]
+    public Vector2Int GridSize = Vector2Int.one;
 }

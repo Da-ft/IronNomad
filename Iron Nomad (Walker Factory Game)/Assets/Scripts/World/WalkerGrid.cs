@@ -48,20 +48,18 @@ public class WalkerGrid : MonoBehaviour
 
     // --- Zellen-Belegung (BuilderTool) ---
 
-    public void OccupyCell(Vector3 worldPos)
+    public void OccupyCell(Vector3 worldPos, Vector2Int gridSize, int rotation)
     {
-        Vector2Int coords = WorldToGridCoords(worldPos);
-        if (!_availableCells.Contains(coords))
-        {
-            Debug.LogWarning($"OccupyCell: Zelle {coords} ist nicht verfügbar!");
-            return;
-        }
-        _occupiedCells.Add(coords);
+        Vector2Int origin = WorldToGridCoords(worldPos);
+        foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
+            _occupiedCells.Add(cell);
     }
 
-    public void FreeCell(Vector3 worldPos)
+    public void FreeCell(Vector3 worldPos, Vector2Int gridSize, int rotation)
     {
-        _occupiedCells.Remove(WorldToGridCoords(worldPos));
+        Vector2Int origin = WorldToGridCoords(worldPos);
+        foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
+            _occupiedCells.Remove(cell);
     }
 
     public bool IsCellAvailable(Vector2Int coords)
@@ -111,6 +109,55 @@ public class WalkerGrid : MonoBehaviour
         Vector2Int coords = WorldToGridCoords(worldPos);
         Vector3 localSnapped = new Vector3(coords.x * _cellSize, 0, coords.y * _cellSize);
         return transform.TransformPoint(localSnapped);
+    }
+
+    public List<Vector2Int> GetOccupiedCoords(Vector2Int origin, Vector2Int gridSize, int rotation)
+    {
+        var cells = new List<Vector2Int>();
+
+        // Offset damit das Gebäude zentriert ist
+        int halfX = (gridSize.x - 1);
+        int halfZ = (gridSize.y - 1);
+
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int z = 0; z < gridSize.y; z++)
+            {
+                int localX = x * 2 - halfX;
+                int localZ = z * 2 - halfZ;
+
+                // Rotation anwenden (0/90/180/270)
+                Vector2Int rotated = RotateCoord(localX, localZ, rotation);
+                cells.Add(origin + rotated / 2);
+            }
+        }
+        return cells;
+    }
+
+    private Vector2Int RotateCoord(int x, int z, int rotation)
+    {
+        return rotation switch
+        {
+            90 => new Vector2Int(z, -x),
+            180 => new Vector2Int(-x, -z),
+            270 => new Vector2Int(-z, x),
+            _ => new Vector2Int(x, z),
+        };
+    }
+
+    public bool IsCellAvailable(Vector2Int origin, Vector2Int gridSize, int rotation)
+    {
+        foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
+        {
+            if (!_availableCells.Contains(cell) || _occupiedCells.Contains(cell))
+                return false;
+        }
+        return true;
+    }
+
+    public void FreeCell(Vector3 worldPos)
+    {
+        FreeCell(worldPos, Vector2Int.one, 0);
     }
 
     // --- Gizmos ---

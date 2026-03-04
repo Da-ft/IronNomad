@@ -92,14 +92,16 @@ public class BuilderTool : BaseTool
 
             Vector3 snappedPos = _grid.GetNearestGridPoint(hit.point);
             Vector2Int coords = _grid.WorldToGridCoords(hit.point);
+            Vector2Int gridSize = _selectedBuilding.GridSize;
 
             _ghostInstance.SetActive(true);
             _ghostInstance.transform.position = snappedPos;
             _ghostInstance.transform.rotation = _grid.transform.rotation * Quaternion.Euler(0, _currentRotation, 0);
 
-            bool canPlace = _grid.IsCellAvailable(coords);
+            bool canPlace = _grid.IsCellAvailable(coords, gridSize, _currentRotation);
+            Color c = canPlace ? new Color(0f, 1f, 0f, 0.5f) : new Color(1f, 0f, 0f, 0.5f);
             foreach (var r in _ghostInstance.GetComponentsInChildren<Renderer>())
-                r.material.color = canPlace ? new Color(0f, 1f, 0f, 0.5f) : new Color(1f, 0f, 0f, 0.5f);
+                r.material.color = c;
         }
         else
         {
@@ -123,7 +125,9 @@ public class BuilderTool : BaseTool
             if (!hit.collider.CompareTag("Grid")) return;
 
             Vector2Int coords = _grid.WorldToGridCoords(hit.point);
-            if (!_grid.IsCellAvailable(coords))
+            Vector2Int gridSize = _selectedBuilding.GridSize;
+
+            if (!_grid.IsCellAvailable(coords, gridSize, _currentRotation))
             {
                 Debug.Log("Zelle belegt!");
                 return;
@@ -138,9 +142,10 @@ public class BuilderTool : BaseTool
             ConstructibleBuilding constructible = building.GetComponent<ConstructibleBuilding>();
             if (constructible == null)
                 constructible = building.AddComponent<ConstructibleBuilding>();
-            constructible.Initialize(_selectedBuilding);
+            constructible.Initialize(_selectedBuilding, _currentRotation);
+            Smelter smelter = building.GetComponent<Smelter>();
 
-            _grid.OccupyCell(snappedPos);
+            _grid.OccupyCell(snappedPos, gridSize, _currentRotation);
         }
     }
 }
