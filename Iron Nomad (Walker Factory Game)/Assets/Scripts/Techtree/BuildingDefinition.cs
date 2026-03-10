@@ -33,7 +33,21 @@ public class BuildingDefinition : ScriptableObject
     [Header("Grid")]
     public Vector2Int GridSize = Vector2Int.one;
 
-    [Header("Verbindungen")]
-    public Vector2Int[] InputDirections = { new Vector2Int(0, -1) };
-    public Vector2Int[] OutputDirections = { new Vector2Int(0, 1) };
+    [Header("Ports")]
+    public BuildingPort[] Ports;
+
+    [Header("Placement")]
+    [Tooltip("Aktiviert Satisfactory-style Belt-Placement statt normaler Ghost-Platzierung")]
+    public bool UsesBeltPlacement = false;
+
+    // --- Hilfsmethoden ---
+
+    public BuildingPort[] GetInputPorts()
+        => System.Array.FindAll(Ports, p => p.Type == PortType.Input);
+
+    public BuildingPort[] GetOutputPorts()
+        => System.Array.FindAll(Ports, p => p.Type == PortType.Output);
+
+    public BuildingPort GetPort(string portName)
+        => System.Array.Find(Ports, p => p.Name == portName);
 }

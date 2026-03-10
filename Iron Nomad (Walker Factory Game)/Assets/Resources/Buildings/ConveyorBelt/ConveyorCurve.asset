@@ -10,15 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6110c864c6a2e9f498fb69cde51003ad, type: 3}
-  m_Name: Conveyor Belt
+  m_Name: ConveyorCurve
   m_EditorClassIdentifier: Assembly-CSharp::BuildingDefinition
-  DisplayName: Conveyor Belt
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  Description: This is a Conveyor Belt!
+  DisplayName: Conveyorbelt Curve
+  Icon: {fileID: 21300000, guid: 6968df4870e7d0647b651583388d026a, type: 3}
+  Description: This is a Curve!
   Category: {fileID: 11400000, guid: f144be1df5e8d3b4d83c1808276b0074, type: 2}
-  BuildingPrefab: {fileID: 3316047437547988934, guid: 8a91737b5b1d90347a0735cd846d028f, type: 3}
+  BuildingPrefab: {fileID: 5576784587677902469, guid: 713e19af3ce85e34082a9f03e1291857, type: 3}
   GhostMaterial: {fileID: 2100000, guid: 0b4b0a6341d8d5b4a8e8ea173c23b2b6, type: 2}
   Costs: []
   IsUnlockedByDefault: 1
   ItemRequirements: []
   BuildingRequirements: []
+  GridSize: {x: 1, y: 1}
+  Ports:
+  - Name: Input
+    Type: 0
+    Direction: {x: 0, y: -1}
+    EdgeOffset: 0
+  - Name: Output
+    Type: 1
+    Direction: {x: 1, y: 0}
+    EdgeOffset: 0
+  UsesBeltPlacement: 1

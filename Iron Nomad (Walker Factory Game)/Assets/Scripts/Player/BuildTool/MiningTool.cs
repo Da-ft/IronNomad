@@ -1,10 +1,8 @@
-using IronNomad.Inputs;
 using UnityEngine;
 
 public class MiningTool : BaseTool
 {
     [Header("Dependencies")]
-    [SerializeField] private InputReader _inputReader;
     [SerializeField] private InventorySystem _inventory;
 
     [Header("Config")]
@@ -14,21 +12,10 @@ public class MiningTool : BaseTool
 
     private IMineable _currentTarget;
 
-    public override void OnEquip()
-    {
-        _inputReader.PlaceEvent += TryMine;
-    }
+    public override void OnEquip() => InputEvents.OnPlace += TryMine;
+    public override void OnUnequip() { InputEvents.OnPlace -= TryMine; _currentTarget = null; }
 
-    public override void OnUnequip()
-    {
-        _inputReader.PlaceEvent -= TryMine;
-        _currentTarget = null;
-    }
-
-    private void Update()
-    {
-        UpdateTarget();
-    }
+    private void Update() => UpdateTarget();
 
     private void UpdateTarget()
     {

@@ -822,6 +822,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292616498}
   m_CullTransparentMesh: 1
+--- !u!1 &305364762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 305364764}
+  - component: {fileID: 305364763}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &305364763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305364762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2649078327ce8624084c9a2461007cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputReader
+--- !u!4 &305364764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305364762}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.83487, y: 50, z: -5.45717}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &321308601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4118,7 +4162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiningTool
   _cameraRoot: {fileID: 11684515}
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _inventory: {fileID: 2065809732}
   _raycastRange: 5
   _miningDamage: 25
@@ -4166,7 +4209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DemolishTool
   _cameraRoot: {fileID: 11684515}
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _grid: {fileID: 338633675}
   _inventory: {fileID: 2065809732}
   _raycastRange: 10
@@ -5512,117 +5554,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030878668}
   m_CullTransparentMesh: 1
---- !u!1 &1061943117
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1061943121}
-  - component: {fileID: 1061943120}
-  - component: {fileID: 1061943119}
-  - component: {fileID: 1061943118}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1061943118
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061943117}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1061943119
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061943117}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 73c176f402d2c2f4d929aa5da7585d17, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1061943120
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061943117}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1061943121
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061943117}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.00875, y: 50, z: -10.07005}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1106723812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5703,16 +5634,13 @@ PrefabInstance:
       addedObject: {fileID: 2065809719}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2065809738}
+    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2065809718}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2065809728}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2065809732}
-    - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2065809735}
   m_SourcePrefab: {fileID: 100100000, guid: 347d600a165de584e98cfdcfbea72e68, type: 3}
 --- !u!1 &1124250665 stripped
 GameObject:
@@ -5737,9 +5665,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuilderTool
   _cameraRoot: {fileID: 11684515}
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _grid: {fileID: 338633675}
   _raycastRange: 10
+  _ghostValidMaterial: {fileID: 2100000, guid: 0b4b0a6341d8d5b4a8e8ea173c23b2b6, type: 2}
+  _ghostInvalidMaterial: {fileID: 2100000, guid: 7a45d8463a428c142992ffcb9a5f873f, type: 2}
 --- !u!1 &1152907814
 GameObject:
   m_ObjectHideFlags: 0
@@ -5751,6 +5680,7 @@ GameObject:
   - component: {fileID: 1152907815}
   - component: {fileID: 1152907817}
   - component: {fileID: 1152907816}
+  - component: {fileID: 1152907818}
   m_Layer: 5
   m_Name: Panel_Hotbar
   m_TagString: Untagged
@@ -5816,6 +5746,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152907814}
   m_CullTransparentMesh: 1
+--- !u!114 &1152907818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152907814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6755dc56c6300b94a80eb1917b3d4f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HotbarSystem
+  _builderTool: {fileID: 1124250667}
 --- !u!1 &1153376072
 GameObject:
   m_ObjectHideFlags: 0
@@ -6875,8 +6818,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487100547}
-  - component: {fileID: 1487100546}
   - component: {fileID: 1487100548}
+  - component: {fileID: 1487100546}
   - component: {fileID: 1487100549}
   - component: {fileID: 1487100550}
   - component: {fileID: 1487100551}
@@ -6899,18 +6842,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e08c1f31c908e459be499421069278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildMenu
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _menuRoot: {fileID: 322300745}
   _categoryList: {fileID: 401970531}
   _buildingGrid: {fileID: 1322719198}
   _categoryButtonPrefab: {fileID: 534791444653647020, guid: 30cd274aee943f54c9fd23772e08b132, type: 3}
   _buildingCardPrefab: {fileID: 7551232053621899582, guid: e2c0f6adc1f8d43449d9bd4912b0c8be, type: 3}
-  _allBuildings:
-  - {fileID: 11400000, guid: 2328f9fa36bfb164c8192984975ce0ff, type: 2}
-  - {fileID: 11400000, guid: a57da090e353ac6488056637b73de2f2, type: 2}
-  - {fileID: 11400000, guid: c062be0e7ccccf64ca3bd098f20a615b, type: 2}
-  - {fileID: 11400000, guid: dd3293421fc79a34abf627bdb35a1b72, type: 2}
-  - {fileID: 11400000, guid: 85103b818a2e27d4f846af95632b293d, type: 2}
 --- !u!4 &1487100547
 Transform:
   m_ObjectHideFlags: 0
@@ -6938,7 +6874,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f452353d171fb46a63f6f7c41c39e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
 --- !u!114 &1487100549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6951,7 +6886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1884cfdaff477ee48af2ecd87adcf185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryMenuUI
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _inventory: {fileID: 2065809732}
   _menuRoot: {fileID: 877177619}
   _inventoryContainer: {fileID: 1273054506}
@@ -6987,16 +6921,19 @@ MonoBehaviour:
   _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _menuRoot: {fileID: 649404178}
   _machineName: {fileID: 1688019650}
+  _viewRecipeSelection: {fileID: 1188239896}
   _recipeList: {fileID: 382273064}
   _recipeInfoPanel: {fileID: 606361850}
   _recipeInputText: {fileID: 353953691}
   _recipeOutputText: {fileID: 1580640406}
   _recipeDurationText: {fileID: 228900033}
-  _activeRecipePanel: {fileID: 0}
+  _btnSelectRecipe: {fileID: 2129434432}
+  _viewProduction: {fileID: 380146648}
   _activeRecipeText: {fileID: 395265304}
   _inputPerMinText: {fileID: 18912619}
   _outputPerMinText: {fileID: 355436757}
-  _progressFill: {fileID: 0}
+  _progressFill: {fileID: 1795148941}
+  _btnChangeRecipe: {fileID: 1238778977}
   _recipeButtonPrefab: {fileID: 5235200831839671602, guid: e48c4e9e58d17c241aefe8eb16a60bd1, type: 3}
 --- !u!1 &1529123169
 GameObject:
@@ -7460,7 +7397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170.2, y: -30.7}
+  m_AnchoredPosition: {x: 170.19995, y: -30.699951}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1688019650
@@ -8689,7 +8626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c96828877f45441847ffceaaf1c162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TechTreeMenuUI
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _allBuildings:
   - {fileID: 11400000, guid: 2328f9fa36bfb164c8192984975ce0ff, type: 2}
   - {fileID: 11400000, guid: c062be0e7ccccf64ca3bd098f20a615b, type: 2}
@@ -9475,7 +9411,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _cameraRoot: {fileID: 11684515}
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
 --- !u!114 &2065809719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9488,7 +9423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4cb315e796ec2149ba6e17fe0c91ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonController
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
   _cameraRoot: {fileID: 11684515}
   MoveSpeed: 4
   SprintSpeed: 6
@@ -9531,428 +9465,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &2065809728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065809715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
-    m_ActionName: 'Gameplay/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnLook
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
-    m_ActionName: 'Gameplay/Look[/Mouse/delta,/Touchscreen/delta]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f1ba0d36-48eb-4cd5-b651-1c94a6531f70
-    m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnSprint
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4f1f07ba-b609-4872-b41a-315fe8f67243
-    m_ActionName: 'Gameplay/Sprint[/Keyboard/leftShift]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnInteract
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9b6a9c7e-b29b-4441-a9b7-0029e2388440
-    m_ActionName: 'Gameplay/Interact[/Keyboard/e]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnScroll
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1cca31bc-89f0-4107-b114-fd2d673264e4
-    m_ActionName: 'Gameplay/Scroll[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar1
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e0fed754-0fad-46ee-a0b4-70e46dfcbd32
-    m_ActionName: 'Gameplay/HotbarSelect[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
-    m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
-    m_ActionName: 'UI/Submit[/Keyboard/enter]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 15cef263-9014-4fd5-94d9-4e4a6234a6ef
-    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 32b35790-4ed0-4e9a-aa41-69ac6d629449
-    m_ActionName: 'UI/Point[/Mouse/position,/Touchscreen/touch0/position,/Touchscreen/touch1/position,/Touchscreen/touch2/position,/Touchscreen/touch3/position,/Touchscreen/touch4/position,/Touchscreen/touch5/position,/Touchscreen/touch6/position,/Touchscreen/touch7/position,/Touchscreen/touch8/position,/Touchscreen/touch9/position]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3c7022bf-7922-4f7c-a998-c437916075ad
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Touchscreen/touch0/press,/Touchscreen/touch1/press,/Touchscreen/touch2/press,/Touchscreen/touch3/press,/Touchscreen/touch4/press,/Touchscreen/touch5/press,/Touchscreen/touch6/press,/Touchscreen/touch7/press,/Touchscreen/touch8/press,/Touchscreen/touch9/press]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 44b200b1-1557-4083-816c-b22cbdf77ddf
-    m_ActionName: 'UI/RightClick[/Mouse/rightButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dad70c86-b58c-4b17-88ad-f5e53adf419e
-    m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0489e84a-4833-4c40-bfae-cea84b696689
-    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 24908448-c609-4bc3-a128-ea258674378a
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar2
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d32ab647-2831-4d45-81ac-9019a9678db6
-    m_ActionName: 'Gameplay/Hotbar2[/Keyboard/2]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar3
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: fcf3eb99-9101-47af-b2d9-0670228cc28f
-    m_ActionName: 'Gameplay/Hotbar3[/Keyboard/3]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar4
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a09154d8-4a1c-42cd-9ba5-ed858a42b180
-    m_ActionName: 'Gameplay/Hotbar4[/Keyboard/4]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar5
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 05b130ba-578d-4d23-8930-a736d51852c8
-    m_ActionName: 'Gameplay/Hotbar5[/Keyboard/5]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnToggleBuild
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a4659e87-d6cf-4ff8-81c4-6bdc0ae4e2d4
-    m_ActionName: 'Gameplay/ToggleBuild[/Keyboard/b]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnRotate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5600fb5f-3225-4454-87af-e77fef1ff524
-    m_ActionName: 'Gameplay/Rotate[/Keyboard/r]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnPlace
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 64c08c1e-5fb7-4642-a1ac-a02498cd0246
-    m_ActionName: 'Gameplay/Place[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnDemolish
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d219f485-9379-495f-9763-36100c8cb90a
-    m_ActionName: 'Gameplay/Demolish[/Keyboard/x]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnDemolishConfirm
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3bf82538-7ec4-440d-b51d-626cdacd6236
-    m_ActionName: 'Gameplay/DemolishConfirm[/Mouse/leftButton]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnInventory
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0308f4c5-5062-403c-ad53-84d631b10660
-    m_ActionName: 'Gameplay/Inventory[/Keyboard/tab]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnCloseMenu
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: cca2dfb1-f42b-43d6-a5b8-2fc5e1920ada
-    m_ActionName: 'Gameplay/CloseMenu[/Keyboard/tab,/Keyboard/escape]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar6
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0bd18146-d756-4b9f-836e-a4683a402fd1
-    m_ActionName: 'Gameplay/Hotbar6[/Keyboard/6]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar7
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 188a2a22-7d4c-435d-a31d-05c2087164f0
-    m_ActionName: 'Gameplay/Hotbar7[/Keyboard/7]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar8
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2e7d7cbc-1874-47d2-a90c-f2f09339fa6c
-    m_ActionName: 'Gameplay/Hotbar8[/Keyboard/8]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
-        m_TargetAssemblyTypeName: IronNomad.Inputs.InputReader, Assembly-CSharp
-        m_MethodName: OnHotbar9
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 71c57c7f-4a44-410a-9e34-063d7b7c4dcf
-    m_ActionName: 'Gameplay/Hotbar9[/Keyboard/9]'
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 1876988913}
 --- !u!114 &2065809732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9966,9 +9478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
   _totalSlots: 45
-  _maxStackSize: 64
   _slots: []
---- !u!114 &2065809735
+--- !u!114 &2065809738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9977,14 +9488,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2065809715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a1e23e3fc7d361459eefc8654022e8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 49716913ba70ea74dae3a5c8d67e3336, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToolbeltStateMachine
-  _inputReader: {fileID: 11400000, guid: 273bf2276ebd12340820330dc70b6c5c, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerToolController
+  _buildMenu: {fileID: 1487100546}
   _builderTool: {fileID: 1124250667}
   _demolishTool: {fileID: 500828589}
-  _miningTool: {fileID: 415070964}
-  _buildMenu: {fileID: 1487100546}
 --- !u!1 &2115916089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10382,6 +9891,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 305364764}
   - {fileID: 539623702}
   - {fileID: 1487100547}
   - {fileID: 410087041}
@@ -10393,4 +9903,3 @@ SceneRoots:
   - {fileID: 1806071738}
   - {fileID: 2023426838}
   - {fileID: 630353227}
-  - {fileID: 1061943121}

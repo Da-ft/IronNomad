@@ -1,4 +1,3 @@
-using IronNomad.Inputs;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +5,6 @@ using UnityEngine.UI;
 public class InventoryMenuUI : MonoBehaviour, IMenu
 {
     [Header("Dependencies")]
-    [SerializeField] private InputReader _inputReader;
     [SerializeField] private InventorySystem _inventory;
 
     [Header("UI References")]
@@ -20,17 +18,17 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
 
-    private List<SlotUI> _slots = new List<SlotUI>();
+    private List<SlotUI> _slots = new();
 
     private void OnEnable()
     {
-        _inputReader.InventoryEvent += ToggleInventory;
+        InputEvents.OnInventory += ToggleInventory;
         _inventory.OnInventoryChanged += Refresh;
     }
 
     private void OnDisable()
     {
-        _inputReader.InventoryEvent -= ToggleInventory;
+        InputEvents.OnInventory -= ToggleInventory;
         _inventory.OnInventoryChanged -= Refresh;
     }
 
@@ -39,33 +37,13 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         UIManager.Instance.RegisterMenu(this);
         _menuRoot.SetActive(false);
         BuildSlots();
-
-        if (_sortButton != null)
-            _sortButton.onClick.AddListener(_inventory.SortByType);
+        if (_sortButton != null) _sortButton.onClick.AddListener(_inventory.SortByType);
     }
 
-    private void OnDestroy()
-    {
-        UIManager.Instance?.UnregisterMenu(this);
-    }
+    private void OnDestroy() => UIManager.Instance?.UnregisterMenu(this);
 
-    // --- IMenu ---
-
-    public void Open()
-    {
-        _isOpen = true;
-        _menuRoot.SetActive(true);
-        Refresh();
-    }
-
-    // Close macht nur das UI zu – Cursor/Gameplay regelt UIManager.CloseAll()
-    public void Close()
-    {
-        _isOpen = false;
-        _menuRoot.SetActive(false);
-    }
-
-    // --- Slots ---
+    public void Open() { _isOpen = true; _menuRoot.SetActive(true); Refresh(); }
+    public void Close() { _isOpen = false; _menuRoot.SetActive(false); }
 
     private void BuildSlots()
     {
@@ -83,8 +61,7 @@ public class InventoryMenuUI : MonoBehaviour, IMenu
         for (int i = 0; i < _slots.Count; i++)
         {
             InventorySlot data = _inventory.GetSlotAt(i);
-            if (data != null)
-                _slots[i].UpdateSlot(data, false);
+            if (data != null) _slots[i].UpdateSlot(data, false);
         }
     }
 

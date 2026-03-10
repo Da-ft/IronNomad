@@ -1,11 +1,9 @@
 using UnityEngine;
-using IronNomad.Inputs;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Dependencies")]
-    [SerializeField] private InputReader _inputReader;
     [SerializeField] private Transform _cameraRoot;
 
     [Header("Movement")]
@@ -53,20 +51,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_inputReader == null) return;
-        _inputReader.MoveEvent += v => _moveInput = v;
-        _inputReader.LookEvent += v => _lookInput = v;
-        _inputReader.SprintEvent += v => _isSprinting = v;
-        _inputReader.JumpEvent += () => _jumpTriggered = true;
+        InputEvents.OnMove += v => _moveInput = v;
+        InputEvents.OnLook += v => _lookInput = v;
+        InputEvents.OnSprint += v => _isSprinting = v;
+        InputEvents.OnJump += () => _jumpTriggered = true;
     }
 
     private void OnDisable()
     {
-        if (_inputReader == null) return;
-        _inputReader.MoveEvent -= v => _moveInput = v;
-        _inputReader.LookEvent -= v => _lookInput = v;
-        _inputReader.SprintEvent -= v => _isSprinting = v;
-        _inputReader.JumpEvent -= () => _jumpTriggered = true;
+        InputEvents.OnMove -= v => _moveInput = v;
+        InputEvents.OnLook -= v => _lookInput = v;
+        InputEvents.OnSprint -= v => _isSprinting = v;
+        InputEvents.OnJump -= () => _jumpTriggered = true;
     }
 
     private void Update()
@@ -76,10 +72,7 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-    private void LateUpdate()
-    {
-        CameraRotation();
-    }
+    private void LateUpdate() => CameraRotation();
 
     private void GroundedCheck()
     {
@@ -90,7 +83,6 @@ public class PlayerController : MonoBehaviour
     private void CameraRotation()
     {
         if (_lookInput.sqrMagnitude < 0.0001f) return;
-
         _cameraPitch -= _lookInput.y * RotationSpeed;
         _cameraPitch = ClampAngle(_cameraPitch, BottomClamp, TopClamp);
         _cameraRoot.localRotation = Quaternion.Euler(_cameraPitch, 0.0f, 0.0f);
@@ -119,14 +111,12 @@ public class PlayerController : MonoBehaviour
             ? transform.right * _moveInput.x + transform.forward * _moveInput.y
             : Vector3.zero;
 
-        Vector3 finalMovement = inputDirection.normalized * (_speed * Time.deltaTime) +
-                                new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
+        Vector3 finalMovement = inputDirection.normalized * (_speed * Time.deltaTime)
+                              + new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime;
 
         if (Grounded && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, GroundLayers))
-        {
             if (hit.collider.attachedRigidbody != null)
                 finalMovement += hit.collider.attachedRigidbody.GetPointVelocity(transform.position) * Time.deltaTime;
-        }
 
         _controller.Move(finalMovement);
     }
@@ -136,24 +126,21 @@ public class PlayerController : MonoBehaviour
         if (Grounded)
         {
             _fallTimeoutDelta = FallTimeout;
+            if (_verticalVelocity < 0f) _verticalVelocity = -2f;
 
-            if (_verticalVelocity < 0.0f)
-                _verticalVelocity = -2f;
-
-            if (_jumpTriggered && _jumpTimeoutDelta <= 0.0f)
+            if (_jumpTriggered && _jumpTimeoutDelta <= 0f)
             {
                 _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                 _jumpTriggered = false;
             }
 
-            if (_jumpTimeoutDelta >= 0.0f) _jumpTimeoutDelta -= Time.deltaTime;
+            if (_jumpTimeoutDelta >= 0f) _jumpTimeoutDelta -= Time.deltaTime;
         }
         else
         {
             _jumpTimeoutDelta = JumpTimeout;
             _jumpTriggered = false;
-
-            if (_fallTimeoutDelta >= 0.0f) _fallTimeoutDelta -= Time.deltaTime;
+            if (_fallTimeoutDelta >= 0f) _fallTimeoutDelta -= Time.deltaTime;
         }
 
         if (_verticalVelocity < _terminalVelocity)
