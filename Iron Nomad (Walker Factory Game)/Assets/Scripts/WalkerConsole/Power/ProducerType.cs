@@ -1,0 +1,1 @@
+public enum ProducerType { None, Solar, Wind, Other }

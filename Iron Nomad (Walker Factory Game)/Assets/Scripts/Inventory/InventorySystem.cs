@@ -215,5 +215,13 @@ public class InventorySystem : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
+    public int GetItemCount(ItemDefinition item)
+    {
+        int total = 0;
+        foreach (var slot in _slots)
+            if (!slot.IsEmpty && slot.Item == item) total += slot.Count;
+        return total;
+    }
+
     public void NotifyChanged() => OnInventoryChanged?.Invoke();
 }

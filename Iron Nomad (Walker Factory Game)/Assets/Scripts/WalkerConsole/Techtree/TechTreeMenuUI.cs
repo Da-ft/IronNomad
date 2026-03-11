@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TechTreeMenuUI : MonoBehaviour, IMenu
+/// <summary>
+/// Reines Sub-Panel — kein IMenu, keine UIManager-Registrierung.
+/// Wird von WalkerConsoleUI ein/ausgeblendet.
+/// </summary>
+public class TechTreeMenuUI : MonoBehaviour
 {
-    [Header("Dependencies")]
-    [SerializeField] private List<BuildingDefinition> _allBuildings;
-
     [Header("UI References")]
-    [SerializeField] private GameObject _menuRoot;
     [SerializeField] private RectTransform _graphContainer;
 
     [Header("Prefabs")]
@@ -26,39 +26,31 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
     [SerializeField] private float _zoomMax = 1f;
     [SerializeField] private float _zoomStep = 0.1f;
 
-    public bool IsOpen => _isOpen;
-    private bool _isOpen = false;
-
+    private List<BuildingDefinition> _allBuildings;
     private Dictionary<BuildingDefinition, TechTreeNodeUI> _nodes = new();
     private List<GameObject> _lines = new();
+    private bool _built = false;
 
     private void Awake()
     {
-        _allBuildings = new List<BuildingDefinition>(Resources.LoadAll<BuildingDefinition>("Buildings"));
+        _allBuildings = new List<BuildingDefinition>(
+            Resources.LoadAll<BuildingDefinition>("Buildings"));
     }
 
-    private void Start()
+    /// <summary>Von WalkerConsoleUI aufgerufen wenn dieser Tab aktiv wird.</summary>
+    public void OnTabOpened()
     {
-        UIManager.Instance.RegisterMenu(this);
-        _menuRoot.SetActive(false);
-        BuildGraph();
-    }
-
-    private void OnDestroy() => UIManager.Instance?.UnregisterMenu(this);
-
-    public void Open()
-    {
-        _isOpen = true;
-        _menuRoot.SetActive(true);
         InputEvents.OnScroll += HandleZoom;
+        if (!_built) { BuildGraph(); _built = true; }
     }
 
-    public void Close()
+    /// <summary>Von WalkerConsoleUI aufgerufen wenn dieser Tab verlassen wird.</summary>
+    public void OnTabClosed()
     {
-        _isOpen = false;
-        _menuRoot.SetActive(false);
         InputEvents.OnScroll -= HandleZoom;
     }
+
+    // --- Zoom ---
 
     private void HandleZoom(float direction)
     {
@@ -69,12 +61,13 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _graphContainer,
             UnityEngine.InputSystem.Mouse.current.position.ReadValue(),
-            null,
-            out Vector2 localMousePos);
+            null, out Vector2 localMousePos);
 
         _graphContainer.localScale = Vector3.one * newScale;
         _graphContainer.anchoredPosition -= localMousePos * (newScale - current);
     }
+
+    // --- Graph ---
 
     private void BuildGraph()
     {
@@ -110,7 +103,8 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         foreach (var (building, node) in _nodes)
             foreach (var req in building.BuildingRequirements)
                 if (_nodes.TryGetValue(req, out TechTreeNodeUI fromNode))
-                    DrawLine(fromNode.GetComponent<RectTransform>(), node.GetComponent<RectTransform>());
+                    DrawLine(fromNode.GetComponent<RectTransform>(),
+                             node.GetComponent<RectTransform>());
     }
 
     private void DrawLine(RectTransform from, RectTransform to)
@@ -122,12 +116,10 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         Vector2 fromPos = from.anchoredPosition + new Vector2(0, -_nodeHeight / 2f);
         Vector2 toPos = to.anchoredPosition + new Vector2(0, _nodeHeight / 2f);
         Vector2 dir = toPos - fromPos;
-        float distance = dir.magnitude;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         line.anchoredPosition = fromPos + dir * 0.5f;
-        line.sizeDelta = new Vector2(distance, 3f);
-        line.localRotation = Quaternion.Euler(0, 0, angle);
+        line.sizeDelta = new Vector2(dir.magnitude, 3f);
+        line.localRotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
         _lines.Add(lineObj);
     }
 
@@ -139,7 +131,9 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         return depths;
     }
 
-    private int CalculateDepth(BuildingDefinition b, Dictionary<BuildingDefinition, int> depths, HashSet<BuildingDefinition> visited)
+    private int CalculateDepth(BuildingDefinition b,
+        Dictionary<BuildingDefinition, int> depths,
+        HashSet<BuildingDefinition> visited)
     {
         if (depths.TryGetValue(b, out int cached)) return cached;
         if (visited.Contains(b)) return 0;
@@ -155,7 +149,8 @@ public class TechTreeMenuUI : MonoBehaviour, IMenu
         return max;
     }
 
-    private Dictionary<int, List<BuildingDefinition>> GroupByDepth(Dictionary<BuildingDefinition, int> depths)
+    private Dictionary<int, List<BuildingDefinition>> GroupByDepth(
+        Dictionary<BuildingDefinition, int> depths)
     {
         var rows = new Dictionary<int, List<BuildingDefinition>>();
         foreach (var (b, depth) in depths)

@@ -51,19 +51,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputEvents.OnMove += v => _moveInput = v;
-        InputEvents.OnLook += v => _lookInput = v;
-        InputEvents.OnSprint += v => _isSprinting = v;
-        InputEvents.OnJump += () => _jumpTriggered = true;
+        InputEvents.OnMove += OnMove;
+        InputEvents.OnLook += OnLook;
+        InputEvents.OnSprint += OnSprint;
+        InputEvents.OnJump += OnJump;
     }
 
     private void OnDisable()
     {
-        InputEvents.OnMove -= v => _moveInput = v;
-        InputEvents.OnLook -= v => _lookInput = v;
-        InputEvents.OnSprint -= v => _isSprinting = v;
-        InputEvents.OnJump -= () => _jumpTriggered = true;
+        InputEvents.OnMove -= OnMove;
+        InputEvents.OnLook -= OnLook;
+        InputEvents.OnSprint -= OnSprint;
+        InputEvents.OnJump -= OnJump;
     }
+
+    private void OnMove(Vector2 v) => _moveInput = v;
+    private void OnLook(Vector2 v) => _lookInput = v;
+    private void OnSprint(bool v) => _isSprinting = v;
+    private void OnJump() => _jumpTriggered = true;
 
     private void Update()
     {

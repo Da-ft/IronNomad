@@ -1,12 +1,14 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class WalkerGrid : MonoBehaviour
 {
     [SerializeField] private float _cellSize = 2f;
     public float CellSize => _cellSize;
+    public System.Collections.Generic.IEnumerable<Vector2Int> AvailableCells => _availableCells;
+    public System.Collections.Generic.IEnumerable<Vector2Int> OccupiedCells => _occupiedCells;
 
-    // Alle verfügbaren Zellen (begehbare Fläche)
+    // Alle verfï¿½gbaren Zellen (begehbare Flï¿½che)
     private HashSet<Vector2Int> _availableCells = new HashSet<Vector2Int>();
 
     // Belegte Zellen (durch BuilderTool gesetzt)
@@ -81,7 +83,7 @@ public class WalkerGrid : MonoBehaviour
         foreach (var cell in GetOccupiedCoords(origin, gridSize, rotation))
         {
             if (_gridObjects.ContainsKey(cell))
-                Debug.LogWarning($"Grid-Konflikt auf {cell}! Überschrieben.");
+                Debug.LogWarning($"Grid-Konflikt auf {cell}! ï¿½berschrieben.");
             _gridObjects[cell] = holder;
         }
     }
@@ -126,7 +128,7 @@ public class WalkerGrid : MonoBehaviour
     {
         var cells = new List<Vector2Int>();
 
-        // Offset damit das Gebäude zentriert ist
+        // Offset damit das Gebï¿½ude zentriert ist
         int halfX = (gridSize.x - 1);
         int halfZ = (gridSize.y - 1);
 
@@ -184,7 +186,7 @@ public class WalkerGrid : MonoBehaviour
     {
         Gizmos.matrix = transform.localToWorldMatrix;
 
-        // Verfügbare Zellen grau
+        // Verfï¿½gbare Zellen grau
         Gizmos.color = new Color(1f, 1f, 1f, 0.1f);
         foreach (var cell in _availableCells)
         {
@@ -192,7 +194,7 @@ public class WalkerGrid : MonoBehaviour
             Gizmos.DrawWireCube(pos, new Vector3(_cellSize, 0f, _cellSize));
         }
 
-        // Belegte Zellen grün
+        // Belegte Zellen grï¿½n
         Gizmos.color = Color.green;
         foreach (var coords in _occupiedCells)
         {

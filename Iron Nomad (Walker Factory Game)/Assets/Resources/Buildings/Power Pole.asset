@@ -23,8 +23,14 @@ MonoBehaviour:
     Amount: 1
   - Item: {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
     Amount: 3
-  IsUnlockedByDefault: 0
+  IsUnlockedByDefault: 1
   ItemRequirements:
   - {fileID: 11400000, guid: 677d6990bfdc36143a7b769c9e2a1ae4, type: 2}
   - {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
   BuildingRequirements: []
+  GridSize: {x: 1, y: 1}
+  Ports: []
+  UsesBeltPlacement: 0
+  PowerDemand: 0
+  PowerProduction: 0
+  ProducerType: 0

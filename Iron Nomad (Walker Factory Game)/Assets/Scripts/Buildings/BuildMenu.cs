@@ -11,7 +11,7 @@ public class BuildMenu : MonoBehaviour, IMenu
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _categoryButtonPrefab;
-    [SerializeField] private GameObject _buildingCardPrefab;
+    [SerializeField] private GameObject _buildingCardPrefab; // SelectableCardUI
 
     public event System.Action<BuildingDefinition> OnBuildingSelected;
 
@@ -48,32 +48,15 @@ public class BuildMenu : MonoBehaviour, IMenu
 
     public void SetBuilderTool(BuilderTool tool) => _builderTool = tool;
 
-    public void SetHoveredBuilding(BuildingDefinition def) => _hoveredBuilding = def;
-    public void ClearHoveredBuilding(BuildingDefinition def)
-    {
-        if (_hoveredBuilding == def) _hoveredBuilding = null;
-    }
-
-    public void Open()
-    {
-        _isOpen = true;
-        _menuRoot.SetActive(true);
-    }
-
-    public void Close()
-    {
-        _isOpen = false;
-        _menuRoot.SetActive(false);
-        _hoveredBuilding = null;
-    }
+    public void Open() { _isOpen = true; _menuRoot.SetActive(true); }
+    public void Close() { _isOpen = false; _menuRoot.SetActive(false); _hoveredBuilding = null; }
 
     private void BuildCategoryList()
     {
         var categories = _allBuildings
             .Where(b => b.Category != null)
             .Select(b => b.Category)
-            .Distinct()
-            .ToList();
+            .Distinct().ToList();
 
         foreach (var cat in categories)
         {
@@ -81,19 +64,25 @@ public class BuildMenu : MonoBehaviour, IMenu
             obj.GetComponent<CategoryButtonUI>().Setup(cat, OnCategorySelected);
         }
 
-        if (categories.Count > 0)
-            OnCategorySelected(categories[0]);
+        if (categories.Count > 0) OnCategorySelected(categories[0]);
     }
 
     private void OnCategorySelected(BuildingCategory category)
     {
-        foreach (Transform child in _buildingGrid)
-            Destroy(child.gameObject);
+        foreach (Transform child in _buildingGrid) Destroy(child.gameObject);
 
         foreach (var building in _allBuildings.Where(b => b.Category == category && b.IsUnlockedByDefault))
         {
+            var def = building; // capture
             GameObject obj = Instantiate(_buildingCardPrefab, _buildingGrid);
-            obj.GetComponent<BuildingCardUI>().Setup(building, OnBuildingSelected, this);
+            var card = obj.GetComponent<SelectableCardUI>();
+            card.Setup(
+                label: def.DisplayName,
+                icon: def.Icon,
+                onClick: () => OnBuildingSelected?.Invoke(def),
+                onHoverEnter: () => _hoveredBuilding = def,
+                onHoverExit: () => { if (_hoveredBuilding == def) _hoveredBuilding = null; }
+            );
         }
     }
 }

@@ -25,7 +25,7 @@ MonoBehaviour:
     Amount: 3
   - Item: {fileID: 11400000, guid: 101675364220978458f06bc56c7b6d59, type: 2}
     Amount: 5
-  IsUnlockedByDefault: 0
+  IsUnlockedByDefault: 1
   ItemRequirements:
   - {fileID: 11400000, guid: 1cbd3343af885dd438c02a76614e886d, type: 2}
   - {fileID: 11400000, guid: 59d7665e183c9fc4d87f45654e90ed8f, type: 2}
@@ -33,3 +33,8 @@ MonoBehaviour:
   BuildingRequirements:
   - {fileID: 11400000, guid: 85103b818a2e27d4f846af95632b293d, type: 2}
   GridSize: {x: 3, y: 3}
+  Ports: []
+  UsesBeltPlacement: 0
+  PowerDemand: 0
+  PowerProduction: 20
+  ProducerType: 0

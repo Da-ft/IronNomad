@@ -1,14 +1,10 @@
-﻿using IronNomad.Inputs;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class MachineMenuUI : MonoBehaviour, IMenu
 {
     public static MachineMenuUI Instance { get; private set; }
-
-    [Header("Dependencies")]
-    [SerializeField] private InputReader _inputReader;
 
     [Header("UI References")]
     [SerializeField] private GameObject _menuRoot;
@@ -32,11 +28,13 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     [SerializeField] private Button _btnChangeRecipe;
 
     [Header("Prefabs")]
-    [SerializeField] private GameObject _recipeButtonPrefab;
+    [SerializeField] private GameObject _recipeCardPrefab; // SelectableCardUI
 
     public bool IsOpen => _isOpen;
     private bool _isOpen = false;
     private IMachine _currentMachine;
+    private CraftingRecipe _highlightedRecipe;
+    private SelectableCardUI _selectedCard;
 
     private void Awake()
     {
@@ -48,20 +46,16 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     {
         UIManager.Instance.RegisterMenu(this);
         _menuRoot.SetActive(false);
-
         _btnSelectRecipe.onClick.AddListener(OnSelectRecipeConfirmed);
         _btnChangeRecipe.onClick.AddListener(ShowRecipeSelection);
     }
 
-    private void OnDestroy()
-    {
-        UIManager.Instance?.UnregisterMenu(this);
-    }
+    private void OnDestroy() => UIManager.Instance?.UnregisterMenu(this);
 
     private void Update()
     {
         if (!_isOpen || _currentMachine == null) return;
-        if (_viewProduction == null || !_viewProduction.activeSelf) return;
+        if (!_viewProduction.activeSelf) return;
 
         _progressFill.fillAmount = _currentMachine.GetProgress();
         _inputPerMinText.text = $"Input: {_currentMachine.GetInputPerMinute():F1}/min";
@@ -80,20 +74,16 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     {
         _isOpen = true;
         _menuRoot.SetActive(true);
-        StartCoroutine(DisableNextFrame());
 
-        // Kein Rezept aktiv → Rezeptauswahl zeigen
-        if (_currentMachine.GetCurrentRecipe() == null)
-            ShowRecipeSelection();
-        else
-            ShowProduction();
+        if (_currentMachine.GetCurrentRecipe() == null) ShowRecipeSelection();
+        else ShowProduction();
     }
 
     public void Close()
     {
         _isOpen = false;
-        _menuRoot.SetActive(false);
         _currentMachine = null;
+        _menuRoot.SetActive(false);
     }
 
     // --- Views ---
@@ -104,7 +94,8 @@ public class MachineMenuUI : MonoBehaviour, IMenu
         _viewProduction.SetActive(false);
         _recipeInfoPanel.SetActive(false);
         _btnSelectRecipe.interactable = false;
-
+        _highlightedRecipe = null;
+        _selectedCard = null;
         BuildRecipeList();
     }
 
@@ -117,57 +108,41 @@ public class MachineMenuUI : MonoBehaviour, IMenu
         if (active != null)
         {
             _activeRecipeText.text = active.Output.Name;
-            _progressFill.sprite = active.Output.Icon;  // ← NEU
+            _progressFill.sprite = active.Output.Icon;
             _progressFill.color = Color.white;
         }
     }
 
-    // --- Recipe Selection ---
+    // --- Recipe List ---
 
     private void BuildRecipeList()
     {
-        foreach (Transform child in _recipeList)
-            DestroyImmediate(child.gameObject);
+        foreach (Transform child in _recipeList) Destroy(child.gameObject);
 
         CraftingRecipe[] recipes = _currentMachine.GetRecipes();
         _machineName.text = recipes.Length > 0 ? "Rezept wählen" : "Keine Rezepte verfügbar";
 
         foreach (CraftingRecipe recipe in recipes)
         {
-            GameObject obj = Instantiate(_recipeButtonPrefab, _recipeList);
-
-            TextMeshProUGUI label = obj.GetComponentInChildren<TextMeshProUGUI>();
-            if (label != null) label.text = recipe.Output.Name;
-
-            Image bg = obj.GetComponent<Image>();
-
-            Button btn = obj.GetComponent<Button>();
-            if (btn != null)
-            {
-                CraftingRecipe captured = recipe;
-                btn.onClick.AddListener(() => OnRecipeHighlighted(captured, bg));
-            }
+            var captured = recipe;
+            GameObject obj = Instantiate(_recipeCardPrefab, _recipeList);
+            SelectableCardUI card = obj.GetComponent<SelectableCardUI>();
+            card.Setup(
+                label: recipe.Output.Name,
+                icon: recipe.Output.Icon,
+                onClick: () => OnRecipeHighlighted(captured, card)
+            );
         }
     }
 
-    private CraftingRecipe _highlightedRecipe;
-
-    private void OnRecipeHighlighted(CraftingRecipe recipe, Image bg)
+    private void OnRecipeHighlighted(CraftingRecipe recipe, SelectableCardUI card)
     {
-        // Alle Buttons zurücksetzen
-        foreach (Transform child in _recipeList)
-        {
-            Image childBg = child.GetComponent<Image>();
-            if (childBg != null) childBg.color = Color.white;
-        }
-
-        // Diesen highlighten
-        if (bg != null) bg.color = new Color(0.3f, 0.8f, 0.3f, 1f);
+        _selectedCard?.SetSelected(false);
+        _selectedCard = card;
+        _selectedCard.SetSelected(true);
 
         _highlightedRecipe = recipe;
         _btnSelectRecipe.interactable = true;
-
-        // Info anzeigen
         ShowRecipeInfo(recipe);
     }
 
@@ -183,20 +158,15 @@ public class MachineMenuUI : MonoBehaviour, IMenu
     {
         _recipeInfoPanel.SetActive(true);
 
-        System.Text.StringBuilder inputs = new System.Text.StringBuilder();
+        var inputs = new System.Text.StringBuilder();
         for (int i = 0; i < recipe.Inputs.Length; i++)
         {
             int amount = i < recipe.InputAmounts.Length ? recipe.InputAmounts[i] : 1;
             inputs.AppendLine($"• {amount}x {recipe.Inputs[i].Name}");
         }
+
         _recipeInputText.text = inputs.ToString();
         _recipeOutputText.text = $"• {recipe.OutputAmount}x {recipe.Output.Name}";
         _recipeDurationText.text = $"{recipe.Duration}s";
-    }
-
-    private System.Collections.IEnumerator DisableNextFrame()
-    {
-        yield return null;
-        _inputReader.DisableGameplay();
     }
 }
