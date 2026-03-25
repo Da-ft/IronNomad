@@ -212,10 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf708a7ed903ae4a9cf5698047fefc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectableCardUI
-  _label: {fileID: 0}
+  _label: {fileID: 1928110454670452667}
   _icon: {fileID: 7333454725162647576}
   _background: {fileID: 1886098375716129898}
-  _button: {fileID: 0}
+  _button: {fileID: 6909943794797992296}
   _colorNormal: {r: 1, g: 1, b: 1, a: 1}
   _colorSelected: {r: 0.3, g: 0.8, b: 0.3, a: 1}
   _colorHover: {r: 1, g: 1, b: 1, a: 0.8}
