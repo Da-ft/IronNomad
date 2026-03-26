@@ -9604,21 +9604,21 @@ MonoBehaviour:
     volumeMask: {fileID: 11700000, guid: 5f7faf8ea896c2a46a2517e0c577bffe, type: 3}
     textureScrollingSpeed: {x: 0.1, y: 0, z: 0}
     textureTiling: {x: 10, y: 1, z: 10}
-    positiveFade: {x: 0.025, y: 0.05, z: 0.025}
-    negativeFade: {x: 0.025, y: 0.05, z: 0.025}
-    m_EditorUniformFade: 0.1
-    m_EditorPositiveFade: {x: 0.125, y: 0, z: 0.125}
-    m_EditorNegativeFade: {x: 0.125, y: 0, z: 0.125}
+    positiveFade: {x: 0.005, y: 0.1, z: 0.005}
+    negativeFade: {x: 0.005, y: 0.1, z: 0.005}
+    m_EditorUniformFade: 0.5
+    m_EditorPositiveFade: {x: 0.005, y: 0, z: 0.005}
+    m_EditorNegativeFade: {x: 0.005, y: 0, z: 0.005}
     m_EditorAdvancedFade: 0
     scaleMode: 0
-    size: {x: 4, y: 2, z: 4}
+    size: {x: 100, y: 5, z: 100}
     invertFade: 0
-    distanceFadeStart: 10000
-    distanceFadeEnd: 10000
+    distanceFadeStart: 500
+    distanceFadeEnd: 800
     textureOffset: {x: -0, y: -0, z: -0}
     falloffMode: 0
     maskMode: 1
-    materialMask: {fileID: -876546973899608171, guid: 8e2870a5c3da6b4498c58914b4c0a210, type: 3}
+    materialMask: {fileID: 2100000, guid: 9323ee92f631f664fa4dfdbbaf54ec93, type: 2}
   m_Version: 3
 --- !u!4 &1549715506
 Transform:
@@ -9629,7 +9629,7 @@ Transform:
   m_GameObject: {fileID: 1549715504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 54.987, z: -5.75}
+  m_LocalPosition: {x: -15, y: 50.11, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
