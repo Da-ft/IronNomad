@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23ff8c8f5727b246b53b92dbdbece27, type: 3}
+  m_Name: SmelterIngotGold
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  Inputs:
+  - {fileID: 11400000, guid: 3b4f919295dc5e548a5eaf793ed0e41c, type: 2}
+  InputAmounts: 01000000
+  Output: {fileID: 11400000, guid: 218989de4a3c7dc4a9604afb8cf91015, type: 2}
+  OutputAmount: 1
+  Duration: 1.5

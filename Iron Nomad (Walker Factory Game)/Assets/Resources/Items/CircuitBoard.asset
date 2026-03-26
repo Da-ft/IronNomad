@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CircuitBoard
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Circuit Board
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 6968df4870e7d0647b651583388d026a, type: 3}
   VisualPrefab: {fileID: 0}
   Description: Beep Boop!

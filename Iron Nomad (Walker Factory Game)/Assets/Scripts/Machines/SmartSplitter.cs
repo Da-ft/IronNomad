@@ -160,4 +160,6 @@ public class SmartSplitter : BaseGridMachine
             Gizmos.DrawRay(transform.position, worldDir * size);
         }
     }
+    public override bool IsFull => _currentItem != null;
+
 }

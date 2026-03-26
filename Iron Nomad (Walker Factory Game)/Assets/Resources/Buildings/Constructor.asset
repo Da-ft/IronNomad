@@ -22,3 +22,10 @@ MonoBehaviour:
   IsUnlockedByDefault: 0
   ItemRequirements: []
   BuildingRequirements: []
+  GridSize: {x: 3, y: 3}
+  Ports:
+  - Name: 
+    Type: 0
+    Direction: {x: 0, y: 0}
+    EdgeOffset: 0
+  UsesBeltPlacement: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: IronScrews
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Iron Screws
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 7b707b70540221048b75c9a5813ccda1, type: 3}
   VisualPrefab: {fileID: 0}
   Description: Screw those!

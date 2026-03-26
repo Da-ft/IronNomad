@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WireCopper
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Copper Wire
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 161cc1fdcc38b0f489b67d032d7b5d97, type: 3}
   VisualPrefab: {fileID: 0}
   Description: This is Copper Wire!

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: IngotGold
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   Name: Gold Ingot
-  Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: 17aa29feb7d62a243a4d9a8411c3038f, type: 3}
   VisualPrefab: {fileID: 0}
   Description: Shiny!

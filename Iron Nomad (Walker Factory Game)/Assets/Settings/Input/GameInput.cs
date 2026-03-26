@@ -627,7 +627,7 @@ namespace IronNomad.Inputs
                 {
                     ""name"": """",
                     ""id"": ""903d693c-91ef-4795-b150-7421ee7f1998"",
-                    ""path"": ""<Keyboard>/b"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -697,17 +697,6 @@ namespace IronNomad.Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CloseMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""610bb5e7-e957-4241-a9cd-3843cd4a5d13"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
