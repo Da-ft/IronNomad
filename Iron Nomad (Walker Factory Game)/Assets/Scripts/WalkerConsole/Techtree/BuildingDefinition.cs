@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum EnergyType
+{
+    None,
+    Solar,
+    Wind
+}
+
 [System.Serializable]
 public class BuildingCost
 {
@@ -46,7 +53,8 @@ public class BuildingDefinition : ScriptableObject
     [Tooltip("Stromproduktion in MW. 0 = kein Producer")]
     public float PowerProduction = 0f;
     [Tooltip("Art der Stromproduktion — relevant für Oberflächen-Boni")]
-    public ProducerType ProducerType = ProducerType.None;
+
+    public EnergyType EnergyType;
 
     // --- Hilfsmethoden ---
 
@@ -61,6 +69,6 @@ public class BuildingDefinition : ScriptableObject
 
     public bool UsesPower => PowerDemand > 0f;
     public bool IsProducer => PowerProduction > 0f;
-    public bool IsSolarProducer => IsProducer && ProducerType == ProducerType.Solar;
-    public bool IsWindProducer => IsProducer && ProducerType == ProducerType.Wind;
+    public bool IsSolarProducer => IsProducer && EnergyType == EnergyType.Solar;
+    public bool IsWindProducer => IsProducer && EnergyType == EnergyType.Wind;
 }

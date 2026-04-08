@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Move : MonoBehaviour
+public class WalkerMovement : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float _moveSpeed = 3f;
